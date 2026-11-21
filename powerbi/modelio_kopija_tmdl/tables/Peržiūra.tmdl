@@ -1,0 +1,64 @@
+/// Sąskaitos, kurių DI nepatvirtino ir atidavė žmogui (perziura.csv): priežastis ir, jei buvo, įtartinas turinys.
+table Peržiūra
+	lineageTag: 2f8df6d1-fd29-4d2a-ae31-9364ca1c4f9b
+
+	column Failas
+		dataType: string
+		lineageTag: 3b83e151-2cc0-4e64-b1f5-b347a716a94d
+		sourceColumn: Failas
+
+	column 'Tiekėjo kodas'
+		dataType: string
+		lineageTag: 4dffbdb7-e511-4f30-aba2-8d51ceec1697
+		sourceColumn: Tiekėjo kodas
+
+	column Tiekėjas
+		dataType: string
+		lineageTag: f7984a8b-cc47-42f6-9383-6380998b4ace
+		sourceColumn: Tiekėjas
+
+	column 'Sąskaitos nr'
+		dataType: string
+		lineageTag: f72ddf03-d8bb-4bd8-8936-ad87898db6f7
+		sourceColumn: Sąskaitos nr
+
+	column Data
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 4f2c67ee-bae3-4b6a-be69-bea04ba6e55e
+		sourceColumn: Data
+
+	column Valiuta
+		dataType: string
+		lineageTag: 353df057-9b0c-472f-ab2b-482597586b36
+		sourceColumn: Valiuta
+
+	column Suma
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 93beb143-0ad6-436a-9c04-3fe8318fdffe
+		sourceColumn: Suma
+
+	column Priežastys
+		dataType: string
+		lineageTag: 33a805ed-adc3-4147-8bb9-8289a27d61ac
+		sourceColumn: Priežastys
+
+	column 'Įtartinas turinys'
+		dataType: string
+		lineageTag: d89fefd7-e684-419c-9f9b-30ed784065cd
+		sourceColumn: Įtartinas turinys
+
+	partition Peržiūra = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\clean\perziura.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"FAILAS", type text}, {"TIEKEJO_KODAS", type text}, {"TIEKEJAS", type text}, {"SF_NR", type text}, {"DATA", type date}, {"VALIUTA", type text}, {"SUMA", type number}, {"PRIEZASTYS", type text}, {"ITARTINAS_TURINYS", type text}}, "lt-LT"),
+				    Pervadinta = Table.RenameColumns(Tipai, {{"FAILAS", "Failas"}, {"TIEKEJO_KODAS", "Tiekėjo kodas"}, {"TIEKEJAS", "Tiekėjas"}, {"SF_NR", "Sąskaitos nr"}, {"DATA", "Data"}, {"VALIUTA", "Valiuta"}, {"SUMA", "Suma"}, {"PRIEZASTYS", "Priežastys"}, {"ITARTINAS_TURINYS", "Įtartinas turinys"}})
+				in
+				    Pervadinta
+

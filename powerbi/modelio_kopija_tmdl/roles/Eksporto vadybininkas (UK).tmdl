@@ -1,0 +1,8 @@
+/// Mato tik Tesco UK ir Costco UK.
+role 'Eksporto vadybininkas (UK)'
+	modelPermission: read
+
+	tablePermission Klientas = Klientas[Vadybininkas] = "Eksporto vadybininkas (UK)"
+
+	annotation PBI_Id = df9c356d43fa42ab8740f4c5b4a61ecf
+

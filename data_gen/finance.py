@@ -15,7 +15,7 @@ COST_CENTRES = {
     "Marketingas": "Pardavimai",
     "Administracija": "Administracija",
 }
-KRE_L2_REPAIR = 42000.0  # 3 istorija: Kretingos linijos remontas 2026 m. birželį
+KRE_L2_REPAIR = 42000.0  # 3 istorija: Kretingos linijos kompresoriaus ir šaldymo tunelio remontas 2026 m. liepą
 
 
 def planned_cost(item: str, year: int, month: int, units: float, promo_weeks: int) -> float:
@@ -54,7 +54,7 @@ def build_finance(sales: list[dict], promos: set, unit_cost: dict, rng: np.rando
         for item, centre in COST_CENTRES.items():
             value = planned_cost(item, y, m, units[(y, m)], promo_weeks[(y, m)])
             actual = value * rng.normal(1.0, 0.03)
-            if item == "Remontas ir priežiūra" and (y, m) == (2026, 6):
+            if item == "Remontas ir priežiūra" and (y, m) == (2026, 7):
                 actual += KRE_L2_REPAIR
             actuals.append({"date": month_end, "centre": centre, "item": item, "amount": round(actual, 2)})
             budget.append({"year": y, "month": m, "item": item, "amount": round(value, 2)})

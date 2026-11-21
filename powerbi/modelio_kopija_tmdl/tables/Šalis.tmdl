@@ -1,0 +1,35 @@
+/// Rinkos šalys ir miestas, kurio orai naudojami. Filtruoja klientus, orus ir prognozę kartu.
+table Šalis
+	lineageTag: 1164d62a-3d3e-482c-b808-ba590fd34b89
+
+	column 'Šalies kodas'
+		isNameInferred
+		sourceColumn: [Šalies kodas]
+
+	column Šalis
+		isNameInferred
+		sourceColumn: [Šalis]
+
+	column 'Orų miestas'
+		isNameInferred
+		sourceColumn: [Orų miestas]
+
+	column Rinka
+		isNameInferred
+		sourceColumn: [Rinka]
+
+	partition Šalis = calculated
+		mode: import
+		source =
+				DATATABLE(
+				    "Šalies kodas", STRING, "Šalis", STRING, "Orų miestas", STRING, "Rinka", STRING,
+				    {
+				        {"LT", "Lietuva", "Klaipėda", "Baltijos šalys"},
+				        {"LV", "Latvija", "Ryga", "Baltijos šalys"},
+				        {"EE", "Estija", "Talinas", "Baltijos šalys"},
+				        {"PL", "Lenkija", "Varšuva", "Centrinė Europa"},
+				        {"DE", "Vokietija", "Berlynas", "Centrinė Europa"},
+				        {"GB", "Jungtinė Karalystė", "Londonas", "Jungtinė Karalystė"}
+				    }
+				)
+

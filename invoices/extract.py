@@ -1,5 +1,6 @@
 # Vienos PDF sąskaitos nuskaitymas su Claude. Rezultatas saugomas data/clean/di_cache, kad kartojant nemokėtume dar kartą.
 import base64
+import hashlib
 import json
 import time
 from pathlib import Path
@@ -33,7 +34,9 @@ def build_client() -> anthropic.Anthropic:
 
 def extract(client: anthropic.Anthropic, pdf_path: Path, materials: str, cache_dir: Path) -> dict:
     """Grąžina {'invoice': dict, 'usage': {...}, 'seconds': float, 'cached': bool}."""
-    cache_file = cache_dir / f"{pdf_path.stem}.json"
+    # Raktas = failo vardas + turinio maiša: pakeistas PDF tuo pačiu vardu nuskaitomas iš naujo.
+    digest = hashlib.sha256(pdf_path.read_bytes()).hexdigest()[:12]
+    cache_file = cache_dir / f"{pdf_path.stem}_{digest}.json"
     if cache_file.exists():
         return json.loads(cache_file.read_text(encoding="utf-8")) | {"cached": True}
 

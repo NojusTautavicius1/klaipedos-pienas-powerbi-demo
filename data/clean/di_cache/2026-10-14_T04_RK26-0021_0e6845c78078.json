@@ -1,0 +1,43 @@
+{
+  "invoice": {
+    "supplier_name": "SIA „Rīgas kakao“",
+    "supplier_vat_code": "LV40009990044",
+    "invoice_number": "RK26-0021",
+    "invoice_date": "2026-10-14",
+    "due_date": "2026-11-13",
+    "currency": "EUR",
+    "reverse_charge": true,
+    "lines": [
+      {
+        "description": "Kakavos milteliai",
+        "material_code": "Z-KAKA",
+        "quantity": 700.0,
+        "unit": "kg",
+        "unit_price": 8.7194,
+        "discount_pct": 0.0,
+        "line_net": 6103.58
+      },
+      {
+        "description": "Šokolado glajus",
+        "material_code": "Z-SOKO",
+        "quantity": 2225.0,
+        "unit": "kg",
+        "unit_price": 6.9765,
+        "discount_pct": 0.0,
+        "line_net": 15522.71
+      }
+    ],
+    "net_total": 21626.29,
+    "vat_rate_pct": 0.0,
+    "vat_amount": 0.0,
+    "gross_total": 21626.29,
+    "suspicious_content": ""
+  },
+  "usage": {
+    "input_tokens": 4164,
+    "output_tokens": 301,
+    "model": "claude-opus-5-5",
+    "cost_usd": 0.0227
+  },
+  "seconds": 3.3
+}

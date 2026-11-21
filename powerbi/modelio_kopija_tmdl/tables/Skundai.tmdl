@@ -1,0 +1,86 @@
+/// Kokybės skyriaus skundų registras (Excel skundu_registras.xlsx). Klientas įrašytas pavadinimu, partija kartais su tarpais ar mažosiomis.
+table Skundai
+	lineageTag: b247dc6a-ffda-487c-8ac0-abf3294c6982
+
+	column 'Skundo nr'
+		dataType: string
+		lineageTag: 3199dbd0-ea97-4db5-9c96-86280fd049ec
+		sourceColumn: Skundo nr
+
+	column Gauta
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 854a684d-2070-4b3c-bd1b-b41c104e0afb
+		sourceColumn: Gauta
+
+	column Klientas
+		dataType: string
+		isHidden
+		lineageTag: 87bfbd04-545e-43ae-bce6-92eb0ab6e923
+		sourceColumn: Klientas
+
+	column 'Prekės kodas'
+		dataType: string
+		isHidden
+		lineageTag: 09fbbdf3-6b73-4679-89cb-e0c1d27700ff
+		sourceColumn: Prekės kodas
+
+	column 'Partija (registre)'
+		dataType: string
+		isHidden
+		lineageTag: 0a1914f9-7341-4d02-9400-50e6c9346a0f
+		sourceColumn: Partija (registre)
+
+	column Tipas
+		dataType: string
+		lineageTag: 7b89b503-4527-4dc3-a374-3318a6deda7f
+		sourceColumn: Tipas
+
+	column Aprašymas
+		dataType: string
+		lineageTag: b0bd8963-1ef0-45ef-9d29-ca262e022546
+		sourceColumn: Aprašymas
+
+	column Būsena
+		dataType: string
+		lineageTag: eb906362-198d-4449-ba29-20d906dee8f1
+		sourceColumn: Būsena
+
+	column 'Korekcinis veiksmas'
+		dataType: string
+		lineageTag: 219d0db1-2a03-457f-becf-ef1e837f94ee
+		sourceColumn: Korekcinis veiksmas
+
+	column 'Partijos nr'
+		dataType: string
+		isHidden
+		lineageTag: 0544ff08-49c3-49d7-bbd4-2d7c2f2f7c3e
+		sourceColumn: Partijos nr
+
+	column 'Nr. taisytas'
+		dataType: int64
+		isHidden
+		lineageTag: 016bb34d-d27b-4d1f-84b9-711ba2ff93ed
+		sourceColumn: Nr. taisytas
+
+	column 'Gavimo mėnuo'
+		dataType: string
+		lineageTag: 61df5981-83dc-4a2b-9d24-081147001eb9
+		sourceColumn: Gavimo mėnuo
+
+	partition Skundai = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\kokybe\skundu_registras.xlsx")){0}[Content],
+				    Knyga = Excel.Workbook(Turinys, true, true),
+				    Lapas = Knyga{[Item = "Skundai", Kind = "Sheet"]}[Data],
+				    Tipai = Table.TransformColumnTypes(Lapas, {{"Nr.", type text}, {"Gauta", type date}, {"Klientas", type text}, {"Prekės kodas", type text}, {"Partija", type text}, {"Tipas", type text}, {"Aprašymas", type text}, {"Būsena", type text}, {"Korekcinis veiksmas", type text}}),
+				    Normalizuota = Table.AddColumn(Tipai, "Partijos nr", each Text.Upper(Text.Trim([Partija])), type text),
+				    Taisyta = Table.AddColumn(Normalizuota, "Nr. taisytas", each if [Partija] <> [Partijos nr] then 1 else 0, Int64.Type),
+				    Menuo = Table.AddColumn(Taisyta, "Gavimo mėnuo", each Date.ToText([Gauta], [Format = "yyyy-MM"]), type text),
+				    Pervadinta = Table.RenameColumns(Menuo, {{"Nr.", "Skundo nr"}, {"Partija", "Partija (registre)"}})
+				in
+				    Pervadinta
+

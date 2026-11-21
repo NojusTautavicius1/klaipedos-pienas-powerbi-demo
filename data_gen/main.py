@@ -6,8 +6,9 @@ from datetime import date
 import numpy as np
 
 import export
+import quality
 import simulate
-from catalog import build_products
+from catalog import CUSTOMERS, build_products
 from finance import build_finance
 from purchasing import build_invoices, material_prices, unit_costs
 
@@ -31,6 +32,7 @@ def run(scale: float):
 
 
 def story_checks(sim: dict, costs: dict, prices: dict) -> None:
+    country_of = {c[0]: c[2] for c in CUSTOMERS}
     print("\n--- Istorijų patikra ---")
     for year in (2025, 2026):
         rev = net_revenue(sim["sales"], year)
@@ -69,8 +71,19 @@ def story_checks(sim: dict, costs: dict, prices: dict) -> None:
             lost["Lidl" if r["customer"] in ("C01", "C02", "C03") else "kiti"] += r["ordered"] - r["delivered"]
     print("Prarasti vnt. 2026 VI–VIII:", {k: f"{v:,.0f}" for k, v in lost.items()})
 
-    june = [p for p in sim["production"] if p["line"] == "KRE-L2" and p["week"].month == 6 and p["week"].year == 2026]
-    print(f"KRE-L2 2026-06: planas {sum(p['planned'] for p in june):,}, pagaminta {sum(p['produced'] for p in june):,}")
+    for ym in ((2026, 6), (2026, 7)):
+        rows = [p for p in sim["production"] if p["line"] == "KRE-L2" and (p["week"].year, p["week"].month) == ym]
+        print(f"KRE-L2 {ym[0]}-{ym[1]:02d}: planas {sum(p['planned'] for p in rows):,}, "
+              f"pagaminta {sum(p['produced'] for p in rows):,}")
+
+    print("Užsakyta / prognozė pagal šalį, 2026-06-22 savaitė ir VI–VIII:")
+    for country in sorted({f["country"] for f in sim["forecast"]}):
+        for label, weeks in (("06-22", {date(2026, 6, 22)}),
+                             ("VI-VIII", {w for w in {f["week"] for f in sim["forecast"]} if w.year == 2026 and 6 <= w.month <= 8})):
+            fc = sum(f["forecast"] for f in sim["forecast"] if f["country"] == country and f["week"] in weeks)
+            od = sum(r["ordered"] for r in sim["sales"] if r["week"] in weeks and country_of[r["customer"]] == country)
+            print(f"  {country} {label}: {od / fc * 100:5.1f} %  (anomalija {sim['anomaly'][(country, date(2026, 6, 22))]:+.1f} °C)"
+                  if label == "06-22" else f"  {country} {label}: {od / fc * 100:5.1f} %")
 
 
 def main() -> None:
@@ -83,16 +96,19 @@ def main() -> None:
     export.export_dimensions(products)
     dq = export.export_sales(sim["sales"], costs, rng)
     export.export_production(sim["production"], sim["eff"], rng)
-    export.export_plan_excel(sim["production"], rng)
+    export.export_plan_excel(sim["production"], sim["forecast"], rng)
     export.export_stock(sim["stock"])
     october = export.export_purchases(invoices)
     export.export_finance(actuals, budget)
     export.write_truth("dq_tiesa.json", dq)
     export.write_truth("spalio_saskaitos.json", october)
+    q = quality.export_quality(products, sim, invoices, np.random.default_rng(SEED + 1))
+    export.write_truth("kokybe_tiesa.json", q)
 
     print(f"Mastelis {scale:.3f}; pardavimų eilučių {len(sim['sales']):,}; sąskaitų {len(invoices)}, "
           f"iš jų spalio (PDF) {len(october)}")
     print("DQ:", dq)
+    print("Kokybė:", q)
     story_checks(sim, costs, prices)
 
 

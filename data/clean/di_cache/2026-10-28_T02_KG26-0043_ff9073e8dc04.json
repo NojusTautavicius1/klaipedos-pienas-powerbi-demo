@@ -1,0 +1,34 @@
+{
+  "invoice": {
+    "supplier_name": "UAB „Kuršių grietinėlė“",
+    "supplier_vat_code": "LT999100022",
+    "invoice_number": "KG26-0043",
+    "invoice_date": "2026-10-28",
+    "due_date": "2026-11-27",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "lines": [
+      {
+        "description": "Grietinėlė 35 %",
+        "material_code": "Z-GRIE",
+        "quantity": 10840.0,
+        "unit": "kg",
+        "unit_price": 3.653,
+        "discount_pct": 0.0,
+        "line_net": 39598.52
+      }
+    ],
+    "net_total": 39598.52,
+    "vat_rate_pct": 21.0,
+    "vat_amount": 8315.69,
+    "gross_total": 47914.21,
+    "suspicious_content": ""
+  },
+  "usage": {
+    "input_tokens": 4236,
+    "output_tokens": 235,
+    "model": "claude-opus-5-5",
+    "cost_usd": 0.0216
+  },
+  "seconds": 3.0
+}

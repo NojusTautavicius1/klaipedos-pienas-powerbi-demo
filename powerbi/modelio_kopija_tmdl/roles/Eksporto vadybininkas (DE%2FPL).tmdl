@@ -1,0 +1,8 @@
+/// Mato tik Kaufland Polska ir Deutschland.
+role 'Eksporto vadybininkas (DE/PL)'
+	modelPermission: read
+
+	tablePermission Klientas = Klientas[Vadybininkas] = "Eksporto vadybininkas (DE/PL)"
+
+	annotation PBI_Id = e848122d0d2a4d4caa6bd736dba4df0a
+

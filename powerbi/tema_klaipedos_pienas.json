@@ -1,0 +1,84 @@
+{
+  "name": "Klaipėdos pienas (pavyzdys)",
+  "dataColors": ["#2A78D6", "#EB6834", "#1BAF7A", "#EDA100", "#E87BA4", "#008300", "#6250D6", "#E34948"],
+  "background": "#FCFCFB",
+  "foreground": "#0B0B0B",
+  "tableAccent": "#2A78D6",
+  "good": "#0CA30C",
+  "neutral": "#FAB219",
+  "bad": "#D03B3B",
+  "maximum": "#2A78D6",
+  "center": "#F0EFEC",
+  "minimum": "#E34948",
+  "null": "#898781",
+  "hyperlink": "#256ABF",
+  "visitedHyperlink": "#184F95",
+  "textClasses": {
+    "callout": { "fontSize": 26, "fontFace": "Segoe UI Light", "color": "#0B0B0B" },
+    "title": { "fontSize": 12, "fontFace": "Segoe UI Semibold", "color": "#0B0B0B" },
+    "header": { "fontSize": 11, "fontFace": "Segoe UI Semibold", "color": "#52514E" },
+    "label": { "fontSize": 10, "fontFace": "Segoe UI", "color": "#52514E" },
+    "smallLabel": { "fontSize": 9, "fontFace": "Segoe UI", "color": "#898781" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#FCFCFB" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#E1E0D9" } }, "radius": 8 }],
+        "dropShadow": [{ "show": false }],
+        "padding": [{ "top": 10, "bottom": 10, "left": 12, "right": 12 }],
+        "title": [{ "show": true, "fontColor": { "solid": { "color": "#0B0B0B" } }, "fontSize": 12, "fontFamily": "Segoe UI Semibold", "alignment": "left" }],
+        "valueAxis": [{ "gridlineShow": true, "gridlineColor": { "solid": { "color": "#E1E0D9" } }, "gridlineStyle": "solid", "gridlineThickness": 1, "labelColor": { "solid": { "color": "#898781" } }, "fontSize": 9, "showAxisTitle": false, "axisLineColor": { "solid": { "color": "#C3C2B7" } } }],
+        "categoryAxis": [{ "gridlineShow": false, "labelColor": { "solid": { "color": "#898781" } }, "fontSize": 9, "showAxisTitle": false, "axisLineColor": { "solid": { "color": "#C3C2B7" } } }],
+        "legend": [{ "show": true, "position": "Top", "labelColor": { "solid": { "color": "#52514E" } }, "fontSize": 9, "showTitle": false }],
+        "lineStyles": [{ "strokeWidth": 2, "lineStyle": "solid", "showMarker": true, "markerSize": 4 }],
+        "labels": [{ "color": { "solid": { "color": "#0B0B0B" } }, "fontSize": 9 }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#F3F6F9" } }, "transparency": 0 }],
+        "outspace": [{ "color": { "solid": { "color": "#F3F6F9" } }, "transparency": 0 }]
+      }
+    },
+    "waterfallChart": {
+      "*": {
+        "sentimentColors": [{ "increaseFill": { "solid": { "color": "#2A78D6" } }, "decreaseFill": { "solid": { "color": "#EB6834" } }, "totalFill": { "solid": { "color": "#898781" } } }],
+        "labels": [{ "show": true }]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "label": [{ "fontSize": 10, "color": { "solid": { "color": "#52514E" } } }],
+        "value": [{ "fontSize": 26, "fontFamily": "Segoe UI Light", "color": { "solid": { "color": "#0B0B0B" } } }]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [{ "fontSize": 26, "fontFamily": "Segoe UI Light", "color": { "solid": { "color": "#0B0B0B" } } }],
+        "categoryLabels": [{ "show": true, "fontSize": 10, "color": { "solid": { "color": "#52514E" } } }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "header": [{ "fontColor": { "solid": { "color": "#52514E" } }, "textSize": 9 }],
+        "items": [{ "fontColor": { "solid": { "color": "#0B0B0B" } }, "textSize": 10 }]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "grid": [{ "gridHorizontal": true, "gridHorizontalColor": { "solid": { "color": "#E1E0D9" } }, "gridVertical": false, "rowPadding": 4 }],
+        "columnHeaders": [{ "fontColor": { "solid": { "color": "#52514E" } }, "backColor": { "solid": { "color": "#FCFCFB" } }, "fontFamily": "Segoe UI Semibold" }],
+        "values": [{ "fontColorPrimary": { "solid": { "color": "#0B0B0B" } }, "backColorPrimary": { "solid": { "color": "#FCFCFB" } }, "backColorSecondary": { "solid": { "color": "#F6F7F8" } } }]
+      }
+    },
+    "textbox": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }]
+      }
+    }
+  }
+}

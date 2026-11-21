@@ -1,0 +1,44 @@
+/// Finansų ir biudžeto straipsniai. Tipas skiria rezultatus nuo sąnaudų.
+table Straipsnis
+	lineageTag: 68ded681-a3e7-475e-8fbc-d6d2a542c860
+
+	column Straipsnis
+		lineageTag: 84a15d97-2475-44b2-b9ff-afd658258cd1
+		isNameInferred
+		sourceColumn: [Straipsnis]
+		sortByColumn: Eilė
+
+	column 'Kaštų centras'
+		lineageTag: 60e76589-8280-4e7e-a7f2-e7c220cf1ab1
+		isNameInferred
+		sourceColumn: [Kaštų centras]
+
+	column Tipas
+		lineageTag: 981cd098-28c3-4d89-8d6c-4124b01848a2
+		isNameInferred
+		sourceColumn: [Tipas]
+
+	column Eilė
+		isHidden
+		lineageTag: 229e89b0-ceec-4719-93f8-4f62975f3d3d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Eilė]
+
+	partition Straipsnis = calculated
+		mode: import
+		source =
+				DATATABLE(
+				    "Straipsnis", STRING, "Kaštų centras", STRING, "Tipas", STRING, "Eilė", INTEGER,
+				    {
+				        {"Pajamos", "Rezultatai", "Rezultatai", 1},
+				        {"Bendrasis pelnas", "Rezultatai", "Rezultatai", 2},
+				        {"Darbo užmokestis", "Gamyba", "Sąnaudos", 3},
+				        {"Energija", "Gamyba", "Sąnaudos", 4},
+				        {"Remontas ir priežiūra", "Gamyba", "Sąnaudos", 5},
+				        {"Logistika", "Pardavimai", "Sąnaudos", 6},
+				        {"Marketingas", "Pardavimai", "Sąnaudos", 7},
+				        {"Administracija", "Administracija", "Sąnaudos", 8}
+				    }
+				)
+

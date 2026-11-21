@@ -1,6 +1,7 @@
 # Paleidimas: python invoices/evaluate.py (po run.py)
 # Lygina DI rezultatą su tiesa (PDF generavome patys, todėl žinome teisingus atsakymus) ir rašo docs/di_tikslumas.md.
 import csv
+import hashlib
 import json
 from pathlib import Path
 
@@ -45,7 +46,9 @@ def main() -> None:
     field_ok, rows, errors = {}, [], []
     cost = seconds = 0.0
     for t in truth:
-        cached = json.loads((ROOT / "data" / "clean" / "di_cache" / f"{Path(t['file']).stem}.json")
+        pdf = ROOT / "data" / "raw" / "saskaitos_pdf" / t["file"]
+        digest = hashlib.sha256(pdf.read_bytes()).hexdigest()[:12]
+        cached = json.loads((ROOT / "data" / "clean" / "di_cache" / f"{pdf.stem}_{digest}.json")
                             .read_text(encoding="utf-8"))
         checks = compare(t, cached["invoice"])
         for name, ok in checks.items():

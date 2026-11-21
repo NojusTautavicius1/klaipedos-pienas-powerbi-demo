@@ -1,0 +1,62 @@
+/// Gamybos partijos (gamyba.csv). Savaitės pradžia sieja su planu ir prastovomis.
+table Gamyba
+	lineageTag: 4fedc4ac-85fe-4a70-85da-55ae37d0a893
+
+	column 'Partijos nr'
+		dataType: string
+		lineageTag: 0568e5ad-9e49-41e3-83f5-25b9c8792ae1
+		sourceColumn: Partijos nr
+
+	column Data
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: bcd6a3c6-72db-4cc4-abc2-7fa48c5c4225
+		sourceColumn: Data
+
+	column 'Linijos kodas'
+		dataType: string
+		isHidden
+		lineageTag: 7520f488-5c01-4f95-91a5-6bc85e8814eb
+		sourceColumn: Linijos kodas
+
+	column 'Prekės kodas'
+		dataType: string
+		isHidden
+		lineageTag: 586be0ab-6d8e-4f02-894c-d6b78140eff5
+		sourceColumn: Prekės kodas
+
+	column 'Pagaminta vnt'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 389d2958-acee-46de-a535-df0258cb33fb
+		sourceColumn: Pagaminta vnt
+
+	column 'Brokas vnt'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 232d75c1-e433-4ddd-b260-6727e744fc4b
+		sourceColumn: Brokas vnt
+
+	column 'Savaitės pradžia'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 122dc9d1-d645-4029-8f86-a34665674f14
+		sourceColumn: Savaitės pradžia
+
+	partition Gamyba = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\erp\gamyba.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"PARTIJOS_NR", type text}, {"DATA", type date}, {"LINIJA", type text}, {"PREKES_KODAS", type text}, {"PAGAMINTA_VNT", Int64.Type}, {"BROKAS_VNT", Int64.Type}}),
+				    Savaite = Table.AddColumn(Tipai, "Savaitės pradžia", each Date.StartOfWeek([DATA], Day.Monday), type date),
+				    Pervadinta = Table.RenameColumns(Savaite, {{"PARTIJOS_NR", "Partijos nr"}, {"DATA", "Data"}, {"LINIJA", "Linijos kodas"}, {"PREKES_KODAS", "Prekės kodas"}, {"PAGAMINTA_VNT", "Pagaminta vnt"}, {"BROKAS_VNT", "Brokas vnt"}})
+				in
+				    Pervadinta
+

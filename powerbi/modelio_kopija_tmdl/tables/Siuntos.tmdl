@@ -1,0 +1,54 @@
+/// Sandėlio siuntos klientams su partija (siuntos.csv, FIFO). Siuntos be partijos = 2024 m. likutis.
+table Siuntos
+	lineageTag: 4f5640ef-b765-479c-9c5d-50ff1486a826
+
+	column 'Siuntos nr'
+		dataType: string
+		lineageTag: 06989d0d-9969-463d-8875-138019da8ec8
+		sourceColumn: Siuntos nr
+
+	column 'Siuntos data'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 4cdb8b84-4fdb-43d8-b7f2-0bcd5dd425ce
+		sourceColumn: Siuntos data
+
+	column 'Kliento kodas'
+		dataType: string
+		isHidden
+		lineageTag: 5f3d730c-ad5d-43e5-adc5-6bbb46e8cf8d
+		sourceColumn: Kliento kodas
+
+	column 'Prekės kodas'
+		dataType: string
+		isHidden
+		lineageTag: 4c17d874-a58f-42b9-9b07-5166020e001c
+		sourceColumn: Prekės kodas
+
+	column 'Partijos nr'
+		dataType: string
+		isHidden
+		lineageTag: a26cb27a-db76-44e0-9e8a-1449b67aa86c
+		sourceColumn: Partijos nr
+
+	column 'Kiekis vnt'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 6f3dd21c-0fb0-4af6-9815-65ef6203c811
+		sourceColumn: Kiekis vnt
+
+	partition Siuntos = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\sandelis\siuntos.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tusti = Table.ReplaceValue(Antrastes, "", null, Replacer.ReplaceValue, {"PARTIJOS_NR"}),
+				    Tipai = Table.TransformColumnTypes(Tusti, {{"SIUNTOS_NR", type text}, {"DATA", type date}, {"KLIENTO_KODAS", type text}, {"PREKES_KODAS", type text}, {"PARTIJOS_NR", type text}, {"KIEKIS_VNT", Int64.Type}}),
+				    Pervadinta = Table.RenameColumns(Tipai, {{"SIUNTOS_NR", "Siuntos nr"}, {"DATA", "Siuntos data"}, {"KLIENTO_KODAS", "Kliento kodas"}, {"PREKES_KODAS", "Prekės kodas"}, {"PARTIJOS_NR", "Partijos nr"}, {"KIEKIS_VNT", "Kiekis vnt"}})
+				in
+				    Pervadinta
+

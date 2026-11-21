@@ -1,0 +1,30 @@
+/// Ašis krioklio (waterfall) diagramai puslapyje Kodėl?. Naudok su matu Veiksnio poveikis.
+table 'Maržos veiksniai'
+	lineageTag: 6216c53e-99e3-46aa-819d-11cace7f1673
+
+	column Veiksnys
+		lineageTag: 60838b1c-852e-43b2-b3b5-52f050946574
+		isNameInferred
+		sourceColumn: [Veiksnys]
+		sortByColumn: Eilė
+
+	column Eilė
+		isHidden
+		lineageTag: 9d34d5b7-d05e-45e3-bd56-2c7b8a45b50e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Eilė]
+
+	partition 'Maržos veiksniai' = calculated
+		mode: import
+		source =
+				DATATABLE(
+				    "Veiksnys", STRING, "Eilė", INTEGER,
+				    {
+				        {"Kiekis", 1},
+				        {"Produktų ir klientų mix", 2},
+				        {"Kaina ir nuolaidos", 3},
+				        {"Žaliavų kainos", 4}
+				    }
+				)
+

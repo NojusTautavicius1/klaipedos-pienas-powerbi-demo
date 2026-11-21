@@ -6,7 +6,7 @@ Sintetinės sąskaitos (PAVYZDYS). Teisingi atsakymai žinomi, nes PDF sugeneruo
 - Laukų tikslumas: **378/378 (100.0 %)**
 - Teisingas sprendimas (patvirtinti / į peržiūrą su teisinga priežastimi): **27/27**
 - Kaina: **0.60 $** iš viso, 0.022 $ už sąskaitą (Claude Opus 5.5)
-- Laikas: 1.6 min. DI vs ~108 min. rankomis (prielaida: 4 min. sąskaitai)
+- Laikas: 1.4 min. DI vs ~108 min. rankomis (prielaida: 4 min. sąskaitai)
 
 ## Laukai
 

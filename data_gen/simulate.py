@@ -1,13 +1,18 @@
-# Savaitinė simuliacija: paklausa -> planas -> gamyba -> atsargos -> pristatymai.
+# Savaitinė simuliacija: paklausa -> prognozė ir planas -> gamyba -> atsargos -> pristatymai.
+# Paklausą lemia TIKRI orai (weather.py, Open-Meteo): planuotojas prognozuoja pagal įprastą sezoną,
+# o pirkėjai perka pagal tai, kiek tą savaitę šilčiau ar šalčiau nei įprasta toje šalyje.
 # Paslėptos istorijos:
-#   1) 2026 m. liepos karščiai: paklausa ~+35 %, planuotojas to nežino.
-#   3) Kretingos puodelių linija (KRE-L2) 2026 m. birželį dirba ~55 % efektyvumu.
-#   Kartu jos sukelia trūkumus Lidl liepą. 2 istorija (grietinėlė) yra purchasing.py.
+#   1) 2026-06-22 savaitės karščio banga Europoje (Berlynas +8,8 °C, Londonas +10 °C virš normos) ir karšta
+#      vasara JK: užsakymai viršija prognozę, trūksta prekių.
+#   3) Tą pačią savaitę neatlaiko Kretingos puodelių linijos (KRE-L2) šaldymo kompresorius: 4 savaitės
+#      sumažinto pajėgumo pačiame sezone. Kartu su 1 istorija tai sukelia puodelių trūkumą.
+#   2 istorija (grietinėlė) yra purchasing.py.
 import math
 from datetime import date, timedelta
 
 import numpy as np
 
+import weather
 from catalog import CUSTOMERS, LINES, Product
 
 START = date(2025, 1, 6)
@@ -18,14 +23,19 @@ SEASON = {
     "vasara": [0.40, 0.45, 0.60, 0.80, 1.10, 1.45, 1.70, 1.55, 0.95, 0.65, 0.50, 0.60],
     "sventes": [0.60, 0.70, 0.80, 0.90, 1.00, 1.10, 1.10, 1.00, 0.80, 0.80, 1.00, 2.20],
 }
-HEATWAVE = (date(2026, 6, 29), date(2026, 8, 2))
-KRE_L2_DOWNTIME = {date(2026, 6, 1): 0.62, date(2026, 6, 8): 0.48, date(2026, 6, 15): 0.55, date(2026, 6, 22): 0.70}
+# Kiek % keičiasi paklausa, kai savaitė 1 °C šiltesnė nei norma (vasaros sezonu, V–IX mėn.).
+TEMP_SENSITIVITY = {
+    "Plombyras puodelyje": 0.045, "Ledai ant pagaliuko": 0.05, "Ledai su vafliu": 0.05, "Šeimos pakuotė": 0.03,
+    "Vaikiški ledai": 0.045, "Šerbetas": 0.06, "Ledų tortas": 0.01,
+}
+OFF_SEASON_WEIGHT = 0.3  # X–IV mėn. oras paklausą veikia silpniau
+KRE_L2_DOWNTIME = {date(2026, 6, 22): 0.45, date(2026, 6, 29): 0.50, date(2026, 7, 6): 0.62, date(2026, 7, 13): 0.80}
 PRICE_RISE_2026 = 1.03
 PROMO_DISCOUNT = 0.20
 PROMO_LIFT = 1.6
 DEMAND_SCALE = 1.0  # derinama main.py, kad metinės pajamos būtų ~14 mln. €
 CAPACITY_HEADROOM = 1.08  # linijos pajėgumas virš didžiausios savaitės prognozės
-SAFETY_COVER = 0.5  # kiek kitos savaitės prognozės laikoma atsargose
+SAFETY_COVER = 0.25  # kiek kitos savaitės prognozės laikoma atsargose (ledai brangu laikyti -25 °C)
 
 
 def season_factor(week: date, profile: str) -> float:
@@ -37,10 +47,9 @@ def growth(week: date) -> float:
     return 1.06 if week.year >= 2026 else 1.0
 
 
-def heat(week: date, category: str) -> float:
-    if HEATWAVE[0] <= week <= HEATWAVE[1]:
-        return 1.10 if category == "Ledų tortas" else 1.35
-    return 1.0
+def weather_effect(anomaly: float, week: date, category: str) -> float:
+    weight = 1.0 if 5 <= (week + timedelta(days=3)).month <= 9 else OFF_SEASON_WEIGHT
+    return math.exp(TEMP_SENSITIVITY[category] * weight * anomaly)
 
 
 def list_price(product: Product, week: date) -> float:
@@ -103,8 +112,11 @@ def simulate(products: list[Product], rng: np.random.Generator) -> dict:
     promos = build_promos(products, rng)
     eff = line_efficiency(rng)
     promo_customers = {c[0] for c in CUSTOMERS if c[7]}
+    observed = weather.load()
+    countries = sorted({c[2] for c in CUSTOMERS})
+    anomaly = {(country, w): weather.weekly_anomaly(observed, country, w) for country in countries for w in WEEKS}
 
-    sales, production, stock = [], [], []
+    sales, production, stock, forecasts = [], [], [], []
     for p in products:
         expected = np.zeros((len(WEEKS), len(CUSTOMERS)))
         actual = np.zeros_like(expected)
@@ -117,10 +129,20 @@ def simulate(products: list[Product], rng: np.random.Generator) -> dict:
                 is_promo = c[0] in promo_customers and (w, p.category) in promos
                 lift = PROMO_LIFT if is_promo else 1.0
                 expected[wi, ci] = base * c[5] * lift
-                actual[wi, ci] = expected[wi, ci] * heat(w, p.category) * rng.lognormal(0, 0.12)
+                effect = weather_effect(anomaly[(c[2], w)], w, p.category)
+                actual[wi, ci] = expected[wi, ci] * effect * rng.lognormal(0, 0.12)
                 promo_flags[wi, ci] = is_promo
 
-        forecast = expected.sum(axis=1) * rng.normal(1.0, 0.04, size=len(WEEKS))
+        # Planuotojo prognozė pagal šalį: įprastas sezonas + žinomos akcijos, be orų.
+        forecast = np.zeros(len(WEEKS))
+        for country in countries:
+            idx = [ci for ci, c in enumerate(CUSTOMERS) if c[2] == country]
+            by_country = expected[:, idx].sum(axis=1) * rng.normal(1.0, 0.04, size=len(WEEKS))
+            forecast += by_country
+            for wi, w in enumerate(WEEKS):
+                if by_country[wi] > 0:
+                    forecasts.append({"week": w, "sku": p.sku, "plan_code": p.plan_code, "country": country,
+                                      "forecast": round(by_country[wi])})
         capacity = CAPACITY_HEADROOM * forecast.max()
         inventory = 1.5 * forecast[0]
         for wi, w in enumerate(WEEKS):
@@ -152,4 +174,5 @@ def simulate(products: list[Product], rng: np.random.Generator) -> dict:
                 "produced": produced, "scrap": scrap, "efficiency": e,
             })
             stock.append({"week": w, "sku": p.sku, "line": p.line, "stock": round(inventory)})
-    return {"sales": sales, "production": production, "stock": stock, "promos": promos, "eff": eff}
+    return {"sales": sales, "production": production, "stock": stock, "promos": promos, "eff": eff,
+            "forecast": forecasts, "anomaly": anomaly}

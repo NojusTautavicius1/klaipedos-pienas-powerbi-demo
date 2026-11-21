@@ -1,0 +1,43 @@
+{
+  "invoice": {
+    "supplier_name": "UAB „Nemuno slėnio pienas“",
+    "supplier_vat_code": "LT999100011",
+    "invoice_number": "NSP26-0043",
+    "invoice_date": "2026-10-28",
+    "due_date": "2026-11-27",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "lines": [
+      {
+        "description": "Pienas 3,5 %",
+        "material_code": "Z-PIEN",
+        "quantity": 25000.0,
+        "unit": "l",
+        "unit_price": 0.4347,
+        "discount_pct": 0.0,
+        "line_net": 10867.5
+      },
+      {
+        "description": "Transportavimo paslauga",
+        "material_code": "TRANSP",
+        "quantity": 1.0,
+        "unit": "vnt",
+        "unit_price": 45.0,
+        "discount_pct": 0.0,
+        "line_net": 45.0
+      }
+    ],
+    "net_total": 10912.5,
+    "vat_rate_pct": 21.0,
+    "vat_amount": 2291.62,
+    "gross_total": 13204.12,
+    "suspicious_content": ""
+  },
+  "usage": {
+    "input_tokens": 4263,
+    "output_tokens": 305,
+    "model": "claude-opus-5-5",
+    "cost_usd": 0.0232
+  },
+  "seconds": 3.6
+}

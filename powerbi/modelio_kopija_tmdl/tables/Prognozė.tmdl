@@ -1,0 +1,61 @@
+/// Planuotojo paklausos prognozė pagal savaitę, produktą ir šalį (Excel lapas Prognozė). Orai čia neįskaičiuoti.
+table Prognozė
+	lineageTag: b28a96f6-3223-41ef-bcb6-3561dc585c58
+
+	column 'ISO savaitė'
+		dataType: string
+		lineageTag: 3e44c898-9571-47ea-aec8-3671c7fa8d00
+		sourceColumn: ISO savaitė
+
+	column 'Savaitės pradžia'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 46ee94b8-7a23-4ac9-802b-3e05d6c37313
+		sourceColumn: Savaitės pradžia
+
+	column 'Šalies kodas'
+		dataType: string
+		isHidden
+		lineageTag: 0ca69395-b905-4373-988f-bb6cb5f19624
+		sourceColumn: Šalies kodas
+
+	column 'Plano kodas'
+		dataType: string
+		isHidden
+		lineageTag: d1e99dca-9809-427a-b60d-b7dd809ed1b7
+		sourceColumn: Plano kodas
+
+	column 'Prognozė vnt'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: a5ef1769-bde2-4645-b429-d977cc1e5ffa
+		sourceColumn: Prognozė vnt
+
+	/// Savaitės antradienis, ta pati diena kaip ERP užsakymų data.
+	column 'Užsakymų diena'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 5d6a96a7-eafe-4c21-8fe3-97f0ba3b89f6
+		sourceColumn: Užsakymų diena
+
+	partition Prognozė = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\excel\gamybos_planas.xlsx")){0}[Content],
+				    Knyga = Excel.Workbook(Turinys, null, true),
+				    Lapas = Knyga{[Item = "Prognozė", Kind = "Sheet"]}[Data],
+				    Antrastes = Table.PromoteHeaders(Table.Skip(Lapas, each [Column1] <> "Savaitė"), [PromoteAllScalars = true]),
+				    Eilutes = Table.SelectRows(Antrastes, each [Produktas] <> null and [Produktas] <> ""),
+				    Tipai = Table.TransformColumnTypes(Eilutes, {{"Savaitė", type text}, {"Savaitės pradžia", type date}, {"Šalis", type text}, {"Produktas", type text}, {"Prognozė, vnt", Int64.Type}}),
+				    Kodas = Table.TransformColumns(Tipai, {{"Produktas", Text.Trim, type text}}),
+				    // Savaitinė prognozė priskiriama tai pačiai dienai kaip ERP užsakymai (savaitės antradienis), kad mėnesių riba sutaptų.
+				    UzsakymuDiena = Table.AddColumn(Kodas, "Užsakymų diena", each Date.AddDays([Savaitės pradžia], 1), type date),
+				    Pervadinta = Table.RenameColumns(UzsakymuDiena, {{"Savaitė", "ISO savaitė"}, {"Šalis", "Šalies kodas"}, {"Produktas", "Plano kodas"}, {"Prognozė, vnt", "Prognozė vnt"}})
+				in
+				    Pervadinta
+

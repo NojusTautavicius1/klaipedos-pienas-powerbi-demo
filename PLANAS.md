@@ -41,11 +41,24 @@ Tikslas: iki **11-24** turėti viešą, veikiantį pavyzdį ir kandidatuoti su t
 
 Sintetiniuose duomenyse **specialiai paslėpsime 3 istorijas**, kurias ataskaita turi rasti:
 
-1. **2026 m. liepos karščiai**: paklausa +35 %, bet populiariausio plombyro trūko Lidl (prarasti pardavimai, out-of-stock).
-2. **Grietinėlės kaina +18 % nuo 2026 m. balandžio** (vienas tiekėjas): bendroji marža krito ~4 p. p., nors pardavimai augo.
-3. **Kretingos 2 linijos prastovos birželį**: gamyba 12 % žemiau plano, todėl ir atsirado 1 istorijos trūkumas.
+Paklausą lemia **tikri orai** (Open-Meteo, 6 rinkų miestai, nukrypimas nuo 2015–2024 m. normos). Planuotojas prognozuoja pagal įprastą sezoną, todėl karštą savaitę užsakymai viršija prognozę. Iš duomenų atkuriamas jautrumas: **+1 °C virš normos ≈ +4,5 % užsakymų** (šerbetas 5,8 %, tortai 0,9 %).
 
-Pokalbyje galėsi parodyti: „Matau, kad marža krito. Paspaudžiu, ir ataskaita parodo: 60 % dėl žaliavų kainos, 25 % dėl akcijų nuolaidų Lidl, 15 % dėl produktų mix'o.“ Būtent to skelbimas ir prašo.
+1. **2026-06-22 savaitės karščio banga Europoje** (tikri orai: Londonas +10,0 °C, Berlynas +8,8, Varšuva +6,2, Klaipėda +3,6 virš normos) ir karšta JK vasara. Tą savaitę užsakymai viršijo prognozę JK +63 %, Lietuvoje +15 %. Prognozės tikslumas VI–VIII: 2025 m. 86 %, 2026 m. 85 %. Prarasta 411 tūkst. vnt. (VI–VIII).
+2. **Grietinėlės kaina +18 % nuo 2026 m. balandžio** (3,10 → 3,65 €/kg, tiekėjas T02): žaliavų marža IV–IX krito 62,8 % → 60,2 %, nors pardavimai augo.
+3. **Tą pačią savaitę neatlaiko Kretingos puodelių linijos (KRE-L2) šaldymo kompresorius**: 4 savaitės sumažinto pajėgumo (gedimas → dalių laukimas → tunelio remontas → paleidimas), VI–VII pagaminta 79 % plano, 7 765 min. prastovų, +42 tūkst. € remontas liepą. Puodelių pristatyta tik 77 % užsakymų birželį ir 90 % liepą; kitos linijos karštį atlaikė (94–100 %).
+
+**Padaryta 11-21:** generatorius (`data_gen/`, orai `data_gen/weather.py`), 27 PDF sąskaitos su 6 spąstais, Claude ištraukėjas + taisyklės + ERP importas (`invoices/`), tikslumas 378/378 laukų, 27/27 sprendimų, 0,60 $ (`docs/di_tikslumas.md`), 13 testų. Power BI modelis per MCP: 31 lentelė, 39 ryšiai, 116 matų, RLS, orų what-if, automatiniai įspėjimai.
+
+**Kokybė ir atsekamumas (RVASVT / BRC, `data_gen/quality.py`):** kiekviena partija turi duomenis iš 5 „sistemų“:
+- linijų apskaitos (8 etapai su laikais ir kontrole, KVT: pasterizacija ≥ 80 °C, metalo detektorius);
+- laboratorijos (kitas CSV formatas, 4 % partijos nr. įvesta rankomis kitaip);
+- sandėlio siuntų (FIFO);
+- ERP žaliavų sunaudojimo (partija → tiekėjo sąskaita);
+- kokybės skyriaus Excel skundų registro ir partijų sprendimų.
+
+3 istorijos tęsinys: kol KRE-L2 kompresorius sugedęs, tunelis pasiekia tik −27…−31 °C (riba −35 °C), ledai grūdinami per šiltai, ir liepą–rugpjūtį ateina 18 skundų dėl ledo kristalų (įprastai ~1 per mėn.). Skundų iš tų partijų tenka 43 milijonui vienetų, kai vidutiniškai 2,5 (17 kartų daugiau). Pirmo karto atitiktis iš viso 95,8 %, gedimo partijų 0 %. Laukimas prieš šaldymą sausį 0,6 h, 2026 m. liepą 6,5 h (linija apkrauta). Atšaukimo simuliacija: partija → klientai, kiekiai, likutis sandėlyje, tiekėjų sąskaitos, masės balansas 100 %. Etapai yra tipinė ledų technologija (pokalbyje paklausti, kaip pas juos).
+
+Pokalbyje galėsi parodyti: „Marža krito 2,6 p. p. Paspaudžiu „Kodėl?“: IV–IX bendrasis pelnas vis tiek +268 tūkst. €, nes kiekis +417 tūkst., kainos +136 tūkst., mix +47 tūkst., o žaliavos (grietinėlė) atėmė −333 tūkst. €.“ Ir: „Jei planuotojas būtų žiūrėjęs orų prognozę (+8 °C JK), modelis būtų rekomendavęs +45 % prognozės.“
 
 ---
 

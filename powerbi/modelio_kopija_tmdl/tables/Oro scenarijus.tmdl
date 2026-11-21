@@ -1,0 +1,14 @@
+/// What-if parametras planuotojui: kiek °C šiltesnė už normą bus savaitė. Naudok kaip pjaustyklę su matu Pasirinktas nukrypimas °C.
+table 'Oro scenarijus'
+	lineageTag: 8bc43b7a-f677-411f-90b6-b2d66ab54df1
+
+	column 'Nukrypimas °C'
+		formatString: +0;-0;0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nukrypimas °C]
+
+	partition 'Oro scenarijus' = calculated
+		mode: import
+		source = SELECTCOLUMNS(GENERATESERIES(-6, 12, 1), "Nukrypimas °C", [Value])
+

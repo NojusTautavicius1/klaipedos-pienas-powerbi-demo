@@ -1,0 +1,45 @@
+/// Prekybos tinklai ir šalys (klientai.csv) + eilutė NEŽINOMAS pardavimams be kliento kodo.
+table Klientas
+	lineageTag: 6efb2440-8f92-4df2-b784-476b4bb66d0d
+
+	column 'Kliento kodas'
+		dataType: string
+		lineageTag: a52a65cc-e488-447a-af48-4d617d1a3dac
+		sourceColumn: Kliento kodas
+
+	column Klientas
+		dataType: string
+		lineageTag: a38f3aff-7619-48d5-9c09-08e2763d80ee
+		sourceColumn: Klientas
+
+	column Šalis
+		dataType: string
+		isHidden
+		lineageTag: c003fe5b-a638-4808-bd2f-0114ca3c468e
+		dataCategory: Country
+		sourceColumn: Šalis
+
+	column Rinka
+		dataType: string
+		lineageTag: 0a60e225-de38-4f79-a259-e63644933b43
+		sourceColumn: Rinka
+
+	column Vadybininkas
+		dataType: string
+		lineageTag: 045774bc-75e5-49a5-a3fb-6656e7cbd6dd
+		sourceColumn: Vadybininkas
+
+	partition Klientas = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\erp\klientai.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"KLIENTO_KODAS", type text}, {"PAVADINIMAS", type text}, {"SALIS", type text}, {"RINKA", type text}, {"VADYBININKAS", type text}}),
+				    Nezinomas = Table.InsertRows(Tipai, Table.RowCount(Tipai), {[KLIENTO_KODAS = "NEŽINOMAS", PAVADINIMAS = "(nenurodytas klientas)", SALIS = "-", RINKA = "(nenurodyta)", VADYBININKAS = "(nenurodytas)"]}),
+				    Pervadinta = Table.RenameColumns(Nezinomas, {{"KLIENTO_KODAS", "Kliento kodas"}, {"PAVADINIMAS", "Klientas"}, {"SALIS", "Šalis"}, {"RINKA", "Rinka"}, {"VADYBININKAS", "Vadybininkas"}})
+				in
+				    Pervadinta
+

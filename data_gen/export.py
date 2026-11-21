@@ -11,6 +11,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font
 
 from catalog import CUSTOMERS, LINES, MATERIALS, SUPPLIERS, Product
+from simulate import KRE_L2_DOWNTIME
 
 ROOT = Path(__file__).resolve().parent.parent
 ERP = ROOT / "data" / "raw" / "erp"
@@ -20,8 +21,8 @@ ERP_PURCHASES_UNTIL = date(2026, 9, 30)  # spalio sąskaitos dar neįvestos: jas
 
 DOWNTIME_REASONS = ["Planinis valymas", "Produkto keitimas (derinimas)", "Pakavimo įrangos gedimas",
                     "Žaliavų trūkumas", "Elektros sutrikimas"]
-KRE_L2_REASONS = ["Šaldymo kompresoriaus gedimas", "Laukiama atsarginių dalių", "Šaldymo tunelio remontas",
-                  "Paleidimas po remonto"]
+KRE_L2_REASONS = ["Šaldymo kompresoriaus gedimas (karščio banga)", "Laukiama atsarginių dalių",
+                  "Šaldymo tunelio remontas", "Paleidimas po remonto"]
 
 
 def num(value: float, digits: int = 2) -> str:
@@ -98,16 +99,17 @@ def export_production(production: list[dict], eff: dict, rng: np.random.Generato
         total = round((1 - e) * minutes[line] * 0.9 + rng.uniform(0, 20))
         if total < 30:
             continue
-        if line == "KRE-L2" and e < 0.75:
-            reason = KRE_L2_REASONS[min(len(KRE_L2_REASONS) - 1, (week.day - 1) // 7)]
+        if line == "KRE-L2" and week in KRE_L2_DOWNTIME:
+            reason = KRE_L2_REASONS[sorted(KRE_L2_DOWNTIME).index(week)]
         else:
             reason = DOWNTIME_REASONS[int(rng.integers(len(DOWNTIME_REASONS)))]
         downtime.append([week.isoformat(), line, total, reason])
     write_csv(ERP / "prastovos.csv", ["SAVAITES_PRADZIA", "LINIJA", "PRASTOVOS_MIN", "PRIEZASTIS"], downtime)
 
 
-def export_plan_excel(production: list[dict], rng: np.random.Generator) -> None:
-    """Planuotojo Excel: pavadinimo eilutė virš lentelės, plano kodai (ne ERP kodai), kartais tarpai."""
+def export_plan_excel(production: list[dict], forecasts: list[dict], rng: np.random.Generator) -> None:
+    """Planuotojo Excel: pavadinimo eilutė virš lentelės, plano kodai (ne ERP kodai), kartais tarpai.
+    Lapas „Prognozė“: paklausos prognozė pagal šalį (iš vadybininkų), pagal kurią sudarytas planas."""
     wb = Workbook()
     wb.remove(wb.active)
     for year in (2025, 2026):
@@ -122,6 +124,16 @@ def export_plan_excel(production: list[dict], rng: np.random.Generator) -> None:
             ws.append([f"{iso.year}-W{iso.week:02d}", p["week"], p["line"], code, p["planned"]])
         for col, width in zip("ABCDE", (10, 16, 10, 20, 12)):
             ws.column_dimensions[col].width = width
+    ws = wb.create_sheet("Prognozė")
+    ws.append(["PAKLAUSOS PROGNOZĖ pagal šalį (vadybininkų įvertis, be orų)"])
+    ws["A1"].font = Font(bold=True, size=14)
+    ws.append([])
+    ws.append(["Savaitė", "Savaitės pradžia", "Šalis", "Produktas", "Prognozė, vnt"])
+    for f in forecasts:
+        iso = f["week"].isocalendar()
+        ws.append([f"{iso.year}-W{iso.week:02d}", f["week"], f["country"], f["plan_code"], f["forecast"]])
+    for col, width in zip("ABCDE", (10, 16, 8, 20, 14)):
+        ws.column_dimensions[col].width = width
     EXCEL.mkdir(parents=True, exist_ok=True)
     wb.save(EXCEL / "gamybos_planas.xlsx")
 

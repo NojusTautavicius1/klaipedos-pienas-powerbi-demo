@@ -1,0 +1,96 @@
+/// Žaliavų pirkimų sąskaitų eilutės: ERP istorija iki 2026-09 + spalio sąskaitos, kurias nuskaitė DI (pirkimai_di.csv). Šaltinis = ERP arba DI.
+table Pirkimai
+	lineageTag: 431bc249-b8cf-4c22-9285-fd4701dcb024
+
+	column 'Sąskaitos nr'
+		dataType: string
+		lineageTag: 16a5f3f2-21c4-459c-825a-6081332f1207
+		sourceColumn: Sąskaitos nr
+
+	column Data
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 90604ae0-abfd-4ff1-9d8f-c480bde67e0b
+		sourceColumn: Data
+
+	column 'Tiekėjo kodas'
+		dataType: string
+		isHidden
+		lineageTag: 9d78147c-2524-4d9c-9fab-411228393dfa
+		sourceColumn: Tiekėjo kodas
+
+	column 'Žaliavos kodas'
+		dataType: string
+		isHidden
+		lineageTag: 0507ccd9-6879-4274-84bd-03af81cbd059
+		sourceColumn: Žaliavos kodas
+
+	column Aprašymas
+		dataType: string
+		lineageTag: a1fd3325-033e-4d80-85af-f7a7bc680c80
+		sourceColumn: Aprašymas
+
+	column Kiekis
+		dataType: double
+		isHidden
+		formatString: #,0.000
+		lineageTag: 691c98be-60f6-4a84-84bd-b9e75e85628e
+		sourceColumn: Kiekis
+
+	column Matas
+		dataType: string
+		lineageTag: 9dd83bfa-0689-4274-9195-111979513d7d
+		sourceColumn: Matas
+
+	column Kaina
+		dataType: double
+		formatString: 0.0000
+		lineageTag: c903bc45-a5c5-4aa6-b858-f798319e1950
+		summarizeBy: none
+		sourceColumn: Kaina
+
+	column 'Nuolaida %'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 24b60a09-bf0a-43ef-b36c-eaa1688e065e
+		summarizeBy: none
+		sourceColumn: Nuolaida %
+
+	column 'Suma be PVM'
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 93e6a844-b1ad-4d93-9a53-0a75de11ce8d
+		sourceColumn: Suma be PVM
+
+	column 'PVM %'
+		dataType: double
+		formatString: 0
+		lineageTag: eb3ecc95-7ad6-4766-bed0-317bc61bfc74
+		summarizeBy: none
+		sourceColumn: PVM %
+
+	column Valiuta
+		dataType: string
+		lineageTag: 0d886776-d80c-4d54-8ee7-564981380053
+		sourceColumn: Valiuta
+
+	column Šaltinis
+		dataType: string
+		lineageTag: 77323f96-2d49-47f3-be5b-17d9302cfb05
+		sourceColumn: Šaltinis
+
+	partition Pirkimai = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Saltiniai = Table.SelectRows(Failai, each let p = Text.Lower([Folder Path] & [Name]) in Text.EndsWith(p, "\raw\erp\pirkimai.csv") or Text.EndsWith(p, "\clean\pirkimai_di.csv")),
+				    Lenteles = Table.AddColumn(Saltiniai, "Duomenys", each Table.TransformColumnNames(Table.PromoteHeaders(Csv.Document([Content], [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", ""))),
+				    Sujungta = Table.Combine(Lenteles[Duomenys]),
+				    Tipai = Table.TransformColumnTypes(Sujungta, {{"SASKAITOS_NR", type text}, {"DATA", type date}, {"TIEKEJO_KODAS", type text}, {"ZALIAVOS_KODAS", type text}, {"APRASYMAS", type text}, {"KIEKIS", type number}, {"MATAS", type text}, {"KAINA_EUR", type number}, {"NUOLAIDA_PROC", type number}, {"SUMA_BE_PVM_EUR", type number}, {"PVM_PROC", type number}, {"VALIUTA", type text}, {"SALTINIS", type text}}, "lt-LT"),
+				    Pervadinta = Table.RenameColumns(Tipai, {{"SASKAITOS_NR", "Sąskaitos nr"}, {"DATA", "Data"}, {"TIEKEJO_KODAS", "Tiekėjo kodas"}, {"ZALIAVOS_KODAS", "Žaliavos kodas"}, {"APRASYMAS", "Aprašymas"}, {"KIEKIS", "Kiekis"}, {"MATAS", "Matas"}, {"KAINA_EUR", "Kaina"}, {"NUOLAIDA_PROC", "Nuolaida %"}, {"SUMA_BE_PVM_EUR", "Suma be PVM"}, {"PVM_PROC", "PVM %"}, {"VALIUTA", "Valiuta"}, {"SALTINIS", "Šaltinis"}})
+				in
+				    Pervadinta
+
