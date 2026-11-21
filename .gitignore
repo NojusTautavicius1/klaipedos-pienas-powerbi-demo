@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Power BI lokalūs failai
+powerbi/**/.pbi/localSettings.json
+powerbi/**/.pbi/cache.abf

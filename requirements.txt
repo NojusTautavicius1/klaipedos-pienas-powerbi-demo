@@ -1,0 +1,10 @@
+anthropic>=2.12
+pydantic>=2.0
+numpy
+pandas
+openpyxl
+reportlab
+pymupdf
+pillow
+python-dotenv
+pytest

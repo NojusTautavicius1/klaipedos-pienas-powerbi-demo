@@ -1,0 +1,802 @@
+[
+  {
+    "file": "2026-10-07_T01_NSP26-0040.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T01",
+    "supplier_vat": "LT999100011",
+    "number": "NSP26-0040",
+    "date": "2026-10-07",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 9921.2,
+    "vat": 2083.45,
+    "gross_printed": 12004.65,
+    "lines": [
+      {
+        "material": "Z-PIEN",
+        "description": "Pienas 3,5 %",
+        "unit": "l",
+        "qty": 23000,
+        "unit_price": 0.4294,
+        "discount_pct": 0.0,
+        "net": 9876.2
+      },
+      {
+        "material": "TRANSP",
+        "description": "Transportavimo paslauga",
+        "unit": "vnt",
+        "qty": 1,
+        "unit_price": 45.0,
+        "discount_pct": 0.0,
+        "net": 45.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-07_T02_KG26-0040.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T02",
+    "supplier_vat": "LT999100022",
+    "number": "KG26-0040",
+    "date": "2026-10-07",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 37103.36,
+    "vat": 7791.71,
+    "gross_printed": 44895.07,
+    "lines": [
+      {
+        "material": "Z-GRIE",
+        "description": "Grietinėlė 35 %",
+        "unit": "kg",
+        "qty": 10100,
+        "unit_price": 3.6736,
+        "discount_pct": 0.0,
+        "net": 37103.36
+      }
+    ]
+  },
+  {
+    "file": "2026-10-07_T03_CT26-0040.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T03",
+    "supplier_vat": "LT999100033",
+    "number": "CT26-0040",
+    "date": "2026-10-07",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 6799.95,
+    "vat": 1427.99,
+    "gross_printed": 8227.94,
+    "lines": [
+      {
+        "material": "Z-CUKR",
+        "description": "Cukrus",
+        "unit": "kg",
+        "qty": 8100,
+        "unit_price": 0.8395,
+        "discount_pct": 0.0,
+        "net": 6799.95
+      }
+    ]
+  },
+  {
+    "file": "2026-10-07_T05_VM26-0040.pdf",
+    "trap": "nuolaida_eiluteje",
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T05",
+    "supplier_vat": "LT999100055",
+    "number": "VM26-0040",
+    "date": "2026-10-07",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 2239.54,
+    "vat": 470.3,
+    "gross_printed": 2709.84,
+    "lines": [
+      {
+        "material": "Z-VAFL",
+        "description": "Vafliniai rageliai",
+        "unit": "vnt",
+        "qty": 52000,
+        "unit_price": 0.0444,
+        "discount_pct": 3.0,
+        "net": 2239.54
+      }
+    ]
+  },
+  {
+    "file": "2026-10-07_T06_FV-OS-26-0040.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T06",
+    "supplier_vat": "PL9990006600",
+    "number": "FV/OS/26-0040",
+    "date": "2026-10-07",
+    "currency": "EUR",
+    "reverse_charge": true,
+    "net": 5051.16,
+    "vat": 0.0,
+    "gross_printed": 5051.16,
+    "lines": [
+      {
+        "material": "Z-UOGA",
+        "description": "Uogų ir vaisių tyrė",
+        "unit": "kg",
+        "qty": 1680,
+        "unit_price": 2.8995,
+        "discount_pct": 0.0,
+        "net": 4871.16
+      },
+      {
+        "material": "TRANSP",
+        "description": "Transportavimo paslauga",
+        "unit": "vnt",
+        "qty": 1,
+        "unit_price": 180.0,
+        "discount_pct": 0.0,
+        "net": 180.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-07_T07_SP26-0040.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T07",
+    "supplier_vat": "LT999100077",
+    "number": "SP26-0040",
+    "date": "2026-10-07",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 12215.0,
+    "vat": 2565.15,
+    "gross_printed": 14780.15,
+    "lines": [
+      {
+        "material": "Z-PAKU",
+        "description": "Pakuotės ir etiketės",
+        "unit": "vnt",
+        "qty": 350000,
+        "unit_price": 0.0349,
+        "discount_pct": 0.0,
+        "net": 12215.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-14_T01_NSP26-0041.pdf",
+    "trap": "skenuota",
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T01",
+    "supplier_vat": "LT999100011",
+    "number": "NSP26-0041",
+    "date": "2026-10-14",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 10420.2,
+    "vat": 2188.24,
+    "gross_printed": 12608.44,
+    "lines": [
+      {
+        "material": "Z-PIEN",
+        "description": "Pienas 3,5 %",
+        "unit": "l",
+        "qty": 24000,
+        "unit_price": 0.4323,
+        "discount_pct": 0.0,
+        "net": 10375.2
+      },
+      {
+        "material": "TRANSP",
+        "description": "Transportavimo paslauga",
+        "unit": "vnt",
+        "qty": 1,
+        "unit_price": 45.0,
+        "discount_pct": 0.0,
+        "net": 45.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-14_T02_KG26-0041.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T02",
+    "supplier_vat": "LT999100022",
+    "number": "KG26-0041",
+    "date": "2026-10-14",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 36858.72,
+    "vat": 7740.33,
+    "gross_printed": 44599.05,
+    "lines": [
+      {
+        "material": "Z-GRIE",
+        "description": "Grietinėlė 35 %",
+        "unit": "kg",
+        "qty": 10200,
+        "unit_price": 3.6136,
+        "discount_pct": 0.0,
+        "net": 36858.72
+      }
+    ]
+  },
+  {
+    "file": "2026-10-14_T03_CT26-0041.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T03",
+    "supplier_vat": "LT999100033",
+    "number": "CT26-0041",
+    "date": "2026-10-14",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 6953.6,
+    "vat": 1460.26,
+    "gross_printed": 8413.86,
+    "lines": [
+      {
+        "material": "Z-CUKR",
+        "description": "Cukrus",
+        "unit": "kg",
+        "qty": 8200,
+        "unit_price": 0.848,
+        "discount_pct": 0.0,
+        "net": 6953.6
+      }
+    ]
+  },
+  {
+    "file": "2026-10-14_T04_RK26-0021.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T04",
+    "supplier_vat": "LV40009990044",
+    "number": "RK26-0021",
+    "date": "2026-10-14",
+    "currency": "EUR",
+    "reverse_charge": true,
+    "net": 21339.11,
+    "vat": 0.0,
+    "gross_printed": 21339.11,
+    "lines": [
+      {
+        "material": "Z-KAKA",
+        "description": "Kakavos milteliai",
+        "unit": "kg",
+        "qty": 700,
+        "unit_price": 8.6353,
+        "discount_pct": 0.0,
+        "net": 6044.71
+      },
+      {
+        "material": "Z-SOKO",
+        "description": "Šokolado glajus",
+        "unit": "kg",
+        "qty": 2200,
+        "unit_price": 6.952,
+        "discount_pct": 0.0,
+        "net": 15294.4
+      }
+    ]
+  },
+  {
+    "file": "2026-10-14_T05_VM26-0041.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T05",
+    "supplier_vat": "LT999100055",
+    "number": "VM26-0041",
+    "date": "2026-10-14",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 2163.1,
+    "vat": 454.25,
+    "gross_printed": 2617.35,
+    "lines": [
+      {
+        "material": "Z-VAFL",
+        "description": "Vafliniai rageliai",
+        "unit": "vnt",
+        "qty": 50000,
+        "unit_price": 0.0446,
+        "discount_pct": 3.0,
+        "net": 2163.1
+      }
+    ]
+  },
+  {
+    "file": "2026-10-14_T06_FV-OS-26-0041.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T06",
+    "supplier_vat": "PL9990006600",
+    "number": "FV/OS/26-0041",
+    "date": "2026-10-14",
+    "currency": "EUR",
+    "reverse_charge": true,
+    "net": 4907.63,
+    "vat": 0.0,
+    "gross_printed": 4907.63,
+    "lines": [
+      {
+        "material": "Z-UOGA",
+        "description": "Uogų ir vaisių tyrė",
+        "unit": "kg",
+        "qty": 1640,
+        "unit_price": 2.8827,
+        "discount_pct": 0.0,
+        "net": 4727.63
+      },
+      {
+        "material": "TRANSP",
+        "description": "Transportavimo paslauga",
+        "unit": "vnt",
+        "qty": 1,
+        "unit_price": 180.0,
+        "discount_pct": 0.0,
+        "net": 180.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-14_T07_SP26-0041.pdf",
+    "trap": "klaidinga_suma",
+    "expected_status": "Peržiūrai",
+    "expected_reasons": [
+      "sumos_nesutampa"
+    ],
+    "supplier": "T07",
+    "supplier_vat": "LT999100077",
+    "number": "SP26-0041",
+    "date": "2026-10-14",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 11866.0,
+    "vat": 2491.86,
+    "gross_printed": 14367.86,
+    "lines": [
+      {
+        "material": "Z-PAKU",
+        "description": "Pakuotės ir etiketės",
+        "unit": "vnt",
+        "qty": 340000,
+        "unit_price": 0.0349,
+        "discount_pct": 0.0,
+        "net": 11866.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-21_T01_NSP26-0042.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T01",
+    "supplier_vat": "LT999100011",
+    "number": "NSP26-0042",
+    "date": "2026-10-21",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 9868.3,
+    "vat": 2072.34,
+    "gross_printed": 11940.64,
+    "lines": [
+      {
+        "material": "Z-PIEN",
+        "description": "Pienas 3,5 %",
+        "unit": "l",
+        "qty": 23000,
+        "unit_price": 0.4271,
+        "discount_pct": 0.0,
+        "net": 9823.3
+      },
+      {
+        "material": "TRANSP",
+        "description": "Transportavimo paslauga",
+        "unit": "vnt",
+        "qty": 1,
+        "unit_price": 45.0,
+        "discount_pct": 0.0,
+        "net": 45.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-21_T02_KG26-0042.pdf",
+    "trap": "paslepta_instrukcija",
+    "expected_status": "Peržiūrai",
+    "expected_reasons": [
+      "itartinas_turinys"
+    ],
+    "supplier": "T02",
+    "supplier_vat": "LT999100022",
+    "number": "KG26-0042",
+    "date": "2026-10-21",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 37406.22,
+    "vat": 7855.31,
+    "gross_printed": 45261.53,
+    "lines": [
+      {
+        "material": "Z-GRIE",
+        "description": "Grietinėlė 35 %",
+        "unit": "kg",
+        "qty": 10220,
+        "unit_price": 3.6601,
+        "discount_pct": 0.0,
+        "net": 37406.22
+      }
+    ]
+  },
+  {
+    "file": "2026-10-21_T03_CT26-0042.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T03",
+    "supplier_vat": "LT999100033",
+    "number": "CT26-0042",
+    "date": "2026-10-21",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 6886.62,
+    "vat": 1446.19,
+    "gross_printed": 8332.81,
+    "lines": [
+      {
+        "material": "Z-CUKR",
+        "description": "Cukrus",
+        "unit": "kg",
+        "qty": 8100,
+        "unit_price": 0.8502,
+        "discount_pct": 0.0,
+        "net": 6886.62
+      }
+    ]
+  },
+  {
+    "file": "2026-10-21_T05_VM26-0042.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T05",
+    "supplier_vat": "LT999100055",
+    "number": "VM26-0042",
+    "date": "2026-10-21",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 2358.07,
+    "vat": 495.19,
+    "gross_printed": 2853.26,
+    "lines": [
+      {
+        "material": "Z-VAFL",
+        "description": "Vafliniai rageliai",
+        "unit": "vnt",
+        "qty": 55000,
+        "unit_price": 0.0442,
+        "discount_pct": 3.0,
+        "net": 2358.07
+      }
+    ]
+  },
+  {
+    "file": "2026-10-21_T06_FV-OS-26-0042.pdf",
+    "trap": "kita_valiuta",
+    "expected_status": "Peržiūrai",
+    "expected_reasons": [
+      "valiuta_ne_eur"
+    ],
+    "supplier": "T06",
+    "supplier_vat": "PL9990006600",
+    "number": "FV/OS/26-0042",
+    "date": "2026-10-21",
+    "currency": "PLN",
+    "reverse_charge": true,
+    "net": 18388.34,
+    "vat": 0.0,
+    "gross_printed": 18388.34,
+    "lines": [
+      {
+        "material": "Z-UOGA",
+        "description": "Uogų ir vaisių tyrė",
+        "unit": "kg",
+        "qty": 1420,
+        "unit_price": 12.4108,
+        "discount_pct": 0.0,
+        "net": 17623.34
+      },
+      {
+        "material": "TRANSP",
+        "description": "Transportavimo paslauga",
+        "unit": "vnt",
+        "qty": 1,
+        "unit_price": 765.0,
+        "discount_pct": 0.0,
+        "net": 765.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-21_T07_SP26-0042.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T07",
+    "supplier_vat": "LT999100077",
+    "number": "SP26-0042",
+    "date": "2026-10-21",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 12006.0,
+    "vat": 2521.26,
+    "gross_printed": 14527.26,
+    "lines": [
+      {
+        "material": "Z-PAKU",
+        "description": "Pakuotės ir etiketės",
+        "unit": "vnt",
+        "qty": 345000,
+        "unit_price": 0.0348,
+        "discount_pct": 0.0,
+        "net": 12006.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-28_T01_NSP26-0043.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T01",
+    "supplier_vat": "LT999100011",
+    "number": "NSP26-0043",
+    "date": "2026-10-28",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 10010.9,
+    "vat": 2102.29,
+    "gross_printed": 12113.19,
+    "lines": [
+      {
+        "material": "Z-PIEN",
+        "description": "Pienas 3,5 %",
+        "unit": "l",
+        "qty": 23000,
+        "unit_price": 0.4333,
+        "discount_pct": 0.0,
+        "net": 9965.9
+      },
+      {
+        "material": "TRANSP",
+        "description": "Transportavimo paslauga",
+        "unit": "vnt",
+        "qty": 1,
+        "unit_price": 45.0,
+        "discount_pct": 0.0,
+        "net": 45.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-28_T02_KG26-0043.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T02",
+    "supplier_vat": "LT999100022",
+    "number": "KG26-0043",
+    "date": "2026-10-28",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 37855.86,
+    "vat": 7949.73,
+    "gross_printed": 45805.59,
+    "lines": [
+      {
+        "material": "Z-GRIE",
+        "description": "Grietinėlė 35 %",
+        "unit": "kg",
+        "qty": 10480,
+        "unit_price": 3.6122,
+        "discount_pct": 0.0,
+        "net": 37855.86
+      }
+    ]
+  },
+  {
+    "file": "2026-10-28_T03_CT26-0043.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T03",
+    "supplier_vat": "LT999100033",
+    "number": "CT26-0043",
+    "date": "2026-10-28",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 6823.98,
+    "vat": 1433.04,
+    "gross_printed": 8257.02,
+    "lines": [
+      {
+        "material": "Z-CUKR",
+        "description": "Cukrus",
+        "unit": "kg",
+        "qty": 8050,
+        "unit_price": 0.8477,
+        "discount_pct": 0.0,
+        "net": 6823.98
+      }
+    ]
+  },
+  {
+    "file": "2026-10-28_T04_RK26-0022.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T04",
+    "supplier_vat": "LV40009990044",
+    "number": "RK26-0022",
+    "date": "2026-10-28",
+    "currency": "EUR",
+    "reverse_charge": true,
+    "net": 10699.09,
+    "vat": 0.0,
+    "gross_printed": 10699.09,
+    "lines": [
+      {
+        "material": "Z-KAKA",
+        "description": "Kakavos milteliai",
+        "unit": "kg",
+        "qty": 375,
+        "unit_price": 8.6454,
+        "discount_pct": 0.0,
+        "net": 3242.03
+      },
+      {
+        "material": "Z-SOKO",
+        "description": "Šokolado glajus",
+        "unit": "kg",
+        "qty": 1075,
+        "unit_price": 6.9368,
+        "discount_pct": 0.0,
+        "net": 7457.06
+      }
+    ]
+  },
+  {
+    "file": "2026-10-28_T05_VM26-0043.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T05",
+    "supplier_vat": "LT999100055",
+    "number": "VM26-0043",
+    "date": "2026-10-28",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 2100.83,
+    "vat": 441.17,
+    "gross_printed": 2542.0,
+    "lines": [
+      {
+        "material": "Z-VAFL",
+        "description": "Vafliniai rageliai",
+        "unit": "vnt",
+        "qty": 49000,
+        "unit_price": 0.0442,
+        "discount_pct": 3.0,
+        "net": 2100.83
+      }
+    ]
+  },
+  {
+    "file": "2026-10-28_T06_FV-OS-26-0043.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T06",
+    "supplier_vat": "PL9990006600",
+    "number": "FV/OS/26-0043",
+    "date": "2026-10-28",
+    "currency": "EUR",
+    "reverse_charge": true,
+    "net": 4806.08,
+    "vat": 0.0,
+    "gross_printed": 4806.08,
+    "lines": [
+      {
+        "material": "Z-UOGA",
+        "description": "Uogų ir vaisių tyrė",
+        "unit": "kg",
+        "qty": 1580,
+        "unit_price": 2.9279,
+        "discount_pct": 0.0,
+        "net": 4626.08
+      },
+      {
+        "material": "TRANSP",
+        "description": "Transportavimo paslauga",
+        "unit": "vnt",
+        "qty": 1,
+        "unit_price": 180.0,
+        "discount_pct": 0.0,
+        "net": 180.0
+      }
+    ]
+  },
+  {
+    "file": "2026-10-28_T07_SP26-0043.pdf",
+    "trap": null,
+    "expected_status": "Patvirtinta",
+    "expected_reasons": [],
+    "supplier": "T07",
+    "supplier_vat": "LT999100077",
+    "number": "SP26-0043",
+    "date": "2026-10-28",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 12040.5,
+    "vat": 2528.51,
+    "gross_printed": 14569.01,
+    "lines": [
+      {
+        "material": "Z-PAKU",
+        "description": "Pakuotės ir etiketės",
+        "unit": "vnt",
+        "qty": 345000,
+        "unit_price": 0.0349,
+        "discount_pct": 0.0,
+        "net": 12040.5
+      }
+    ]
+  },
+  {
+    "file": "skenuota_kopija_T03_CT26-0041.pdf",
+    "trap": "dublikatas",
+    "expected_status": "Peržiūrai",
+    "expected_reasons": [
+      "dublikatas"
+    ],
+    "supplier": "T03",
+    "supplier_vat": "LT999100033",
+    "number": "CT26-0041",
+    "date": "2026-10-14",
+    "currency": "EUR",
+    "reverse_charge": false,
+    "net": 6953.6,
+    "vat": 1460.26,
+    "gross_printed": 8413.86,
+    "lines": [
+      {
+        "material": "Z-CUKR",
+        "description": "Cukrus",
+        "unit": "kg",
+        "qty": 8200,
+        "unit_price": 0.848,
+        "discount_pct": 0.0,
+        "net": 6953.6
+      }
+    ]
+  }
+]

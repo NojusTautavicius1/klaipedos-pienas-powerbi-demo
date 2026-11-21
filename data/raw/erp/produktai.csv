@@ -1,0 +1,25 @@
+﻿PREKES_KODAS;PAVADINIMAS;PREKES_ZENKLAS;KATEGORIJA;TURIS_ML;LINIJA;PLANO_KODAS;BAZINE_KAINA_EUR
+100101;DIONE plombyras puodelyje vanilinis 120 ml;DIONE;Plombyras puodelyje;120;KRE-L2;DIO-PLO-VAN-120;0,5500
+100102;DIONE plombyras puodelyje šokoladinis 120 ml;DIONE;Plombyras puodelyje;120;KRE-L2;DIO-PLO-SOK-120;0,5500
+100103;DIONE plombyras puodelyje braškinis 120 ml;DIONE;Plombyras puodelyje;120;KRE-L2;DIO-PLO-BRA-120;0,5500
+100104;DIONE plombyras puodelyje karamelinis 120 ml;DIONE;Plombyras puodelyje;120;KRE-L2;DIO-PLO-KAR-120;0,5500
+100105;DIONE ledai ant pagaliuko vanilė šokolade 80 ml;DIONE;Ledai ant pagaliuko;80;KLA-L1;DIO-ESK-VAN-80;0,6500
+100106;DIONE ledai ant pagaliuko karamelė šokolade 80 ml;DIONE;Ledai ant pagaliuko;80;KLA-L1;DIO-ESK-KAR-80;0,6500
+100107;DIONE ledai ant pagaliuko kokosas šokolade 80 ml;DIONE;Ledai ant pagaliuko;80;KLA-L1;DIO-ESK-KOK-80;0,6500
+100108;KAR KAR ledai su vafliu vanilinis 110 ml;KAR KAR;Ledai su vafliu;110;KLA-L2;KKR-RAG-VAN-110;0,7500
+100109;KAR KAR ledai su vafliu šokoladinis 110 ml;KAR KAR;Ledai su vafliu;110;KLA-L2;KKR-RAG-SOK-110;0,7500
+100110;KAR KAR ledai su vafliu braškinis 110 ml;KAR KAR;Ledai su vafliu;110;KLA-L2;KKR-RAG-BRA-110;0,7500
+100111;KAR KAR ledai su vafliu pistacijų 110 ml;KAR KAR;Ledai su vafliu;110;KLA-L2;KKR-RAG-PIS-110;0,7500
+100112;DIONE šeimos pakuotė vanilinis 1000 ml;DIONE;Šeimos pakuotė;1000;KLA-L3;DIO-SEI-VAN-1000;2,9000
+100113;DIONE šeimos pakuotė šokoladinis 1000 ml;DIONE;Šeimos pakuotė;1000;KLA-L3;DIO-SEI-SOK-1000;2,9000
+100114;DIONE šeimos pakuotė su razinomis 1000 ml;DIONE;Šeimos pakuotė;1000;KLA-L3;DIO-SEI-RAZ-1000;2,9000
+100115;DIONE šeimos pakuotė mėtinis 1000 ml;DIONE;Šeimos pakuotė;1000;KLA-L3;DIO-SEI-MET-1000;2,9000
+100116;KAR KAR vaikiški ledai braškių 60 ml;KAR KAR;Vaikiški ledai;60;KRE-L1;KKR-VAI-BRA-60;0,4000
+100117;KAR KAR vaikiški ledai bananų 60 ml;KAR KAR;Vaikiški ledai;60;KRE-L1;KKR-VAI-BAN-60;0,4000
+100118;KAR KAR vaikiški ledai spalvotas 60 ml;KAR KAR;Vaikiški ledai;60;KRE-L1;KKR-VAI-SPA-60;0,4000
+100119;KAR KAR šerbetas citrinų 500 ml;KAR KAR;Šerbetas;500;GAR-L1;KKR-SER-CIT-500;1,9000
+100120;KAR KAR šerbetas mangų 500 ml;KAR KAR;Šerbetas;500;GAR-L1;KKR-SER-MAN-500;1,9000
+100121;KAR KAR šerbetas aviečių 500 ml;KAR KAR;Šerbetas;500;GAR-L1;KKR-SER-AVI-500;1,9000
+100122;DIONE ledų tortas vanilės ir šokolado 900 ml;DIONE;Ledų tortas;900;GAR-L1;DIO-TOR-VSO-900;4,9000
+100123;DIONE ledų tortas braškių 900 ml;DIONE;Ledų tortas;900;GAR-L1;DIO-TOR-BRA-900;4,9000
+100124;DIONE ledų tortas karamelės 900 ml;DIONE;Ledų tortas;900;GAR-L1;DIO-TOR-KAR-900;4,9000
