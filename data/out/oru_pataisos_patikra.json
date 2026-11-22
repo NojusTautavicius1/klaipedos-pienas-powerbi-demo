@@ -1,0 +1,21 @@
+{
+  "laikotarpis": "2026 m. V–IX, savaitė × šalis × kategorija",
+  "planuotojo_tikslumas_proc": 88.1,
+  "su_orais_tikslumas_proc": 94.8,
+  "karscio_savaite_2026_06_22": {
+    "uzsakyta_vnt": 720716,
+    "planuotojo_prognoze_vnt": 561889,
+    "su_orais_vnt": 726639,
+    "planuotojo_paklaida_proc": -22.0,
+    "su_orais_paklaida_proc": 0.8
+  },
+  "jautrumas_vasara_proc": {
+    "Ledai ant pagaliuko": 5.1,
+    "Ledai su vafliu": 5.6,
+    "Ledų tortas": 1.1,
+    "Plombyras puodelyje": 4.8,
+    "Vaikiški ledai": 4.9,
+    "Šeimos pakuotė": 3.1,
+    "Šerbetas": 6.1
+  }
+}

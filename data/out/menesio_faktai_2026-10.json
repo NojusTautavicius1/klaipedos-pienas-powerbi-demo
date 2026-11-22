@@ -1,0 +1,306 @@
+{
+  "menuo": "2026-10",
+  "palyginimas_pernai": "2025-10",
+  "praejes_menuo": "2026-09",
+  "pardavimai": {
+    "pajamos_eur": 851687,
+    "bendrasis_pelnas_eur": 518715,
+    "marza_proc": 60.9,
+    "parduota_vnt": 1002680,
+    "uzsakymu_ivykdymas_proc": 100.0,
+    "prarastos_pajamos_eur": 0,
+    "uzsakymu_savaiciu_sk": 4
+  },
+  "pardavimai_pernai": {
+    "pajamos_eur": 777171,
+    "bendrasis_pelnas_eur": 487990,
+    "marza_proc": 62.8,
+    "parduota_vnt": 959441,
+    "uzsakymu_ivykdymas_proc": 100.0,
+    "prarastos_pajamos_eur": 0,
+    "uzsakymu_savaiciu_sk": 4
+  },
+  "pardavimai_praejusi_menesi": {
+    "pajamos_eur": 1469558,
+    "bendrasis_pelnas_eur": 884266,
+    "marza_proc": 60.2,
+    "parduota_vnt": 1803234,
+    "uzsakymu_ivykdymas_proc": 99.8,
+    "prarastos_pajamos_eur": 1568,
+    "uzsakymu_savaiciu_sk": 5
+  },
+  "pokyciai": {
+    "pajamos_yoy_proc": 9.6,
+    "pajamos_mom_proc": -42.0,
+    "marzos_pokytis_pp": -1.9,
+    "parduota_vnt_yoy_proc": 4.5,
+    "pajamos_savaitei_yoy_proc": 9.6
+  },
+  "pelno_skaidymas_vs_pernai": {
+    "kiekis_eur": 21992,
+    "mix_eur": 4659,
+    "kaina_ir_nuolaidos_eur": 32373,
+    "zaliavu_kainos_eur": -28300,
+    "is_viso_eur": 30725,
+    "nepaaiskinta_eur": 0
+  },
+  "metai_iki_siol": {
+    "laikotarpis": "2026-01 – 2026-10",
+    "pajamos_eur": 13758178,
+    "bendrasis_pelnas_eur": 8348449,
+    "marza_proc": 60.7,
+    "parduota_vnt": 16763353,
+    "uzsakymu_ivykdymas_proc": 97.6,
+    "prarastos_pajamos_eur": 228064,
+    "uzsakymu_savaiciu_sk": 43,
+    "pajamos_pernai_eur": 12435059,
+    "marza_pernai_proc": 62.8
+  },
+  "rinkos": [
+    {
+      "rinka": "Baltijos šalys",
+      "pajamos_eur": 532822,
+      "yoy_proc": 7.9,
+      "marza_proc": 61.3
+    },
+    {
+      "rinka": "Jungtinė Karalystė",
+      "pajamos_eur": 165765,
+      "yoy_proc": 12.0,
+      "marza_proc": 60.8
+    },
+    {
+      "rinka": "Centrinė Europa",
+      "pajamos_eur": 148612,
+      "yoy_proc": 10.7,
+      "marza_proc": 59.9
+    }
+  ],
+  "kategorijos": [
+    {
+      "kategorija": "Šeimos pakuotė",
+      "pajamos_eur": 224744,
+      "yoy_proc": 11.2,
+      "uzsakymu_ivykdymas_proc": 100.0
+    },
+    {
+      "kategorija": "Plombyras puodelyje",
+      "pajamos_eur": 201349,
+      "yoy_proc": 6.7,
+      "uzsakymu_ivykdymas_proc": 100.0
+    },
+    {
+      "kategorija": "Ledai su vafliu",
+      "pajamos_eur": 150991,
+      "yoy_proc": 9.7,
+      "uzsakymu_ivykdymas_proc": 100.0
+    },
+    {
+      "kategorija": "Ledai ant pagaliuko",
+      "pajamos_eur": 105422,
+      "yoy_proc": 9.2,
+      "uzsakymu_ivykdymas_proc": 100.0
+    },
+    {
+      "kategorija": "Šerbetas",
+      "pajamos_eur": 61840,
+      "yoy_proc": 11.8,
+      "uzsakymu_ivykdymas_proc": 100.0
+    },
+    {
+      "kategorija": "Vaikiški ledai",
+      "pajamos_eur": 54930,
+      "yoy_proc": 13.0,
+      "uzsakymu_ivykdymas_proc": 100.0
+    },
+    {
+      "kategorija": "Ledų tortas",
+      "pajamos_eur": 52411,
+      "yoy_proc": 9.0,
+      "uzsakymu_ivykdymas_proc": 100.0
+    }
+  ],
+  "klientai_maziausias_pokytis": [
+    {
+      "klientas": "Lidl Eesti",
+      "pajamos_eur": 46065,
+      "pokytis_eur": 2547
+    },
+    {
+      "klientas": "HoReCa ir didmena",
+      "pajamos_eur": 58606,
+      "pokytis_eur": 3550
+    }
+  ],
+  "klientai_didziausias_augimas": [
+    {
+      "klientas": "Vietiniai prekybos tinklai",
+      "pajamos_eur": 147497,
+      "pokytis_eur": 15325
+    },
+    {
+      "klientas": "Tesco UK",
+      "pajamos_eur": 113873,
+      "pokytis_eur": 13397
+    }
+  ],
+  "gamyba": {
+    "pagaminta_vnt": 1290833,
+    "plano_ivykdymas_proc": 96.1,
+    "linijos": [
+      {
+        "linija": "GAR-L1 Šerbetų ir tortų linija (Gargždai)",
+        "plano_ivykdymas_proc": 96.1,
+        "brokas_proc": 1.5,
+        "prastovos_min": 876,
+        "prastovos_pagal_priezasti_min": {
+          "Produkto keitimas (derinimas)": 289,
+          "Žaliavų trūkumas": 284,
+          "Elektros sutrikimas": 192,
+          "Pakavimo įrangos gedimas": 111
+        }
+      },
+      {
+        "linija": "KLA-L1 Pagaliukų linija (Klaipėda)",
+        "plano_ivykdymas_proc": 97.5,
+        "brokas_proc": 1.5,
+        "prastovos_min": 595,
+        "prastovos_pagal_priezasti_min": {
+          "Žaliavų trūkumas": 263,
+          "Elektros sutrikimas": 139,
+          "Produkto keitimas (derinimas)": 102,
+          "Pakavimo įrangos gedimas": 91
+        }
+      },
+      {
+        "linija": "KLA-L2 Ragelių linija (Klaipėda)",
+        "plano_ivykdymas_proc": 97.3,
+        "brokas_proc": 1.7,
+        "prastovos_min": 621,
+        "prastovos_pagal_priezasti_min": {
+          "Planinis valymas": 287,
+          "Pakavimo įrangos gedimas": 189,
+          "Produkto keitimas (derinimas)": 145
+        }
+      },
+      {
+        "linija": "KLA-L3 Šeimos pakuočių linija (Klaipėda)",
+        "plano_ivykdymas_proc": 97.1,
+        "brokas_proc": 1.7,
+        "prastovos_min": 674,
+        "prastovos_pagal_priezasti_min": {
+          "Žaliavų trūkumas": 454,
+          "Produkto keitimas (derinimas)": 190,
+          "Elektros sutrikimas": 30
+        }
+      },
+      {
+        "linija": "KRE-L1 Vaikiškų ledų linija (Kretinga)",
+        "plano_ivykdymas_proc": 97.8,
+        "brokas_proc": 1.6,
+        "prastovos_min": 522,
+        "prastovos_pagal_priezasti_min": {
+          "Produkto keitimas (derinimas)": 185,
+          "Žaliavų trūkumas": 151,
+          "Planinis valymas": 108,
+          "Pakavimo įrangos gedimas": 78
+        }
+      },
+      {
+        "linija": "KRE-L2 Puodelių linija (Kretinga)",
+        "plano_ivykdymas_proc": 93.9,
+        "brokas_proc": 1.6,
+        "prastovos_min": 1355,
+        "prastovos_pagal_priezasti_min": {
+          "Produkto keitimas (derinimas)": 853,
+          "Pakavimo įrangos gedimas": 301,
+          "Planinis valymas": 201
+        }
+      }
+    ],
+    "prastovos_min": 4643,
+    "prastovu_dalis_proc": 3.2,
+    "pagrindine_prastovu_priezastis": "Produkto keitimas (derinimas)",
+    "pagrindines_priezasties_min": 1764
+  },
+  "zaliavos": [
+    {
+      "zaliava": "Grietinėlė 35 %",
+      "kaina_eur": 3.681,
+      "kaina_pernai_eur": 3.078,
+      "pokytis_proc": 19.6
+    },
+    {
+      "zaliava": "Šokolado glajus",
+      "kaina_eur": 6.967,
+      "kaina_pernai_eur": 6.466,
+      "pokytis_proc": 7.7
+    },
+    {
+      "zaliava": "Vafliniai rageliai",
+      "kaina_eur": 0.043,
+      "kaina_pernai_eur": 0.046,
+      "pokytis_proc": -5.7
+    },
+    {
+      "zaliava": "Kakavos milteliai",
+      "kaina_eur": 8.727,
+      "kaina_pernai_eur": 8.471,
+      "pokytis_proc": 3.0
+    }
+  ],
+  "sanaudos": {
+    "sanaudos_eur": 470964,
+    "sanaudu_biudzetas_eur": 483042,
+    "didziausi_nuokrypiai": [
+      {
+        "straipsnis": "Darbo užmokestis",
+        "faktas_eur": 261515,
+        "biudzetas_eur": 272100,
+        "nuokrypis_eur": -10585
+      },
+      {
+        "straipsnis": "Marketingas",
+        "faktas_eur": 38951,
+        "biudzetas_eur": 38000,
+        "nuokrypis_eur": 951
+      },
+      {
+        "straipsnis": "Administracija",
+        "faktas_eur": 56445,
+        "biudzetas_eur": 57200,
+        "nuokrypis_eur": -755
+      }
+    ],
+    "pajamu_biudzetas_eur": 848516
+  },
+  "kokybe": {
+    "skundu_sk": 6,
+    "vid_skundu_per_men": 4.5,
+    "tipai": {
+      "Pažeista pakuotė": 2,
+      "Skonis / kvapas": 2,
+      "Etiketė / alergenų informacija": 1,
+      "Temperatūra pristatant": 1
+    },
+    "atviri_skundai": 2
+  },
+  "di_saskaitos": {
+    "apdorota": 27,
+    "patvirtinta_automatiskai": 23,
+    "atiduota_perziurai": 4,
+    "perziuros_priezastys": [
+      "dublikatas",
+      "itartinas_turinys",
+      "sumos_nesutampa",
+      "valiuta_ne_eur"
+    ],
+    "kaina_usd": 0.6,
+    "sutaupyta_val": 1.8
+  },
+  "prognoze_ir_orai": {
+    "prognozes_tikslumas_proc": 92.0,
+    "uzsakyta_vs_prognoze_proc": 1.4,
+    "oru_nukrypimas_c": 1.4
+  }
+}

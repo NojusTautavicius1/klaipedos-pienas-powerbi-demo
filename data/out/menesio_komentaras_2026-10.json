@@ -1,0 +1,173 @@
+{
+  "komentaras": {
+    "antraste": "Spalio pajamos 9,6 % didesnės nei pernai, bet brangesnė grietinėlė sumažino maržą 1,9 p. p.",
+    "santrauka": [
+      "Spalio pajamos siekė 851,7 tūkst. € ir buvo 9,6 % didesnės nei pernai. Abu mėnesiai turėjo po 4 užsakymų savaites, todėl palyginimas tiesioginis.",
+      "Bendrasis pelnas išaugo iki 518,7 tūkst. € (pernai 488,0 tūkst. €), tačiau marža nukrito iki 60,9 % (−1,9 p. p.), nes grietinėlė brango 19,6 %.",
+      "Augo visos rinkos ir kategorijos: Jungtinė Karalystė +12,0 %, Centrinė Europa +10,7 %, Baltijos šalys +7,9 %. Užsakymai įvykdyti 100,0 %.",
+      "Gamybos planas įvykdytas 96,1 %. Silpniausia buvo KRE-L2 puodelių linija (93,9 %), kurioje produkto keitimas (derinimas) sudarė 853 min. iš 1355 min. prastovų."
+    ],
+    "kodel": "Bendrasis pelnas, palyginti su pernai, išaugo 30,7 tūkst. €. Daugiausia prisidėjo kainos ir nuolaidos (+32,4 tūkst. €) bei didesnis kiekis (+22,0 tūkst. €), šiek tiek – geresnė produktų sudėtis (+4 659 €). Brangesnės žaliavos, pirmiausia grietinėlė (+19,6 %) ir šokolado glajus (+7,7 %), atėmė 28,3 tūkst. € ir lėmė maržos kritimą.",
+    "rizikos": [
+      "Grietinėlės kaina 19,6 % didesnė nei pernai; jei ji neatpigs, marža toliau liks žemesnė nei pernai (metų pradžios marža 60,7 %, pernai 62,8 %).",
+      "Žaliavų trūkumas stabdo linijas: KLA-L3 šeimos pakuočių linijoje jis sukėlė 454 min. prastovų, KLA-L1 – 263 min., GAR-L1 – 284 min.",
+      "Skundų gauta 6, daugiau nei vidutiniškai (4,5 per mėnesį), 2 dar neišspręsti."
+    ],
+    "veiksmai": [
+      {
+        "veiksmas": "Peržiūrėti KRE-L2 puodelių linijos gaminių eiliškumą ir sujungti panašius gaminius į ilgesnes partijas, kad sumažėtų 853 min. derinimo prastovų.",
+        "atsakingas": "Gamybos skyrius"
+      },
+      {
+        "veiksmas": "Susitarti su grietinėlės tiekėjais dėl kainos ir pristatymo grafiko bei užtikrinti žaliavų atsargas KLA-L3 linijai.",
+        "atsakingas": "Pirkimų skyrius"
+      },
+      {
+        "veiksmas": "Išnagrinėti ir uždaryti 2 atvirus skundus, ypač dėl pažeistos pakuotės ir skonio / kvapo.",
+        "atsakingas": "Kokybės skyrius"
+      }
+    ],
+    "skaiciai": [
+      {
+        "tekste": "9,6 %",
+        "kelias": "pokyciai.pajamos_yoy_proc"
+      },
+      {
+        "tekste": "1,9 p. p.",
+        "kelias": "pokyciai.marzos_pokytis_pp"
+      },
+      {
+        "tekste": "851,7 tūkst. €",
+        "kelias": "pardavimai.pajamos_eur"
+      },
+      {
+        "tekste": "4",
+        "kelias": "pardavimai.uzsakymu_savaiciu_sk"
+      },
+      {
+        "tekste": "518,7 tūkst. €",
+        "kelias": "pardavimai.bendrasis_pelnas_eur"
+      },
+      {
+        "tekste": "488,0 tūkst. €",
+        "kelias": "pardavimai_pernai.bendrasis_pelnas_eur"
+      },
+      {
+        "tekste": "60,9 %",
+        "kelias": "pardavimai.marza_proc"
+      },
+      {
+        "tekste": "−1,9 p. p.",
+        "kelias": "pokyciai.marzos_pokytis_pp"
+      },
+      {
+        "tekste": "19,6 %",
+        "kelias": "zaliavos[0].pokytis_proc"
+      },
+      {
+        "tekste": "+12,0 %",
+        "kelias": "rinkos[1].yoy_proc"
+      },
+      {
+        "tekste": "+10,7 %",
+        "kelias": "rinkos[2].yoy_proc"
+      },
+      {
+        "tekste": "+7,9 %",
+        "kelias": "rinkos[0].yoy_proc"
+      },
+      {
+        "tekste": "100,0 %",
+        "kelias": "pardavimai.uzsakymu_ivykdymas_proc"
+      },
+      {
+        "tekste": "96,1 %",
+        "kelias": "gamyba.plano_ivykdymas_proc"
+      },
+      {
+        "tekste": "93,9 %",
+        "kelias": "gamyba.linijos[5].plano_ivykdymas_proc"
+      },
+      {
+        "tekste": "853 min.",
+        "kelias": "gamyba.linijos[5].prastovos_pagal_priezasti_min.Produkto keitimas (derinimas)"
+      },
+      {
+        "tekste": "1355 min.",
+        "kelias": "gamyba.linijos[5].prastovos_min"
+      },
+      {
+        "tekste": "30,7 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.is_viso_eur"
+      },
+      {
+        "tekste": "+32,4 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.kaina_ir_nuolaidos_eur"
+      },
+      {
+        "tekste": "+22,0 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.kiekis_eur"
+      },
+      {
+        "tekste": "+4 659 €",
+        "kelias": "pelno_skaidymas_vs_pernai.mix_eur"
+      },
+      {
+        "tekste": "+19,6 %",
+        "kelias": "zaliavos[0].pokytis_proc"
+      },
+      {
+        "tekste": "+7,7 %",
+        "kelias": "zaliavos[1].pokytis_proc"
+      },
+      {
+        "tekste": "28,3 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.zaliavu_kainos_eur"
+      },
+      {
+        "tekste": "60,7 %",
+        "kelias": "metai_iki_siol.marza_proc"
+      },
+      {
+        "tekste": "62,8 %",
+        "kelias": "metai_iki_siol.marza_pernai_proc"
+      },
+      {
+        "tekste": "454 min.",
+        "kelias": "gamyba.linijos[3].prastovos_pagal_priezasti_min.Žaliavų trūkumas"
+      },
+      {
+        "tekste": "263 min.",
+        "kelias": "gamyba.linijos[1].prastovos_pagal_priezasti_min.Žaliavų trūkumas"
+      },
+      {
+        "tekste": "284 min.",
+        "kelias": "gamyba.linijos[0].prastovos_pagal_priezasti_min.Žaliavų trūkumas"
+      },
+      {
+        "tekste": "6",
+        "kelias": "kokybe.skundu_sk"
+      },
+      {
+        "tekste": "4,5",
+        "kelias": "kokybe.vid_skundu_per_men"
+      },
+      {
+        "tekste": "2",
+        "kelias": "kokybe.atviri_skundai"
+      },
+      {
+        "tekste": "853 min.",
+        "kelias": "gamyba.linijos[5].prastovos_pagal_priezasti_min.Produkto keitimas (derinimas)"
+      }
+    ]
+  },
+  "patikra": [],
+  "naudojimas": {
+    "input_tokens": 16112,
+    "output_tokens": 6315,
+    "bandymai": 2,
+    "sekundes": 51.5,
+    "kaina_usd": 0.191
+  }
+}

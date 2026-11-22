@@ -1,0 +1,165 @@
+{
+  "komentaras": {
+    "antraste": "Birželį pajamos augo 48,7 %, bet palyginamai, vienai savaitei, tik 18,9 %; puodelių linijos kompresoriaus gedimas sumažino užsakymų įvykdymą iki 90,7 %",
+    "santrauka": [
+      "Pajamos siekė 2 440,8 tūkst. € (+48,7 % nei pernai), tačiau šių metų birželis turi 5 užsakymų savaites, o pernai turėjo 4. Palyginamas augimas vienai savaitei yra 18,9 %.",
+      "Bendrasis pelnas pasiekė 1 474,0 tūkst. € (pernai 1 040,8 tūkst. €), bet marža sumažėjo iki 60,4 % (−3,0 p. p.), daugiausia dėl brangesnių žaliavų: grietinėlė pabrango 17,9 %.",
+      "Įvykdyta tik 90,7 % užsakymų (pernai 100,0 %), prarasta 167,9 tūkst. € pajamų. Silpniausia kategorija yra plombyras puodelyje (77,4 %): Kretingos puodelių linija KRE-L2 įvykdė 82,8 % plano, nes per karščio bangą sugedęs šaldymo kompresorius sukėlė 2 379 min. prastovų.",
+      "Sąnaudos sudarė 685,2 tūkst. € ir viršijo 673,2 tūkst. € biudžetą. Labiausiai viršytas marketingo biudžetas (+5,8 tūkst. €)."
+    ],
+    "kodel": "Bendrasis pelnas, palyginti su pernai, išaugo 433,2 tūkst. €. Didesnis parduotas kiekis, kurį padidino ir papildoma užsakymų savaitė, pridėjo 500,2 tūkst. €, o geresnė produktų struktūra – dar 16,7 tūkst. €. Brangesnės žaliavos atėmė 75,9 tūkst. €, kainos ir nuolaidos – 7,8 tūkst. €.",
+    "rizikos": [
+      "Kitos karščio bangos metu KRE-L2 šaldymo kompresorius gali vėl sustoti, o liepą ledų paklausa didžiausia.",
+      "Šeimos pakuočių linija KLA-L3 (didžiausia kategorija, 679,1 tūkst. €) prastovėjo 183 min. dėl žaliavų trūkumo ir 177 min. dėl pakavimo įrangos gedimo.",
+      "Brangstanti grietinėlė (+17,9 %) toliau mažins maržą. Iš 4 skundų 2 susiję su etikete ar alergenų informacija, 2 skundai dar atviri."
+    ],
+    "veiksmai": [
+      {
+        "veiksmas": "Per 2 savaites suremontuoti arba pakeisti KRE-L2 šaldymo kompresorių ir parengti atsarginio šaldymo sprendimą karščio dienoms; peržiūrėti KLA-L3 pakavimo įrangą.",
+        "atsakingas": "Gamybos ir techninės priežiūros skyrius"
+      },
+      {
+        "veiksmas": "Su klientais suderinti neįvykdytų plombyro puodelyje užsakymų pristatymo grafiką ir liepos kiekius pagal realų KRE-L2 pajėgumą.",
+        "atsakingas": "Pardavimų ir planavimo skyrius"
+      },
+      {
+        "veiksmas": "Užtikrinti KLA-L3 žaliavų atsargas ir pateikti grietinėlės kainos fiksavimo ar alternatyvių tiekėjų pasiūlymą; uždaryti 2 atvirus skundus ir patikrinti alergenų etiketes.",
+        "atsakingas": "Pirkimų ir kokybės skyriai"
+      }
+    ],
+    "skaiciai": [
+      {
+        "tekste": "48,7 %",
+        "kelias": "pokyciai.pajamos_yoy_proc"
+      },
+      {
+        "tekste": "18,9 %",
+        "kelias": "pokyciai.pajamos_savaitei_yoy_proc"
+      },
+      {
+        "tekste": "90,7 %",
+        "kelias": "pardavimai.uzsakymu_ivykdymas_proc"
+      },
+      {
+        "tekste": "2 440,8 tūkst. €",
+        "kelias": "pardavimai.pajamos_eur"
+      },
+      {
+        "tekste": "5",
+        "kelias": "pardavimai.uzsakymu_savaiciu_sk"
+      },
+      {
+        "tekste": "4",
+        "kelias": "pardavimai_pernai.uzsakymu_savaiciu_sk"
+      },
+      {
+        "tekste": "1 474,0 tūkst. €",
+        "kelias": "pardavimai.bendrasis_pelnas_eur"
+      },
+      {
+        "tekste": "1 040,8 tūkst. €",
+        "kelias": "pardavimai_pernai.bendrasis_pelnas_eur"
+      },
+      {
+        "tekste": "60,4 %",
+        "kelias": "pardavimai.marza_proc"
+      },
+      {
+        "tekste": "−3,0 p. p.",
+        "kelias": "pokyciai.marzos_pokytis_pp"
+      },
+      {
+        "tekste": "17,9 %",
+        "kelias": "zaliavos[0].pokytis_proc"
+      },
+      {
+        "tekste": "100,0 %",
+        "kelias": "pardavimai_pernai.uzsakymu_ivykdymas_proc"
+      },
+      {
+        "tekste": "167,9 tūkst. €",
+        "kelias": "pardavimai.prarastos_pajamos_eur"
+      },
+      {
+        "tekste": "77,4 %",
+        "kelias": "kategorijos[1].uzsakymu_ivykdymas_proc"
+      },
+      {
+        "tekste": "82,8 %",
+        "kelias": "gamyba.linijos[5].plano_ivykdymas_proc"
+      },
+      {
+        "tekste": "2 379 min.",
+        "kelias": "gamyba.linijos[5].prastovos_pagal_priezasti_min.Šaldymo kompresoriaus gedimas (karščio banga)"
+      },
+      {
+        "tekste": "685,2 tūkst. €",
+        "kelias": "sanaudos.sanaudos_eur"
+      },
+      {
+        "tekste": "673,2 tūkst. €",
+        "kelias": "sanaudos.sanaudu_biudzetas_eur"
+      },
+      {
+        "tekste": "5,8 tūkst. €",
+        "kelias": "sanaudos.didziausi_nuokrypiai[0].nuokrypis_eur"
+      },
+      {
+        "tekste": "433,2 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.is_viso_eur"
+      },
+      {
+        "tekste": "500,2 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.kiekis_eur"
+      },
+      {
+        "tekste": "16,7 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.mix_eur"
+      },
+      {
+        "tekste": "75,9 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.zaliavu_kainos_eur"
+      },
+      {
+        "tekste": "7,8 tūkst. €",
+        "kelias": "pelno_skaidymas_vs_pernai.kaina_ir_nuolaidos_eur"
+      },
+      {
+        "tekste": "679,1 tūkst. €",
+        "kelias": "kategorijos[0].pajamos_eur"
+      },
+      {
+        "tekste": "183 min.",
+        "kelias": "gamyba.linijos[3].prastovos_pagal_priezasti_min.Žaliavų trūkumas"
+      },
+      {
+        "tekste": "177 min.",
+        "kelias": "gamyba.linijos[3].prastovos_pagal_priezasti_min.Pakavimo įrangos gedimas"
+      },
+      {
+        "tekste": "4 skundų",
+        "kelias": "kokybe.skundu_sk"
+      },
+      {
+        "tekste": "2 susiję su etikete ar alergenų informacija",
+        "kelias": "kokybe.tipai.Etiketė / alergenų informacija"
+      },
+      {
+        "tekste": "2 skundai dar atviri",
+        "kelias": "kokybe.atviri_skundai"
+      },
+      {
+        "tekste": "2 atvirus skundus",
+        "kelias": "kokybe.atviri_skundai"
+      }
+    ]
+  },
+  "patikra": [],
+  "naudojimas": {
+    "input_tokens": 6253,
+    "output_tokens": 4589,
+    "bandymai": 1,
+    "sekundes": 40.7,
+    "kaina_usd": 0.117
+  }
+}

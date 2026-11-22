@@ -62,6 +62,20 @@ Pokalbyje galėsi parodyti: „Marža krito 2,6 p. p. Paspaudžiu „Kodėl?“:
 
 ---
 
+**Padaryta 11-22 (`automation/`, 32 testai):**
+- **Mėnesio komentaras** (`monthly_commentary.py` + `kpi.py`): faktai tomis pačiomis formulėmis kaip DAX matai (IV–IX pelno pokytis +267 649 € sutampa su modeliu), Claude rašo, skriptas tikrina kiekvieną skaičių pagal nurodytą fakto kelią ir regex'u ieško skaičių be šaltinio. Rezultatai: `docs/menesio_komentaras_2026-10.md`, `docs/menesio_komentaras_2026-06.md` (~0,2 $ vienas). Rastas kalendoriaus spąstas: 2026-06 turi 5 užsakymų antradienius, 2025-06 tik 4, todėl +48,7 % → vienai savaitei +18,9 %. Tai įrašyta į faktus ir instrukciją. **Šiuo pavyzdžiu verta pasigirti pokalbyje.**
+- **Orų pataisa planuotojui** (`planner_weather.py`): jautrumas iš istorijos pagal kategoriją ir sezoną, tikra Open-Meteo 16 d. prognozė, Excel planuotojo formatu (`data/out/planuotojui_*.xlsx`) su linijų apkrova ir patarimu gaminti iš anksto. Patikra su nematytais duomenimis (mokyta 2025, tikrinta 2026 V–IX): tikslumas 88,1 % → 94,8 %, karščio savaitės paklaida −22 % → +0,8 %. Sintetiniuose duomenyse ryšys įdėtas sąmoningai, README tai pasakyta.
+- **Duomenų žodynas** iš TMDL (`data_dictionary.py` → `docs/duomenu_zodynas.md`): 30 lentelių, 39 ryšiai, 116 matų su DAX, 3 RLS rolės.
+- **README** su architektūra (mermaid), lentele „skelbimas → projektas“, 4 diagramomis (`docs/img/`, `readme_charts.py`) ir EN santrauka. **90 dienų planas**: `docs/pirmos_90_dienu.md` (pradžia ne sezono metu, sulyginimas su finansais, DI pilotas lygiagrečiai su žmogumi, BRCGS atsekamumo testas, mokymai pagal skyrius).
+- **Motyvacinis tekstas**: `IT\CV\juodrastis\klaipedos_pienas_motyvacinis.md` (ne repozitorijoje).
+
+**Liko tau (Nojau) iki 11-24:**
+1. Atidaryti Power BI Desktop, modelį išsaugoti kaip `powerbi\KlaipedosPienas.pbip` (README jau rodo šį kelią) ir sudėti puslapius pagal `docs/puslapiu_gidas.md`.
+2. Padaryti 2–3 ekrano nuotraukas („Kodėl?“, „Planavimas“, „Atšaukimas“), įdėti į `docs/img/` ir README skyrių „Trys istorijos“.
+3. README skyriuje „Kas ką darė“ parašyta, kad vizualus sudėjai pats. Tai turi būti tiesa prieš darant repozitoriją viešą.
+4. Padaryti repozitoriją viešą, perskaityti ir patvirtinti motyvacinį tekstą, kandidatuoti CVbankas formoje.
+5. Neprivaloma: įrašyti „Klausk duomenų“ video (`docs/video_scenarijus.md`).
+
 ## 3. Duomenų modelis (žvaigždės schema)
 
 Laikotarpis: 2025-01-01 – 2026-10-31 (22 mėn., matosi sezoniškumas ir YoY).
