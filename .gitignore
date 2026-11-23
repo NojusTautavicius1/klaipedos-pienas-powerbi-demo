@@ -6,3 +6,5 @@ __pycache__/
 # Power BI lokalūs failai
 powerbi/**/.pbi/localSettings.json
 powerbi/**/.pbi/cache.abf
+
+.vercel
