@@ -1,0 +1,110 @@
+/// Gamybos partijos (ERP gamyba.csv, tik pagaminta > 0). Atsekamumo centras: į ją rodo etapai, tyrimai, siuntos, žaliavos ir skundai.
+table Partija
+	lineageTag: d68f36d5-27e2-499d-a36f-1c3cade4c830
+
+	column 'Partijos nr'
+		dataType: string
+		lineageTag: 539289c4-c03e-476d-8f37-b7cc24dc3b3b
+		sourceColumn: Partijos nr
+
+	column 'ERP data'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 154ea705-2a8a-42c7-ae83-a400150ee350
+		sourceColumn: ERP data
+
+	column 'Linijos kodas'
+		dataType: string
+		isHidden
+		lineageTag: 0ba80ac3-7ea4-43a0-b749-547221c71031
+		sourceColumn: Linijos kodas
+
+	column 'Prekės kodas'
+		dataType: string
+		isHidden
+		lineageTag: 8ae37987-1af6-4460-87ab-948757c0c581
+		sourceColumn: Prekės kodas
+
+	column 'Pagaminta vnt'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 0477b735-eeac-41c7-a845-6f461324e956
+		summarizeBy: sum
+		sourceColumn: Pagaminta vnt
+
+	column 'Brokas vnt'
+		dataType: int64
+		formatString: #,0
+		lineageTag: a48c40d0-46b3-4a94-a6d8-5a08c57bf38b
+		summarizeBy: sum
+		sourceColumn: Brokas vnt
+
+	column 'Savaitės pradžia'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: f75fe669-d27b-4cd0-b45f-c1d1e4b1c664
+		sourceColumn: Savaitės pradžia
+
+	/// Kokybės sprendimas; jei nuokrypių nebuvo: Išleista.
+	column Būsena =
+			VAR Sprendimas = LOOKUPVALUE('Partijų sprendimai'[Sprendimas], 'Partijų sprendimai'[Partijos nr], Partija[Partijos nr])
+			RETURN IF(ISBLANK(Sprendimas), "Išleista", Sprendimas)
+		dataType: string
+		lineageTag: ce1fe559-ea1b-4376-9349-3d604f1b6d3d
+
+	/// Laboratorijos ir gamybos kontrolės rezultatų už ribų skaičius.
+	column Neatitikčių = COUNTROWS(FILTER(RELATEDTABLE('Lab tyrimai'), 'Lab tyrimai'[Atitinka] = "Ne")) + COUNTROWS(FILTER(RELATEDTABLE('Partijų etapai'), 'Partijų etapai'[Atitinka] = "Ne")) + 0
+		dataType: int64
+		lineageTag: 1c6a5c5e-7c3f-46ee-bb8f-fba77c013c87
+		summarizeBy: none
+
+	/// Nuo mišinio ruošimo pradžios iki padėjimo į sandėlį.
+	column 'Gamybos ciklas h' =
+			VAR Etapai = RELATEDTABLE('Partijų etapai')
+			RETURN (MAXX(FILTER(Etapai, 'Partijų etapai'[Etapas] = "Sandėliavimas"), 'Partijų etapai'[Pradžia]) - MINX(Etapai, 'Partijų etapai'[Pradžia])) * 24
+		dataType: double
+		formatString: 0.0
+		lineageTag: 48a81a1d-fb8f-4e07-958b-8869dba89c41
+		summarizeBy: none
+
+	/// Kiek iš gamybos ciklo partija tiesiog laukia tarp etapų.
+	column 'Laukimas h' = SUMX(RELATEDTABLE('Partijų etapai'), 'Partijų etapai'[Laukimas min]) / 60
+		dataType: double
+		formatString: 0.0
+		lineageTag: 97e1cb5e-49eb-49c5-a959-e92ac8273c93
+		summarizeBy: none
+
+	column 'Išsiųsta vnt' = SUMX(RELATEDTABLE(Siuntos), Siuntos[Kiekis vnt]) + 0
+		dataType: int64
+		formatString: #,0
+		lineageTag: e1648c8e-7d70-4f32-81aa-0fd395320740
+		summarizeBy: sum
+
+	/// Dar sandėlyje: pagaminta − brokas − išsiųsta. Atšaukimo atveju šiuos vienetus galima blokuoti vietoje.
+	column 'Likutis vnt' = Partija[Pagaminta vnt] - Partija[Brokas vnt] - Partija[Išsiųsta vnt]
+		dataType: int64
+		formatString: #,0
+		lineageTag: eceedd0d-860f-4156-8946-0f9f0d99f968
+		summarizeBy: sum
+
+	/// Partijos nr ir produktas: patogu pjaustyklėje su paieška.
+	column 'Partija paieškai' = Partija[Partijos nr] & " · " & RELATED(Produktas[Produktas]) & " · " & FORMAT(Partija[ERP data], "yyyy-MM-dd")
+		dataType: string
+		lineageTag: 43bb56af-63e3-426a-97c9-b28024a73863
+
+	partition Partija = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\erp\gamyba.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"PARTIJOS_NR", type text}, {"DATA", type date}, {"LINIJA", type text}, {"PREKES_KODAS", type text}, {"PAGAMINTA_VNT", Int64.Type}, {"BROKAS_VNT", Int64.Type}}),
+				    Gaminta = Table.SelectRows(Tipai, each [PAGAMINTA_VNT] > 0),
+				    Savaite = Table.AddColumn(Gaminta, "Savaitės pradžia", each Date.StartOfWeek([DATA], Day.Monday), type date),
+				    Pervadinta = Table.RenameColumns(Savaite, {{"PARTIJOS_NR", "Partijos nr"}, {"DATA", "ERP data"}, {"LINIJA", "Linijos kodas"}, {"PREKES_KODAS", "Prekės kodas"}, {"PAGAMINTA_VNT", "Pagaminta vnt"}, {"BROKAS_VNT", "Brokas vnt"}})
+				in
+				    Pervadinta
+

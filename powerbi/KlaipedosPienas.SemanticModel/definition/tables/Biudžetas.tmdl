@@ -1,0 +1,52 @@
+/// Mėnesio biudžetas pagal straipsnį, įskaitant Pajamas ir Bendrąjį pelną (biudzetas.csv). Data = mėnesio pabaiga.
+table Biudžetas
+	lineageTag: b5c463b9-1c32-4108-afaa-61cc70663d64
+
+	column Metai
+		dataType: int64
+		isHidden
+		lineageTag: 1349ddd1-4c5b-4dd7-96c5-f594da571c80
+		summarizeBy: none
+		sourceColumn: Metai
+
+	column Mėnuo
+		dataType: int64
+		isHidden
+		lineageTag: ad84b172-df77-44e2-a184-d4f235fa4c7a
+		summarizeBy: none
+		sourceColumn: Mėnuo
+
+	column Straipsnis
+		dataType: string
+		isHidden
+		lineageTag: 7e868463-7818-434d-8b76-efb766b95048
+		sourceColumn: Straipsnis
+
+	column Suma
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: f096ae4c-81d6-4d81-9b4c-a398f9aa9002
+		sourceColumn: Suma
+
+	column Data
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 721caaad-f19d-47bc-82a6-775888bc719b
+		sourceColumn: Data
+
+	partition Biudžetas = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\erp\biudzetas.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"METAI", Int64.Type}, {"MENUO", Int64.Type}, {"STRAIPSNIS", type text}, {"SUMA_EUR", type number}}, "lt-LT"),
+				    Data = Table.AddColumn(Tipai, "Data", each Date.EndOfMonth(#date([METAI], [MENUO], 1)), type date),
+				    Pervadinta = Table.RenameColumns(Data, {{"METAI", "Metai"}, {"MENUO", "Mėnuo"}, {"STRAIPSNIS", "Straipsnis"}, {"SUMA_EUR", "Suma"}})
+				in
+				    Pervadinta
+

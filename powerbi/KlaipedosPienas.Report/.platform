@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "KlaipedosPienas"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "fae3c091-a382-46f5-bd65-397eff13869d"
+  }
+}

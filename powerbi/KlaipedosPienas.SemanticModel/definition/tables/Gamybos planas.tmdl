@@ -1,0 +1,66 @@
+/// Planuotojo Excel (gamybos_planas.xlsx, lapai 2025 ir 2026). Praleidžiamos eilutės iki antraštės, plano kodas Trim. Su produktu sieja Plano kodas.
+table 'Gamybos planas'
+	lineageTag: f8461f43-eac2-4067-a3c7-7bf28c63b92b
+
+	column 'ISO savaitė'
+		dataType: string
+		lineageTag: 7d40982b-531e-4cc3-95df-c65c71f13248
+		sourceColumn: ISO savaitė
+
+	column 'Savaitės pradžia'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 406b3a16-1c09-438b-a857-fc2acb976b37
+		sourceColumn: Savaitės pradžia
+
+	column 'Linijos kodas'
+		dataType: string
+		isHidden
+		lineageTag: c955fec3-6232-4402-89e4-87ba2961a0ea
+		sourceColumn: Linijos kodas
+
+	column 'Plano kodas (Excel)'
+		dataType: string
+		isHidden
+		lineageTag: 2e1c1dee-643c-439f-8c17-fa522ff9d6d3
+		sourceColumn: Plano kodas (Excel)
+
+	column 'Planas vnt'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 84ef5883-332d-4e83-862f-58f2f0a2861d
+		sourceColumn: Planas vnt
+
+	column 'Plano kodas'
+		dataType: string
+		isHidden
+		lineageTag: e0db10e2-6da2-4762-9e73-0a5359dd1a13
+		sourceColumn: Plano kodas
+
+	/// 1, jei Excel plano kodas turėjo tarpą gale.
+	column 'Kodas taisytas'
+		dataType: int64
+		isHidden
+		lineageTag: 5bbe7f5b-5e6f-46e7-94f9-f5f156f529e1
+		sourceColumn: Kodas taisytas
+
+	partition 'Gamybos planas' = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\excel\gamybos_planas.xlsx")){0}[Content],
+				    Knyga = Excel.Workbook(Turinys, null, true),
+				    Lapai = Table.SelectRows(Knyga, each [Kind] = "Sheet" and [Name] <> "Prognozė"),
+				    Lenteles = Table.AddColumn(Lapai, "Duomenys", each Table.PromoteHeaders(Table.Skip([Data], each [Column1] <> "Savaitė"), [PromoteAllScalars = true])),
+				    Sujungta = Table.Combine(Lenteles[Duomenys]),
+				    Eilutes = Table.SelectRows(Sujungta, each [Produktas] <> null and [Produktas] <> ""),
+				    Tipai = Table.TransformColumnTypes(Eilutes, {{"Savaitė", type text}, {"Savaitės pradžia", type date}, {"Linija", type text}, {"Produktas", type text}, {"Planas, vnt", Int64.Type}}),
+				    Kodas = Table.AddColumn(Tipai, "Plano kodas", each Text.Trim([Produktas]), type text),
+				    KodasTaisytas = Table.AddColumn(Kodas, "Kodas taisytas", each if [Produktas] <> Text.Trim([Produktas]) then 1 else 0, Int64.Type),
+				    Pervadinta = Table.RenameColumns(KodasTaisytas, {{"Savaitė", "ISO savaitė"}, {"Linija", "Linijos kodas"}, {"Produktas", "Plano kodas (Excel)"}, {"Planas, vnt", "Planas vnt"}})
+				in
+				    Pervadinta
+

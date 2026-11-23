@@ -1,0 +1,49 @@
+/// Tikri orai iš Open-Meteo archyvo: dienos maksimali temperatūra kiekvienos rinkos mieste ir 2015–2024 m. norma tą pačią metų dieną (data/raw/orai/orai.csv).
+table Orai
+	lineageTag: 2e57ce8c-766b-4d64-b237-243ecbf90999
+
+	column Data
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: c6460273-5d92-4038-a843-a8db9f22f738
+		sourceColumn: Data
+
+	column 'Šalies kodas'
+		dataType: string
+		isHidden
+		lineageTag: 27d3aaf6-77c5-489a-b0aa-ac49ba24f61b
+		sourceColumn: Šalies kodas
+
+	column Miestas
+		dataType: string
+		lineageTag: ccd29341-ef20-439b-9403-5ff4514430c1
+		sourceColumn: Miestas
+
+	column 'Maks. temperatūra'
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 2d9272fc-46ac-434d-aa69-803428acdeef
+		sourceColumn: Maks. temperatūra
+
+	column Norma
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 22ad582e-55d4-4d52-ad22-8f7cab0c7c00
+		sourceColumn: Norma
+
+	partition Orai = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\orai\orai.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"DATA", type date}, {"SALIS", type text}, {"MIESTAS", type text}, {"TMAX_C", type number}, {"NORMA_C", type number}}, "lt-LT"),
+				    Pervadinta = Table.RenameColumns(Tipai, {{"DATA", "Data"}, {"SALIS", "Šalies kodas"}, {"MIESTAS", "Miestas"}, {"TMAX_C", "Maks. temperatūra"}, {"NORMA_C", "Norma"}})
+				in
+				    Pervadinta
+

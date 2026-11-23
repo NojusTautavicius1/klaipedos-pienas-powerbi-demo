@@ -1,0 +1,52 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table Produktas
+ref table Klientas
+ref table Linija
+ref table Žaliava
+ref table Tiekėjas
+ref table Pardavimai
+ref table Gamyba
+ref table 'Gamybos planas'
+ref table Prastovos
+ref table Atsargos
+ref table Pirkimai
+ref table Finansai
+ref table Biudžetas
+ref table 'DI žurnalas'
+ref table Peržiūra
+ref table Data
+ref table _Matai
+ref table Straipsnis
+ref table 'Maržos veiksniai'
+ref table 'Kokybės patikros'
+ref table Orai
+ref table Prognozė
+ref table Šalis
+ref table 'Oro scenarijus'
+ref table Partija
+ref table 'Partijų etapai'
+ref table 'Lab tyrimai'
+ref table Siuntos
+ref table 'Žaliavų sunaudojimas'
+ref table Skundai
+ref table 'Partijų sprendimai'
+ref table Atsakymai
+
+ref role 'Baltijos šalių vadybininkas'
+ref role 'Eksporto vadybininkas (DE/PL)'
+ref role 'Eksporto vadybininkas (UK)'
+
+ref cultureInfo en-GB
+

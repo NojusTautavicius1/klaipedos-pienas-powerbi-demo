@@ -1,0 +1,127 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "37bfaf43v08",
+  "position": {
+    "x": 24,
+    "y": 180,
+    "z": 8000,
+    "width": 740,
+    "height": 280,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Skundai"
+                    }
+                  },
+                  "Property": "Gavimo mėnuo"
+                }
+              },
+              "queryRef": "Skundai.Gavimo mėnuo",
+              "nativeQueryRef": "Gavimo mėnuo"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Skundai"
+                    }
+                  },
+                  "Property": "Tipas"
+                }
+              },
+              "queryRef": "Skundai.Tipas",
+              "nativeQueryRef": "Tipas"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Matai"
+                    }
+                  },
+                  "Property": "Skundų sk."
+                }
+              },
+              "queryRef": "_Matai.Skundų sk.",
+              "nativeQueryRef": "Skundų sk."
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Skundai"
+                  }
+                },
+                "Property": "Gavimo mėnuo"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": false
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Skundai pagal gavimo mėnesį ir tipą'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

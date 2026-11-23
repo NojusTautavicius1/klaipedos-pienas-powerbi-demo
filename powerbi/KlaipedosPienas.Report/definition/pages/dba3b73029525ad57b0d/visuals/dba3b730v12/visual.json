@@ -1,0 +1,202 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "dba3b730v12",
+  "position": {
+    "x": 24,
+    "y": 463,
+    "z": 12000,
+    "width": 610,
+    "height": 222,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Partijų etapai"
+                    }
+                  },
+                  "Property": "Etapas"
+                }
+              },
+              "queryRef": "Partijų etapai.Etapas",
+              "nativeQueryRef": "Etapas"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Partijų etapai"
+                    }
+                  },
+                  "Property": "Pradžia"
+                }
+              },
+              "queryRef": "Partijų etapai.Pradžia",
+              "nativeQueryRef": "Pradžia"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Partijų etapai"
+                    }
+                  },
+                  "Property": "Kontrolė"
+                }
+              },
+              "queryRef": "Partijų etapai.Kontrolė",
+              "nativeQueryRef": "Kontrolė"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Partijų etapai"
+                    }
+                  },
+                  "Property": "Reikšmė"
+                }
+              },
+              "queryRef": "Partijų etapai.Reikšmė",
+              "nativeQueryRef": "Reikšmė"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Partijų etapai"
+                    }
+                  },
+                  "Property": "Atitinka"
+                }
+              },
+              "queryRef": "Partijų etapai.Atitinka",
+              "nativeQueryRef": "Atitinka"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Partijų etapai"
+                  }
+                },
+                "Property": "Etapas"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": false
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Gamybos kelias'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

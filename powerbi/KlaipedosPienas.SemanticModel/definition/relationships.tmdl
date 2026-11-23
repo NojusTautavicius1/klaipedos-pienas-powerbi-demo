@@ -1,0 +1,156 @@
+relationship Pardavimai_Data_Data_Data
+	fromColumn: Pardavimai.Data
+	toColumn: Data.Data
+
+relationship 'Pardavimai_Kliento kodas_Klientas_Kliento kodas'
+	fromColumn: Pardavimai.'Kliento kodas'
+	toColumn: Klientas.'Kliento kodas'
+
+relationship 'Pardavimai_Prekės kodas_Produktas_Prekės kodas'
+	fromColumn: Pardavimai.'Prekės kodas'
+	toColumn: Produktas.'Prekės kodas'
+
+relationship 'Gamyba_Savaitės pradžia_Data_Data'
+	fromColumn: Gamyba.'Savaitės pradžia'
+	toColumn: Data.Data
+
+relationship 'Gamyba_Prekės kodas_Produktas_Prekės kodas'
+	fromColumn: Gamyba.'Prekės kodas'
+	toColumn: Produktas.'Prekės kodas'
+
+relationship 'Gamyba_Linijos kodas_Linija_Linijos kodas'
+	fromColumn: Gamyba.'Linijos kodas'
+	toColumn: Linija.'Linijos kodas'
+
+relationship 'Gamybos planas_Savaitės pradžia_Data_Data'
+	fromColumn: 'Gamybos planas'.'Savaitės pradžia'
+	toColumn: Data.Data
+
+relationship 'Gamybos planas_Plano kodas_Produktas_Plano kodas'
+	fromColumn: 'Gamybos planas'.'Plano kodas'
+	toColumn: Produktas.'Plano kodas'
+
+relationship 'Gamybos planas_Linijos kodas_Linija_Linijos kodas'
+	fromColumn: 'Gamybos planas'.'Linijos kodas'
+	toColumn: Linija.'Linijos kodas'
+
+relationship 'Prastovos_Savaitės pradžia_Data_Data'
+	fromColumn: Prastovos.'Savaitės pradžia'
+	toColumn: Data.Data
+
+relationship 'Prastovos_Linijos kodas_Linija_Linijos kodas'
+	fromColumn: Prastovos.'Linijos kodas'
+	toColumn: Linija.'Linijos kodas'
+
+relationship Atsargos_Data_Data_Data
+	fromColumn: Atsargos.Data
+	toColumn: Data.Data
+
+relationship 'Atsargos_Prekės kodas_Produktas_Prekės kodas'
+	fromColumn: Atsargos.'Prekės kodas'
+	toColumn: Produktas.'Prekės kodas'
+
+relationship Pirkimai_Data_Data_Data
+	fromColumn: Pirkimai.Data
+	toColumn: Data.Data
+
+relationship 'Pirkimai_Tiekėjo kodas_Tiekėjas_Tiekėjo kodas'
+	fromColumn: Pirkimai.'Tiekėjo kodas'
+	toColumn: Tiekėjas.'Tiekėjo kodas'
+
+relationship 'Pirkimai_Žaliavos kodas_Žaliava_Žaliavos kodas'
+	fromColumn: Pirkimai.'Žaliavos kodas'
+	toColumn: Žaliava.'Žaliavos kodas'
+
+relationship Finansai_Data_Data_Data
+	fromColumn: Finansai.Data
+	toColumn: Data.Data
+
+relationship Finansai_Straipsnis_Straipsnis_Straipsnis
+	fromColumn: Finansai.Straipsnis
+	toColumn: Straipsnis.Straipsnis
+
+relationship Biudžetas_Data_Data_Data
+	fromColumn: Biudžetas.Data
+	toColumn: Data.Data
+
+relationship Biudžetas_Straipsnis_Straipsnis_Straipsnis
+	fromColumn: Biudžetas.Straipsnis
+	toColumn: Straipsnis.Straipsnis
+
+relationship 'Klientas_Šalis_Šalis_Šalies kodas'
+	fromColumn: Klientas.Šalis
+	toColumn: Šalis.'Šalies kodas'
+
+relationship Orai_Data_Data_Data
+	fromColumn: Orai.Data
+	toColumn: Data.Data
+
+relationship 'Orai_Šalies kodas_Šalis_Šalies kodas'
+	fromColumn: Orai.'Šalies kodas'
+	toColumn: Šalis.'Šalies kodas'
+
+relationship 'Prognozė_Plano kodas_Produktas_Plano kodas'
+	fromColumn: Prognozė.'Plano kodas'
+	toColumn: Produktas.'Plano kodas'
+
+relationship 'Prognozė_Šalies kodas_Šalis_Šalies kodas'
+	fromColumn: Prognozė.'Šalies kodas'
+	toColumn: Šalis.'Šalies kodas'
+
+relationship 'Partija_Savaitės pradžia_Data_Data'
+	fromColumn: Partija.'Savaitės pradžia'
+	toColumn: Data.Data
+
+relationship 'Partija_Prekės kodas_Produktas_Prekės kodas'
+	fromColumn: Partija.'Prekės kodas'
+	toColumn: Produktas.'Prekės kodas'
+
+relationship 'Partija_Linijos kodas_Linija_Linijos kodas'
+	fromColumn: Partija.'Linijos kodas'
+	toColumn: Linija.'Linijos kodas'
+
+relationship 'Partijų etapai_Partijos nr_Partija_Partijos nr'
+	fromColumn: 'Partijų etapai'.'Partijos nr'
+	toColumn: Partija.'Partijos nr'
+
+relationship 'Lab tyrimai_Partijos nr_Partija_Partijos nr'
+	fromColumn: 'Lab tyrimai'.'Partijos nr'
+	toColumn: Partija.'Partijos nr'
+
+relationship 'Siuntos_Partijos nr_Partija_Partijos nr'
+	fromColumn: Siuntos.'Partijos nr'
+	toColumn: Partija.'Partijos nr'
+
+relationship 'Siuntos_Kliento kodas_Klientas_Kliento kodas'
+	fromColumn: Siuntos.'Kliento kodas'
+	toColumn: Klientas.'Kliento kodas'
+
+relationship 'Žaliavų sunaudojimas_Partijos nr_Partija_Partijos nr'
+	fromColumn: 'Žaliavų sunaudojimas'.'Partijos nr'
+	toColumn: Partija.'Partijos nr'
+
+relationship 'Žaliavų sunaudojimas_Žaliavos kodas_Žaliava_Žaliavos kodas'
+	fromColumn: 'Žaliavų sunaudojimas'.'Žaliavos kodas'
+	toColumn: Žaliava.'Žaliavos kodas'
+
+relationship 'Žaliavų sunaudojimas_Tiekėjo kodas_Tiekėjas_Tiekėjo kodas'
+	fromColumn: 'Žaliavų sunaudojimas'.'Tiekėjo kodas'
+	toColumn: Tiekėjas.'Tiekėjo kodas'
+
+relationship 'Skundai_Partijos nr_Partija_Partijos nr'
+	fromColumn: Skundai.'Partijos nr'
+	toColumn: Partija.'Partijos nr'
+
+relationship Skundai_Klientas_Klientas_Klientas
+	fromColumn: Skundai.Klientas
+	toColumn: Klientas.Klientas
+
+relationship 'Partijų sprendimai_Partijos nr_Partija_Partijos nr'
+	fromColumn: 'Partijų sprendimai'.'Partijos nr'
+	toColumn: Partija.'Partijos nr'
+
+relationship 'Prognozė_Užsakymų diena_Data_Data'
+	fromColumn: Prognozė.'Užsakymų diena'
+	toColumn: Data.Data
+

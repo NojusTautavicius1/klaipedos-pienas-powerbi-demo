@@ -1,0 +1,142 @@
+/// Pardavimų sąskaitų eilutės iš 22 mėnesinių ERP eksportų. Valymas: pašalinti dublikatai (ERP eilučių > 1), kliento kodas Trim + Upper, tuščias kodas = NEŽINOMAS.
+table Pardavimai
+	lineageTag: 6a6c672d-e5bd-470d-879b-6b10e59614a7
+
+	column 'Sąskaitos nr'
+		dataType: string
+		lineageTag: 376fd38a-16ee-4b2e-a91f-e7f0e891228b
+		sourceColumn: Sąskaitos nr
+
+	column Data
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 5144b4f4-e06d-44b2-8165-e424b47ab203
+		sourceColumn: Data
+
+	column 'Kliento kodas (ERP)'
+		dataType: string
+		isHidden
+		lineageTag: 0a55256d-8564-46db-9d2d-40f287faf23d
+		sourceColumn: Kliento kodas (ERP)
+
+	column 'Prekės kodas'
+		dataType: string
+		isHidden
+		lineageTag: 32cf5852-7cb6-48fc-ad3a-a259836ded6a
+		sourceColumn: Prekės kodas
+
+	column 'Užsakyta vnt'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 04efdc8a-665c-4d3d-8acd-f24f6d4a579b
+		sourceColumn: Užsakyta vnt
+
+	column 'Pristatyta vnt'
+		dataType: int64
+		formatString: #,0
+		lineageTag: b8e7c522-af93-4388-a558-c9c1ba642740
+		sourceColumn: Pristatyta vnt
+
+	column 'Kainoraščio kaina'
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 9b089791-a32a-4876-b7ff-78df6e8c9c8a
+		summarizeBy: none
+		sourceColumn: Kainoraščio kaina
+
+	column 'Nuolaida %'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 9d4e6a91-65af-4a69-a464-9c2ed502c8a2
+		summarizeBy: none
+		sourceColumn: Nuolaida %
+
+	column Akcija
+		dataType: string
+		lineageTag: ff47c52e-4831-4562-8f63-3486abcb96ec
+		sourceColumn: Akcija
+
+	column 'Savikaina vnt'
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 4f161a33-1dbe-4927-86b3-9054e313ce80
+		summarizeBy: none
+		sourceColumn: Savikaina vnt
+
+	column 'ERP eilučių'
+		dataType: int64
+		isHidden
+		lineageTag: de12a420-052c-4f96-902a-d6c4fccc52ca
+		sourceColumn: ERP eilučių
+
+	column 'Kliento kodas'
+		dataType: string
+		isHidden
+		lineageTag: f4ff4a0f-685f-48cf-b665-f534657d1a06
+		sourceColumn: Kliento kodas
+
+	column Pajamos
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: eda46a85-f589-4820-9104-5d20aa656913
+		sourceColumn: Pajamos
+
+	column 'Pajamos be nuolaidų'
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 17f40d9f-e76b-4d4c-a92c-bc4db86a0628
+		sourceColumn: Pajamos be nuolaidų
+
+	column 'Žaliavų savikaina'
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 987e806b-dc58-43b9-8341-a642f72fbe53
+		sourceColumn: Žaliavų savikaina
+
+	column 'Prarasta vnt'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c4b73555-675a-4a96-a82f-5abe80d00815
+		sourceColumn: Prarasta vnt
+
+	column 'Prarastos pajamos'
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 3f839f11-f949-4f6f-87cc-4e984cdb3e7e
+		sourceColumn: Prarastos pajamos
+
+	/// 1, jei ERP kliento kodas turėjo tarpų ar mažųjų raidžių ir buvo sutvarkytas.
+	column 'Kodas taisytas'
+		dataType: int64
+		isHidden
+		lineageTag: 8662dbcb-7c9f-4e79-bb4c-2c32126304b9
+		sourceColumn: Kodas taisytas
+
+	partition Pardavimai = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    MenesiuFailai = Table.SelectRows(Failai, each Text.Contains(Text.Lower([Folder Path]), "\raw\erp\pardavimai\") and Text.Lower([Extension]) = ".csv"),
+				    Lenteles = Table.AddColumn(MenesiuFailai, "Duomenys", each Table.TransformColumnNames(Table.PromoteHeaders(Csv.Document([Content], [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", ""))),
+				    Sujungta = Table.Combine(Lenteles[Duomenys]),
+				    Tipai = Table.TransformColumnTypes(Sujungta, {{"SASKAITOS_NR", type text}, {"DATA", type date}, {"KLIENTO_KODAS", type text}, {"PREKES_KODAS", type text}, {"UZSAKYTA_VNT", Int64.Type}, {"PRISTATYTA_VNT", Int64.Type}, {"KAINA_EUR", type number}, {"NUOLAIDA_PROC", type number}, {"AKCIJA", type text}, {"SAVIKAINA_VNT_EUR", type number}}, "lt-LT"),
+				    BeDublikatu = Table.Group(Tipai, Table.ColumnNames(Tipai), {{"ERP eilučių", each Table.RowCount(_), Int64.Type}}),
+				    KodasTaisytas = Table.AddColumn(BeDublikatu, "Kodas taisytas", each let o = [KLIENTO_KODAS] ?? "" in if Text.Trim(o) <> "" and o <> Text.Upper(Text.Trim(o)) then 1 else 0, Int64.Type),
+				    KlientoKodas = Table.AddColumn(KodasTaisytas, "Kliento kodas", each let k = Text.Upper(Text.Trim([KLIENTO_KODAS] ?? "")) in if k = "" then "NEŽINOMAS" else k, type text),
+				    Akcija = Table.TransformColumns(KlientoKodas, {{"AKCIJA", each if _ = "T" then "Taip" else "Ne", type text}}),
+				    Pajamos = Table.AddColumn(Akcija, "Pajamos", each [PRISTATYTA_VNT] * [KAINA_EUR] * (1 - [NUOLAIDA_PROC] / 100), type number),
+				    Bruto = Table.AddColumn(Pajamos, "Pajamos be nuolaidų", each [PRISTATYTA_VNT] * [KAINA_EUR], type number),
+				    Savikaina = Table.AddColumn(Bruto, "Žaliavų savikaina", each [PRISTATYTA_VNT] * [SAVIKAINA_VNT_EUR], type number),
+				    PrarastaVnt = Table.AddColumn(Savikaina, "Prarasta vnt", each [UZSAKYTA_VNT] - [PRISTATYTA_VNT], Int64.Type),
+				    PrarastosPajamos = Table.AddColumn(PrarastaVnt, "Prarastos pajamos", each [Prarasta vnt] * [KAINA_EUR] * (1 - [NUOLAIDA_PROC] / 100), type number),
+				    Pervadinta = Table.RenameColumns(PrarastosPajamos, {{"SASKAITOS_NR", "Sąskaitos nr"}, {"DATA", "Data"}, {"KLIENTO_KODAS", "Kliento kodas (ERP)"}, {"PREKES_KODAS", "Prekės kodas"}, {"UZSAKYTA_VNT", "Užsakyta vnt"}, {"PRISTATYTA_VNT", "Pristatyta vnt"}, {"KAINA_EUR", "Kainoraščio kaina"}, {"NUOLAIDA_PROC", "Nuolaida %"}, {"AKCIJA", "Akcija"}, {"SAVIKAINA_VNT_EUR", "Savikaina vnt"}})
+				in
+				    Pervadinta
+

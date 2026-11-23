@@ -1,0 +1,1051 @@
+/// Visi matai vienoje vietoje, suskirstyti į aplankus.
+table _Matai
+	lineageTag: d8615e0e-4f68-43de-9e44-19596702846f
+
+	/// Pajamos po nuolaidų: pristatytas kiekis × kainoraščio kaina × (1 − nuolaida).
+	measure Pajamos = SUM(Pardavimai[Pajamos])
+		formatString: #,0" €"
+		displayFolder: 1 Pardavimai
+		lineageTag: 0d5fe7d3-9a0f-450d-8077-c6b83e7f2391
+
+	measure 'Pajamos be nuolaidų' = SUM(Pardavimai[Pajamos be nuolaidų])
+		formatString: #,0" €"
+		displayFolder: 1 Pardavimai
+		lineageTag: ca9c69d1-89c3-45f4-88b6-90149d336936
+
+	/// Klientų nuolaidos ir akcijų nuolaidos kartu.
+	measure Nuolaidos = [Pajamos be nuolaidų] - [Pajamos]
+		formatString: #,0" €"
+		displayFolder: 1 Pardavimai
+		lineageTag: a6b70e2f-7191-4347-92e4-a6c3d1086f2f
+
+	measure 'Nuolaidų dalis %' = DIVIDE([Nuolaidos], [Pajamos be nuolaidų])
+		formatString: 0.0%
+		displayFolder: 1 Pardavimai
+		lineageTag: 0d66186c-2156-4e85-a07a-17658d13ffb2
+
+	/// Parduotų produktų žaliavų savikaina pagal receptą ir tų mėnesių žaliavų kainas.
+	measure 'Žaliavų savikaina' = SUM(Pardavimai[Žaliavų savikaina])
+		formatString: #,0" €"
+		displayFolder: 1 Pardavimai
+		lineageTag: 856eb164-a83d-42bb-8a76-2467363bc6cb
+
+	/// Pajamos minus žaliavų savikaina (darbo, energijos ir kitos sąnaudos čia neįskaičiuotos, jos yra Finansuose).
+	measure 'Bendrasis pelnas' = [Pajamos] - [Žaliavų savikaina]
+		formatString: #,0" €"
+		displayFolder: 1 Pardavimai
+		lineageTag: 9b98ee53-beda-4237-966a-f6fdf54a0f62
+
+	/// Bendrasis pelnas / Pajamos (marža po žaliavų).
+	measure 'Marža %' = DIVIDE([Bendrasis pelnas], [Pajamos])
+		formatString: 0.0%
+		displayFolder: 1 Pardavimai
+		lineageTag: cda5cedc-58b6-44d6-9881-1b362d6fe25e
+
+	measure 'Parduota vnt' = SUM(Pardavimai[Pristatyta vnt])
+		formatString: #,0
+		displayFolder: 1 Pardavimai
+		lineageTag: c0a408e6-6438-4ff0-803d-b93c39b494f8
+
+	measure 'Užsakyta vnt' = SUM(Pardavimai[Užsakyta vnt])
+		formatString: #,0
+		displayFolder: 1 Pardavimai
+		lineageTag: 844ec500-4e2a-403c-ad4c-62135706dcff
+
+	/// Užsakyta, bet nepristatyta (trūkumas sandėlyje).
+	measure 'Prarasta vnt' = SUM(Pardavimai[Prarasta vnt])
+		formatString: #,0
+		displayFolder: 1 Pardavimai
+		lineageTag: 92b1920e-d1ca-4304-93f4-f7e6a33eacd4
+
+	/// Kiek būtų uždirbta, jei būtų pristatytas visas užsakymas.
+	measure 'Prarastos pajamos' = SUM(Pardavimai[Prarastos pajamos])
+		formatString: #,0" €"
+		displayFolder: 1 Pardavimai
+		lineageTag: 9038052f-082c-4963-b956-d584209277c6
+
+	/// Fill rate: pristatyta / užsakyta.
+	measure 'Užsakymų įvykdymas %' = DIVIDE([Parduota vnt], [Užsakyta vnt])
+		formatString: 0.0%
+		displayFolder: 1 Pardavimai
+		lineageTag: 89694bb5-029b-4b70-a4b9-4f39de89902c
+
+	measure 'Akcijų pajamų dalis %' = DIVIDE(CALCULATE([Pajamos], Pardavimai[Akcija] = "Taip"), [Pajamos])
+		formatString: 0.0%
+		displayFolder: 1 Pardavimai
+		lineageTag: b42c503c-0710-4eb3-8bc9-06f08e6288bc
+
+	measure 'Vid. kaina vnt' = DIVIDE([Pajamos], [Parduota vnt])
+		formatString: 0.000" €"
+		displayFolder: 1 Pardavimai
+		lineageTag: 217e7997-8874-4132-9395-facefe31c5a6
+
+	/// Praeito mėnesio pajamos.
+	measure 'Pajamos PM' = CALCULATE([Pajamos], DATEADD(Data[Data], -1, MONTH))
+		formatString: #,0" €"
+		displayFolder: 2 Palyginimai
+		lineageTag: 63e52756-dfba-406e-8421-4e70c080c04c
+
+	measure 'Pajamos MoM %' = IF(NOT ISBLANK([Pajamos PM]), DIVIDE([Pajamos] - [Pajamos PM], [Pajamos PM]))
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 2 Palyginimai
+		lineageTag: a6308140-3e58-46ac-bdf0-308181e7b53b
+
+	/// Tas pats laikotarpis prieš metus.
+	measure 'Pajamos PY' = CALCULATE([Pajamos], SAMEPERIODLASTYEAR(Data[Data]))
+		formatString: #,0" €"
+		displayFolder: 2 Palyginimai
+		lineageTag: 874b1662-9847-4bda-afaf-e11b943534fe
+
+	measure 'Pajamos YoY %' = IF(NOT ISBLANK([Pajamos PY]), DIVIDE([Pajamos] - [Pajamos PY], [Pajamos PY]))
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 2 Palyginimai
+		lineageTag: c966cb9d-b577-43c8-8611-802ea5735024
+
+	measure 'Parduota vnt PY' = CALCULATE([Parduota vnt], SAMEPERIODLASTYEAR(Data[Data]))
+		formatString: #,0
+		displayFolder: 2 Palyginimai
+		lineageTag: aea91287-48de-4ddb-832a-c5f7542ed1a2
+
+	measure 'Parduota vnt YoY %' = IF(NOT ISBLANK([Parduota vnt PY]), DIVIDE([Parduota vnt] - [Parduota vnt PY], [Parduota vnt PY]))
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 2 Palyginimai
+		lineageTag: 80eda958-246b-45c6-b530-dfc8fd103358
+
+	measure 'Žaliavų savikaina PY' = CALCULATE([Žaliavų savikaina], SAMEPERIODLASTYEAR(Data[Data]))
+		formatString: #,0" €"
+		displayFolder: 2 Palyginimai
+		lineageTag: bcd03624-801d-4173-9378-3ad9082d7e5b
+
+	measure 'Bendrasis pelnas PY' = CALCULATE([Bendrasis pelnas], SAMEPERIODLASTYEAR(Data[Data]))
+		formatString: #,0" €"
+		displayFolder: 2 Palyginimai
+		lineageTag: a3ae3f6b-e204-4b63-9128-ce6da567a8b7
+
+	measure 'Marža % PY' = CALCULATE([Marža %], SAMEPERIODLASTYEAR(Data[Data]))
+		formatString: 0.0%
+		displayFolder: 2 Palyginimai
+		lineageTag: a5ffa93b-5942-4bde-b51b-e8be36b81dec
+
+	/// Maržos pokyčis procentiniais punktais, palyginti su tuo pačiu laikotarpiu prieš metus.
+	measure 'Maržos pokyčis p. p.' = IF(NOT ISBLANK([Marža % PY]) && NOT ISBLANK([Marža %]), ([Marža %] - [Marža % PY]) * 100)
+		formatString: +0.0" p. p.";-0.0" p. p.";0.0" p. p."
+		displayFolder: 2 Palyginimai
+		lineageTag: d6ac76d2-46a6-466b-9215-5f7ca6cfc893
+
+	measure 'Pajamos YTD' = TOTALYTD([Pajamos], Data[Data])
+		formatString: #,0" €"
+		displayFolder: 2 Palyginimai
+		lineageTag: db3399db-857e-4749-bdab-72c036a7cc37
+
+	measure 'Pajamos YTD PY' = CALCULATE([Pajamos YTD], SAMEPERIODLASTYEAR(Data[Data]))
+		formatString: #,0" €"
+		displayFolder: 2 Palyginimai
+		lineageTag: e9467431-77db-4999-9ccf-c5c1757a79c9
+
+	/// Bendrojo pelno pokyčis, palyginti su tuo pačiu laikotarpiu prieš metus. Lygus keturių efektų sumai.
+	measure 'Pelno pokyčis vs PY' = IF(NOT ISBLANK([Bendrasis pelnas PY]), [Bendrasis pelnas] - [Bendrasis pelnas PY])
+		formatString: +#,0" €";-#,0" €";0" €"
+		displayFolder: 3 Kodėl? (pelno skaidymas)
+		lineageTag: 0c2a9046-3532-4634-bb78-25c783db88ac
+
+	/// Kiek pelno pokyčio lėmė parduotas kiekis, jei vidutinis pelnas vienetui būtų kaip pernai.
+	measure 'Kiekio efektas' =
+			VAR KiekisPY = [Parduota vnt PY]
+			RETURN
+			    IF(KiekisPY > 0, ([Parduota vnt] - KiekisPY) * DIVIDE([Bendrasis pelnas PY], KiekisPY))
+		formatString: +#,0" €";-#,0" €";0" €"
+		displayFolder: 3 Kodėl? (pelno skaidymas)
+		lineageTag: 29916dae-06da-4cc3-864f-3149ae83ab0d
+
+	/// Kiek lėmė pasikeitusi pardavimų struktūra (kurie produktai ir kuriems klientams). Skaičiuojama produkto × kliento lygiu.
+	measure 'Mix efektas' =
+			VAR KiekisPY = [Parduota vnt PY]
+			VAR VidPelnasPY = DIVIDE([Bendrasis pelnas PY], KiekisPY)
+			VAR PagalPernaiPelna =
+			    SUMX(
+			        CROSSJOIN(VALUES(Produktas[Prekės kodas]), VALUES(Klientas[Kliento kodas])),
+			        VAR q = [Parduota vnt]
+			        VAR qPY = [Parduota vnt PY]
+			        RETURN IF(qPY > 0, q * DIVIDE([Bendrasis pelnas PY], qPY), [Bendrasis pelnas])
+			    )
+			RETURN
+			    IF(KiekisPY > 0, PagalPernaiPelna - [Parduota vnt] * VidPelnasPY)
+		formatString: +#,0" €";-#,0" €";0" €"
+		displayFolder: 3 Kodėl? (pelno skaidymas)
+		lineageTag: dd2826bd-d6dd-40c5-b415-e6e26fba2c57
+
+	/// Kiek lėmė grynosios kainos vienetui pokyčis (kainoraštis, klientų ir akcijų nuolaidos).
+	measure 'Kainos ir nuolaidų efektas' =
+			VAR KiekisPY = [Parduota vnt PY]
+			RETURN
+			    IF(
+			        KiekisPY > 0,
+			        SUMX(
+			            CROSSJOIN(VALUES(Produktas[Prekės kodas]), VALUES(Klientas[Kliento kodas])),
+			            VAR q = [Parduota vnt]
+			            VAR qPY = [Parduota vnt PY]
+			            RETURN IF(q > 0 && qPY > 0, q * (DIVIDE([Pajamos], q) - DIVIDE([Pajamos PY], qPY)))
+			        )
+			    )
+		formatString: +#,0" €";-#,0" €";0" €"
+		displayFolder: 3 Kodėl? (pelno skaidymas)
+		lineageTag: d408c337-6182-45eb-819d-cc4689e2a5c6
+
+	/// Kiek lėmė žaliavų savikainos vienetui pokyčis (pvz. grietinėlės kaina). Neigiamas = savikaina išaugo.
+	measure 'Žaliavų kainų efektas' =
+			VAR KiekisPY = [Parduota vnt PY]
+			RETURN
+			    IF(
+			        KiekisPY > 0,
+			        SUMX(
+			            CROSSJOIN(VALUES(Produktas[Prekės kodas]), VALUES(Klientas[Kliento kodas])),
+			            VAR q = [Parduota vnt]
+			            VAR qPY = [Parduota vnt PY]
+			            RETURN IF(q > 0 && qPY > 0, -q * (DIVIDE([Žaliavų savikaina], q) - DIVIDE([Žaliavų savikaina PY], qPY)))
+			        )
+			    )
+		formatString: +#,0" €";-#,0" €";0" €"
+		displayFolder: 3 Kodėl? (pelno skaidymas)
+		lineageTag: 87eaefbb-4225-4530-8faf-16cc638ee91b
+
+	/// Krioklio diagramai: ašis = Maržos veiksniai[Veiksnys], reikšmė = šis matas.
+	measure 'Veiksnio poveikis' =
+			SWITCH(
+			    SELECTEDVALUE('Maržos veiksniai'[Veiksnys]),
+			    "Kiekis", [Kiekio efektas],
+			    "Produktų ir klientų mix", [Mix efektas],
+			    "Kaina ir nuolaidos", [Kainos ir nuolaidų efektas],
+			    "Žaliavų kainos", [Žaliavų kainų efektas],
+			    [Pelno pokyčis vs PY]
+			)
+		formatString: +#,0" €";-#,0" €";0" €"
+		displayFolder: 3 Kodėl? (pelno skaidymas)
+		lineageTag: 8b33800e-d5b2-41b5-bb19-c550f0177bee
+
+	measure 'Pagaminta vnt' = SUM(Gamyba[Pagaminta vnt])
+		formatString: #,0
+		displayFolder: 4 Gamyba
+		lineageTag: 35bf5c4e-2cce-4758-91bb-3beff47b01a3
+
+	measure 'Brokas vnt' = SUM(Gamyba[Brokas vnt])
+		formatString: #,0
+		displayFolder: 4 Gamyba
+		lineageTag: ee7f5903-f1b4-48ec-9dd1-2f197614129d
+
+	measure 'Brokas %' = DIVIDE([Brokas vnt], [Pagaminta vnt])
+		formatString: 0.0%
+		displayFolder: 4 Gamyba
+		lineageTag: 83d7f820-8e47-40f5-9ec4-2ed2478e134d
+
+	/// Planuotojo Excel planas.
+	measure 'Planas vnt' = SUM('Gamybos planas'[Planas vnt])
+		formatString: #,0
+		displayFolder: 4 Gamyba
+		lineageTag: 752ff122-0e4c-4d25-85ff-69bfd62b0207
+
+	measure 'Plano įvykdymas %' = DIVIDE([Pagaminta vnt], [Planas vnt])
+		formatString: 0.0%
+		displayFolder: 4 Gamyba
+		lineageTag: fdfe5558-d7fc-4958-9d2e-e45d89f2361b
+
+	measure 'Plano nuokrypis vnt' = [Pagaminta vnt] - [Planas vnt]
+		formatString: +#,0;-#,0;0
+		displayFolder: 4 Gamyba
+		lineageTag: e4c3a148-a52d-46bc-b5fa-1bcc3d8aca14
+
+	measure 'Prastovos min' = SUM(Prastovos[Prastovos min])
+		formatString: #,0
+		displayFolder: 4 Gamyba
+		lineageTag: be368f42-8f4a-4b4c-b004-c8564e53d052
+
+	/// Linijų darbo minutės per savaitę × savaičių (pirmadienių) skaičius laikotarpyje.
+	measure 'Galimos minutės' =
+			SUMX(VALUES(Linija[Linijos kodas]), CALCULATE(MAX(Linija[Minutės per savaitę])))
+			    * CALCULATE(COUNTROWS(Data), Data[Savaitės dienos nr] = 1)
+		formatString: #,0
+		displayFolder: 4 Gamyba
+		lineageTag: 04c94dd2-717d-4f30-be9d-ad4c2ab7360a
+
+	measure 'Prastovų dalis %' = DIVIDE([Prastovos min], [Galimos minutės])
+		formatString: 0.0%
+		displayFolder: 4 Gamyba
+		lineageTag: 69a2d2a0-8061-4889-85b6-973bba982d9d
+
+	/// Likutis paskutinė laikotarpio inventorizacijos dieną (likutių per laiką nesumuojame).
+	measure 'Likutis vnt' =
+			VAR PaskutineData = MAX(Atsargos[Data])
+			RETURN
+			    CALCULATE(SUM(Atsargos[Likutis vnt]), Data[Data] = PaskutineData)
+		formatString: #,0
+		displayFolder: 5 Atsargos
+		lineageTag: d0af7f4e-da8a-4ce2-91ac-1bc10a245daa
+
+	measure 'Vid. dienos pardavimai vnt' = DIVIDE([Parduota vnt], COUNTROWS(Data))
+		formatString: #,0
+		displayFolder: 5 Atsargos
+		lineageTag: 8893305a-0338-456d-82c5-3ca1cfd2ec0b
+
+	/// Days of cover: kelioms dienoms užtektų likučio esant laikotarpio vidutiniam pardavimų tempui.
+	measure 'Atsargų dienos' = DIVIDE([Likutis vnt], [Vid. dienos pardavimai vnt])
+		formatString: 0.0
+		displayFolder: 5 Atsargos
+		lineageTag: a4d21a06-ce51-48e1-9f0f-b33d9ba0d94d
+
+	measure 'Pirkimų suma' = SUM(Pirkimai[Suma be PVM])
+		formatString: #,0" €"
+		displayFolder: 6 Pirkimai
+		lineageTag: 1b3733db-3c97-43b7-b1a7-46a900386884
+
+	/// Prasminga tik vienai žaliavai (skirtingi matai: l, kg, vnt).
+	measure 'Pirkimų kiekis' = SUM(Pirkimai[Kiekis])
+		formatString: #,0
+		displayFolder: 6 Pirkimai
+		lineageTag: 752ab3d0-b08b-485a-991f-7bcf7bcea557
+
+	/// Svertinė kaina už mato vienetą. Naudok su Žaliava filtre ar ašyje.
+	measure 'Vid. pirkimo kaina' = DIVIDE([Pirkimų suma], [Pirkimų kiekis])
+		formatString: 0.0000" €"
+		displayFolder: 6 Pirkimai
+		lineageTag: d2f076ef-1113-42fe-84c8-5714cd10fa7f
+
+	/// 100 = 2025 m. sausio kainos. Kiek dabar nupirktas žaliavų krepšelis kainuotų 2025-01 kainomis (be transporto).
+	measure 'Žaliavų kainų indeksas' =
+			VAR Zaliavos = FILTER(VALUES('Žaliava'[Žaliavos kodas]), 'Žaliava'[Žaliavos kodas] <> "TRANSP")
+			VAR Faktas = SUMX(Zaliavos, [Pirkimų suma])
+			VAR BazinemisKainomis =
+			    SUMX(
+			        Zaliavos,
+			        [Pirkimų kiekis] * CALCULATE([Vid. pirkimo kaina], REMOVEFILTERS(Data), Data[Metai-mėnuo] = "2025-01")
+			    )
+			RETURN
+			    DIVIDE(Faktas, BazinemisKainomis) * 100
+		formatString: 0.0
+		displayFolder: 6 Pirkimai
+		lineageTag: 1aacb624-b879-4615-a0f4-84c803d8715c
+
+	measure 'DI nuskaitytų pirkimų suma' = CALCULATE([Pirkimų suma], Pirkimai[Šaltinis] = "DI")
+		formatString: #,0" €"
+		displayFolder: 6 Pirkimai
+		lineageTag: da2f8bbb-8595-4e15-a275-22245283a35f
+
+	measure 'Pirkimų sąskaitų sk.' = DISTINCTCOUNT(Pirkimai[Sąskaitos nr])
+		formatString: #,0
+		displayFolder: 6 Pirkimai
+		lineageTag: c91cbf05-b85c-40d8-a110-dc54982ba975
+
+	/// Faktinės veiklos sąnaudos iš finansų (be žaliavų).
+	measure Sąnaudos = SUM(Finansai[Suma])
+		formatString: #,0" €"
+		displayFolder: 7 Finansai
+		lineageTag: 1dfb2617-54cc-43ba-8b2f-b9ceb4b8b1a8
+
+	/// Naudok su Straipsnis filtre ar ašyje.
+	measure Biudžetas = SUM('Biudžetas'[Suma])
+		formatString: #,0" €"
+		displayFolder: 7 Finansai
+		lineageTag: e53c2a63-f032-4d71-98ad-654d9472b25a
+
+	measure 'Sąnaudų biudžetas' = CALCULATE([Biudžetas], Straipsnis[Tipas] = "Sąnaudos")
+		formatString: #,0" €"
+		displayFolder: 7 Finansai
+		lineageTag: d29ee751-4f05-45c4-9ef0-69f70c8a4e3d
+
+	/// Teigiamas = išleista daugiau nei planuota.
+	measure 'Sąnaudų nuokrypis' = [Sąnaudos] - [Sąnaudų biudžetas]
+		formatString: +#,0" €";-#,0" €";0" €"
+		displayFolder: 7 Finansai
+		lineageTag: 08a51ec6-89ee-4adc-b9b1-11296ced3738
+
+	measure 'Sąnaudų nuokrypis %' = DIVIDE([Sąnaudų nuokrypis], [Sąnaudų biudžetas])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 7 Finansai
+		lineageTag: 26938a83-a3d7-4d22-9cd8-d6e599b20a0f
+
+	measure 'Pajamų biudžetas' = CALCULATE([Biudžetas], Straipsnis[Straipsnis] = "Pajamos")
+		formatString: #,0" €"
+		displayFolder: 7 Finansai
+		lineageTag: 321718cf-c911-4252-ba94-7f1178b40c07
+
+	measure 'Pajamų biudžeto įvykdymas %' = DIVIDE([Pajamos], [Pajamų biudžetas])
+		formatString: 0.0%
+		displayFolder: 7 Finansai
+		lineageTag: 44006e70-503a-41f5-9bc3-db1d6b7d47cc
+
+	measure 'Bendrojo pelno biudžetas' = CALCULATE([Biudžetas], Straipsnis[Straipsnis] = "Bendrasis pelnas")
+		formatString: #,0" €"
+		displayFolder: 7 Finansai
+		lineageTag: c61638c4-a474-445c-8a58-34e10e9ab1eb
+
+	/// Supaprastintas: bendrasis pelnas minus visos finansų sąnaudos.
+	measure 'Veiklos pelnas' = [Bendrasis pelnas] - [Sąnaudos]
+		formatString: #,0" €"
+		displayFolder: 7 Finansai
+		lineageTag: a126a25e-be3f-4e3e-93e4-c5ad7703a4aa
+
+	measure 'Veiklos pelno marža %' = DIVIDE([Veiklos pelnas], [Pajamos])
+		formatString: 0.0%
+		displayFolder: 7 Finansai
+		lineageTag: 169658cd-5faa-45d8-8ec9-d7d7d2298fca
+
+	measure 'DI apdorota sąskaitų' = COUNTROWS('DI žurnalas')
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 17d167f9-1454-44fa-8bdf-7f2da3107275
+
+	measure 'DI patvirtinta automatiškai' = CALCULATE(COUNTROWS('DI žurnalas'), 'DI žurnalas'[Statusas] = "Patvirtinta")
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: ec333c91-8920-4ef4-9fb8-ab88d8226922
+
+	measure 'DI atiduota peržiūrai' = CALCULATE(COUNTROWS('DI žurnalas'), 'DI žurnalas'[Statusas] = "Peržiūrai") + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 198524a9-ca76-460e-8023-1352379baa1d
+
+	/// Kokia dalis sąskaitų pateko į ERP be žmogaus.
+	measure 'DI automatizavimo lygis %' = DIVIDE([DI patvirtinta automatiškai], [DI apdorota sąskaitų])
+		formatString: 0%
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: e3034638-0cb1-47a3-970f-778631c855d8
+
+	measure 'DI kaina USD' = SUM('DI žurnalas'[Kaina USD])
+		formatString: 0.00" $"
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: c3101f8d-8db1-421e-8f7b-498792c36979
+
+	measure 'DI laikas min' = DIVIDE(SUM('DI žurnalas'[Trukmė s]), 60)
+		formatString: 0.0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 189efc0e-8ae5-4ba4-bc49-5788b5415755
+
+	/// Prielaida: 4 min. vienai sąskaitai suvesti rankomis (docs/di_tikslumas.md).
+	measure 'Rankinio darbo laikas min' = [DI apdorota sąskaitų] * 4
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: b48d9285-0d82-40a8-a079-91f977a26d1d
+
+	measure 'Sutaupyta laiko min' = [Rankinio darbo laikas min] - [DI laikas min]
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 517274b2-5ffb-412f-a3a1-62bc5ee2e973
+
+	measure 'Pašalinta dublikatų' = SUM(Pardavimai[ERP eilučių]) - COUNTROWS(Pardavimai)
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: f77d3032-9265-48f1-b426-213a9119c4fd
+
+	measure 'Sutvarkyta kliento kodų' = SUM(Pardavimai[Kodas taisytas]) + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 423badbb-d187-4d08-a925-1be56ddd1030
+
+	measure 'Be kliento kodo' = CALCULATE(COUNTROWS(Pardavimai), Pardavimai[Kliento kodas] = "NEŽINOMAS") + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 07b7c965-6913-4ceb-9444-762c44515861
+
+	measure 'Sutvarkyta plano kodų' = SUM('Gamybos planas'[Kodas taisytas]) + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: c644829a-c494-490e-81cd-540ad8e32033
+
+	measure 'Nerasta plano kodų' = COUNTROWS(FILTER('Gamybos planas', ISBLANK(RELATED(Produktas[Prekės kodas])))) + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 9d1a373f-c7a1-43fa-972c-1a9d531bfcfd
+
+	/// Lentelei su Kokybės patikros eilutėmis.
+	measure 'Rasta atvejų' =
+			SWITCH(
+			    SELECTEDVALUE('Kokybės patikros'[Nr]),
+			    1, [Pašalinta dublikatų],
+			    2, [Sutvarkyta kliento kodų],
+			    3, [Be kliento kodo],
+			    4, [Sutvarkyta plano kodų],
+			    5, [Nerasta plano kodų],
+			    6, COUNTROWS('Peržiūra') + 0,
+			    7, [Lab nr. kitu formatu],
+			    8, [Tyrimai be ERP partijos],
+			    9, [Skundo nr. kitu formatu],
+			    10, [Siuntos be partijos]
+			)
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 0080d506-4f99-48c1-8f2e-0dd2c22ef727
+
+	/// Vidutinė dienos maksimali temperatūra (tikri Open-Meteo duomenys).
+	measure 'Temperatūra °C' = AVERAGE(Orai[Maks. temperatūra])
+		formatString: 0.0" °C"
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: dac33b03-af7f-4270-85c5-54e1223fe3e0
+
+	/// 2015–2024 m. vidurkis tą pačią metų dieną.
+	measure 'Norma °C' = AVERAGE(Orai[Norma])
+		formatString: 0.0" °C"
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: 6133eb46-fd62-42e4-8c48-d7c29dda815c
+
+	/// Kiek šiltėliau (+) ar vėsiau (−) nei įprasta. Būtent tai, ne pati temperatūra, lemia prognozės klaidą.
+	measure 'Nukrypimas nuo normos °C' = IF(NOT ISBLANK([Temperatūra °C]), [Temperatūra °C] - [Norma °C])
+		formatString: +0.0" °C";-0.0" °C";0.0" °C"
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: 8abff015-788c-49f4-b72a-5e3160195812
+
+	/// Dienų skaičius, kai maksimali temperatūra ≥ 25 °C (sumuojama per pasirinktas šalis).
+	measure 'Karštų dienų (≥25 °C)' = CALCULATE(COUNTROWS(Orai), Orai[Maks. temperatūra] >= 25)
+		formatString: #,0
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: ad530201-8232-46fe-8440-6da75b11255c
+
+	/// Planuotojo paklausos prognozė (Excel). Lyginti su Užsakyta vnt; klientų filtras prognozės nefiltruoja, tik šalis.
+	measure 'Prognozė vnt' = SUM('Prognozė'[Prognozė vnt])
+		formatString: #,0
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: d8bcb382-65aa-459a-8a02-72b00ecd2caa
+
+	/// Kiek užsakymai viršijo (+) ar nesiekė (−) prognozės.
+	measure 'Prognozės nuokrypis %' = DIVIDE([Užsakyta vnt] - [Prognozė vnt], [Prognozė vnt])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: afe74cc0-8783-4098-a88e-be2580cfdc58
+
+	/// 1 − WAPE savaitės × produkto × šalies lygiu. 100 % = prognozė tiksliai atitiko užsakymus.
+	measure 'Prognozės tikslumas %' =
+			VAR Langeliai = CROSSJOIN(VALUES(Data[Savaitės pradžia]), VALUES(Produktas[Prekės kodas]), VALUES('Šalis'[Šalies kodas]))
+			VAR Paklaida = SUMX(Langeliai, ABS([Užsakyta vnt] - [Prognozė vnt]))
+			RETURN
+			    1 - DIVIDE(Paklaida, [Prognozė vnt])
+		formatString: 0.0%
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: e9ec1732-94f6-4fda-a373-4c8682cef149
+
+	/// Regresija iš duomenų (V–IX mėn., savaitė × šalis): kiek % užsakymai viršija prognozę, kai savaitė 1 °C šiltesnė už normą. Veikia ir pagal kategoriją ar šalį.
+	measure 'Paklausos jautrumas 1 °C' =
+			VAR Savaites = CALCULATETABLE(VALUES(Data[Savaitės pradžia]), Data[Mėnesio nr] >= 5, Data[Mėnesio nr] <= 9)
+			VAR Taskai =
+			    FILTER(
+			        ADDCOLUMNS(
+			            CROSSJOIN(Savaites, VALUES('Šalis'[Šalies kodas])),
+			            "@uzsakyta", [Užsakyta vnt],
+			            "@prognoze", [Prognozė vnt],
+			            "@x", [Nukrypimas nuo normos °C]
+			        ),
+			        [@uzsakyta] > 0 && [@prognoze] > 0 && NOT ISBLANK([@x])
+			    )
+			VAR Regresija = LINESTX(Taskai, LN([@uzsakyta] / [@prognoze]), [@x])
+			RETURN
+			    IF(COUNTROWS(Taskai) >= 10, EXP(MAXX(Regresija, [Slope1])) - 1)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: ebbab6ae-2287-4b12-b4ed-4fe5c2a5ccf2
+
+	measure 'Pasirinktas nukrypimas °C' = SELECTEDVALUE('Oro scenarijus'[Nukrypimas °C], 0)
+		formatString: +0" °C";-0" °C";0" °C"
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: b874a29c-b832-49b5-8b89-e32ee2f72f1a
+
+	/// Kiek koreguoti prognozę, jei orų prognozė rodo pasirinktą nukrypimą nuo normos. Jautrumas imamas iš visos istorijos.
+	measure 'Rekomenduojamas prognozės pokytis %' =
+			VAR Jautrumas = CALCULATE([Paklausos jautrumas 1 °C], REMOVEFILTERS(Data))
+			RETURN
+			    IF(NOT ISBLANK(Jautrumas), POWER(1 + Jautrumas, [Pasirinktas nukrypimas °C]) - 1)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: 49971193-08b4-45aa-a686-a23db0a0e383
+
+	measure 'Prognozė su orais vnt' = [Prognozė vnt] * (1 + [Rekomenduojamas prognozės pokytis %])
+		formatString: #,0
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: 0bb0afbc-e70b-43ce-b79d-5d205c26b631
+
+	/// Tiek vienetų reikėtų pagaminti papildomai pagal pasirinktą orų scenarijų.
+	measure 'Papildomai reikia vnt' = [Prognozė su orais vnt] - [Prognozė vnt]
+		formatString: +#,0;-#,0;0
+		displayFolder: 9 Orai ir prognozė
+		lineageTag: 4903ab61-e1ee-493d-81ed-b8ff9c199b56
+
+	measure 'Partijų sk.' = COUNTROWS(Partija)
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 0ce587d4-a81a-4ae1-b1ff-8354f42fa9d1
+
+	measure 'Partijų su nuokrypiu' = CALCULATE(COUNTROWS(Partija), Partija[Neatitikčių] > 0) + 0
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: e86cd2fb-5e84-4954-b059-283dcaa92a9d
+
+	/// Right first time: dalis partijų, kurių visi laboratorijos ir gamybos kontrolės rezultatai buvo ribose.
+	measure 'Pirmo karto atitiktis %' = 1 - DIVIDE([Partijų su nuokrypiu], [Partijų sk.])
+		formatString: 0.0%
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 34d99af3-44d7-4138-a8d1-50055ae7673d
+
+	/// Kritinių valdymo taškų (pasterizacija, metalo detektorius) nukrypimai.
+	measure 'KVT nukrypimai' = CALCULATE(COUNTROWS('Partijų etapai'), 'Partijų etapai'[KVT] = "Taip", 'Partijų etapai'[Atitinka] = "Ne") + 0
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 42a3dbac-0886-4855-ad6b-004633f1e0d8
+
+	measure 'Laboratorijos neatitiktys' = CALCULATE(COUNTROWS('Lab tyrimai'), 'Lab tyrimai'[Atitinka] = "Ne") + 0
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: e7c72f77-13e9-4131-afcb-3f0bc7b6a608
+
+	/// Partijos, kurias tunelis grūdino šiltesniu nei -35 °C oru.
+	measure 'Grūdinimo nukrypimai' = CALCULATE(COUNTROWS('Partijų etapai'), 'Partijų etapai'[Etapas] = "Grūdinimas tunelyje", 'Partijų etapai'[Atitinka] = "Ne") + 0
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 528f883c-33b6-4e2c-8aef-387a4efe541f
+
+	/// Pagal partijos gamybos datą. Tendencijai pagal gavimo mėnesį naudok Skundai[Gavimo mėnuo].
+	measure 'Skundų sk.' = COUNTROWS(Skundai) + 0
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 80117554-2706-4379-a6f1-d69036f94c21
+
+	measure 'Išsiųsta vnt' = SUM(Siuntos[Kiekis vnt])
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: b92b4587-65f6-4115-9377-6fc4aace8a02
+
+	/// Skundų skaičius milijonui išsiųstų vienetų (tos pačios partijos).
+	measure 'Skundai 1 mln. vnt.' = DIVIDE([Skundų sk.], [Išsiųsta vnt]) * 1000000
+		formatString: 0.0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 73602cc2-5672-4a5a-aa1d-fd237848820e
+
+	measure 'Vid. gamybos ciklas h' = AVERAGE(Partija[Gamybos ciklas h])
+		formatString: 0.0" h"
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: b17d41ff-ff97-4dbc-a8e9-b81312ec54c7
+
+	/// Kiek gamybos ciklo partija tiesiog laukia (dažniausiai prieš šaldymą, kai linija užimta).
+	measure 'Laukimo dalis %' = DIVIDE(SUM(Partija[Laukimas h]), SUM(Partija[Gamybos ciklas h]))
+		formatString: 0.0%
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 897c8f6e-dbde-406b-b743-65af292a12da
+
+	measure 'Vid. etapo trukmė h' = DIVIDE(AVERAGE('Partijų etapai'[Trukmė min]), 60)
+		formatString: 0.0" h"
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: c5d1bd8a-16e6-4b14-be59-604f40977aa1
+
+	measure 'Vid. laukimas prieš etapą h' = DIVIDE(AVERAGE('Partijų etapai'[Laukimas min]), 60)
+		formatString: 0.0" h"
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 6e5668b7-3e11-4a32-a161-f31614fc8538
+
+	/// Brandąs mišinys laukia laisvo frizerio. Didžiausias kamštis sezono piko metu.
+	measure 'Laukimas prieš šaldymą h' = CALCULATE([Vid. laukimas prieš etapą h], 'Partijų etapai'[Etapas] = "Šaldymas ir fasavimas")
+		formatString: 0.0" h"
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: a4a45fee-756c-4995-9c61-3f6a90485c6f
+
+	/// Kiek klientų gavo pasirinktų partijų produkcijos.
+	measure 'Atšaukimas: klientų sk.' = DISTINCTCOUNT(Siuntos[Kliento kodas])
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: cad16805-b98b-4099-be67-1cce9f50917e
+
+	measure 'Atšaukimas: siuntų sk.' = COUNTROWS(Siuntos)
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 9af50da9-d3ab-4be9-a2dc-617ed59d3d02
+
+	/// Vienetai, kuriuos galima tuoj pat blokuoti sandėlyje.
+	measure 'Atšaukimas: likutis sandėlyje vnt' = SUM(Partija[Likutis vnt])
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: c879b820-8244-4dee-8f9b-0f71c219487e
+
+	/// Masės balansas (BRC): kiek pagamintų vienetų rasta siuntose, broke ir sandėlyje.
+	measure 'Atšaukimas: atsekta %' = DIVIDE(SUM(Partija[Išsiųsta vnt]) + SUM(Partija[Brokas vnt]) + [Atšaukimas: likutis sandėlyje vnt], SUM(Partija[Pagaminta vnt]))
+		formatString: 0.0%
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 4ff41cd0-ccfe-4334-bdd0-10e47296d929
+
+	/// Iš kiek tiekėjų sąskaitų (žaliavų partijų) pagaminta.
+	measure 'Atšaukimas: tiekėjų sąskaitų sk.' = DISTINCTCOUNT('Žaliavų sunaudojimas'[Tiekėjo sąskaita])
+		formatString: #,0
+		displayFolder: 10 Kokybė ir atsekamumas
+		lineageTag: 23b09e86-63d0-4698-b57d-a1be31ee636e
+
+	measure 'Lab nr. kitu formatu' = SUM('Lab tyrimai'[Nr. taisytas]) + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: c56c6956-701a-4929-b89b-d12d7bf8eda1
+
+	measure 'Skundo nr. kitu formatu' = SUM(Skundai[Nr. taisytas]) + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 0d3df53d-566c-437f-b5d6-4c9917ede0ee
+
+	measure 'Siuntos be partijos' = COUNTROWS(FILTER(Siuntos, ISBLANK(Siuntos[Partijos nr]))) + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 7b937e18-21dc-4cb0-be3e-4b6a6c803305
+
+	measure 'Tyrimai be ERP partijos' = COUNTROWS(FILTER('Lab tyrimai', ISBLANK(RELATED(Partija[Partijos nr])))) + 0
+		formatString: #,0
+		displayFolder: 8 DI ir duomenų kokybė
+		lineageTag: 07933a73-4216-40c7-a121-840ae82e99c3
+
+	/// Automatinis įspėjimas apžvalgai: blogiausiai įvykdyta kategorija pasirinktu laikotarpiu.
+	measure 'Įspėjimas: trūkumai' =
+			VAR Kategorijos = FILTER(VALUES(Produktas[Kategorija]), [Užsakyta vnt] > 0)
+			VAR Blogiausia = TOPN(1, Kategorijos, [Užsakymų įvykdymas %], ASC)
+			VAR Pavadinimas = MAXX(Blogiausia, Produktas[Kategorija])
+			VAR Ivykdymas = MINX(Blogiausia, [Užsakymų įvykdymas %])
+			VAR Prarasta = CALCULATE([Prarastos pajamos], TREATAS({Pavadinimas}, Produktas[Kategorija]))
+			RETURN
+			    IF(
+			        Ivykdymas < 0.97,
+			        "⚠ " & Pavadinimas & ": pristatyta tik " & FORMAT(Ivykdymas, "0.0 %", "lt-LT") & " užsakymų, prarasta " & FORMAT(Prarasta, "#,0 €", "lt-LT"),
+			        "✓ Visų kategorijų užsakymai įvykdyti bent 97 %"
+			    )
+		displayFolder: 0 Apžvalga ir antraštės
+		lineageTag: 383c8bc0-423c-4db3-9017-0c8882090fcd
+
+	measure 'Įspėjimas: marža' =
+			VAR Pokytis = [Maržos pokyčis p. p.]
+			VAR Tekstas = "Marža " & FORMAT([Marža %], "0.0 %", "lt-LT") & " (" & FORMAT(Pokytis, "+0.0;-0.0", "lt-LT") & " p. p. vs pernai)"
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(Pokytis), "Palyginimo su pernai nėra",
+			        Pokytis <= -1, "⚠ " & Tekstas & ". Priežastys: puslapis „Kodėl?“",
+			        "✓ " & Tekstas
+			    )
+		displayFolder: 0 Apžvalga ir antraštės
+		lineageTag: d5a88961-fc36-4cc5-882b-5456793f9fef
+
+	/// Skundai pagal partijų gamybos laikotarpį, palyginti su visos istorijos vidurkiu.
+	measure 'Įspėjimas: kokybė' =
+			VAR Dabar = [Skundai 1 mln. vnt.]
+			VAR Iprasta = CALCULATE([Skundai 1 mln. vnt.], REMOVEFILTERS(Data))
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(Dabar), "✓ Skundų nėra",
+			        Dabar > 2 * Iprasta, "⚠ " & FORMAT(Dabar, "0.0", "lt-LT") & " skundo milijonui vnt. (įprastai " & FORMAT(Iprasta, "0.0", "lt-LT") & "). Puslapis „Kokybė“",
+			        "✓ Skundų lygis įprastas: " & FORMAT(Dabar, "0.0", "lt-LT") & " milijonui vnt."
+			    )
+		displayFolder: 0 Apžvalga ir antraštės
+		lineageTag: ac4504d7-7b27-4ee4-babd-f3e2ff67dbba
+
+	measure 'Įspėjimas: prognozė' =
+			VAR Nuokrypis = [Prognozės nuokrypis %]
+			VAR Orai = [Nukrypimas nuo normos °C]
+			RETURN
+			    IF(
+			        ABS(Nuokrypis) >= 0.1,
+			        "⚠ Užsakymai " & FORMAT(Nuokrypis, "+0 %;-0 %", "lt-LT") & " nuo prognozės, orai " & FORMAT(Orai, "+0.0;-0.0", "lt-LT") & " °C nuo normos. Puslapis „Planavimas“",
+			        "✓ Užsakymai atitinka prognozę (" & FORMAT(Nuokrypis, "+0 %;-0 %", "lt-LT") & ")"
+			    )
+		displayFolder: 0 Apžvalga ir antraštės
+		lineageTag: d5c8405b-07a4-455b-8425-e90dc14aff23
+
+	measure 'Antraštė: laikotarpis' = FORMAT(MIN(Data[Data]), "yyyy-MM-dd") & " – " & FORMAT(MAX(Data[Data]), "yyyy-MM-dd")
+		displayFolder: 0 Apžvalga ir antraštės
+		lineageTag: deb6634e-bcec-4cf3-a1d0-8ef0169211b7
+
+	measure 'Antraštė: kodėl' =
+			VAR Pokytis = [Pelno pokyčis vs PY]
+			RETURN
+			    IF(
+			        ISBLANK(Pokytis),
+			        "Pasirink laikotarpį, kuris turi palyginimą su pernai",
+			        "Bendrasis pelnas " & FORMAT(Pokytis, "+#,0 €;-#,0 €", "lt-LT") & " vs pernai, marža " & FORMAT([Maržos pokyčis p. p.], "+0.0;-0.0", "lt-LT") & " p. p. Kas tai lėmė?"
+			    )
+		displayFolder: 0 Apžvalga ir antraštės
+		lineageTag: dc48b7c9-5a69-44ab-8f8b-98e63c9f7d90
+
+	measure 'Antraštė: partija' = IF(HASONEVALUE(Partija[Partijos nr]), "Partija " & SELECTEDVALUE(Partija[Partija paieškai]) & " · " & SELECTEDVALUE(Partija[Būsena]), "Pasirink vieną partiją (paieška viršuje arba dešiniu pelės mygtuku → Drill through)")
+		displayFolder: 0 Apžvalga ir antraštės
+		lineageTag: c91d65ce-769f-4396-9dfe-ce7632eae3b6
+
+	/// Atsakymas į pasirinktą klausimą (Atsakymai[Klausimas]) pagal eilutę (Atsakymai[Eilutė]).
+	/// Atsakymas į pasirinktą klausimą (Atsakymai[Klausimas]) pagal eilutę (Atsakymai[Eilutė]).
+	/// Atsakymas į pasirinktą klausimą (Atsakymai[Klausimas]) pagal eilutę (Atsakymai[Eilutė]).
+	measure Atsakymas =
+			VAR q = SELECTEDVALUE(Atsakymai[Nr])
+			RETURN
+			    SWITCH(
+			        q,
+			        1, CALCULATE([Atsakymas: metai], REMOVEFILTERS(Data), REMOVEFILTERS(Partija), REMOVEFILTERS('Oro scenarijus')),
+			        2, CALCULATE([Atsakymas: trūkumai], REMOVEFILTERS(Data), REMOVEFILTERS(Partija), REMOVEFILTERS('Oro scenarijus')),
+			        3, CALCULATE([Atsakymas: marža], REMOVEFILTERS(Data), REMOVEFILTERS(Partija), REMOVEFILTERS('Oro scenarijus')),
+			        4, CALCULATE([Atsakymas: karštis], REMOVEFILTERS(Data), REMOVEFILTERS(Partija)),
+			        5, CALCULATE([Atsakymas: kokybė], REMOVEFILTERS(Data), REMOVEFILTERS(Partija), REMOVEFILTERS('Oro scenarijus')),
+			        6, CALCULATE([Atsakymas: procesas], REMOVEFILTERS(Data), REMOVEFILTERS(Partija), REMOVEFILTERS('Oro scenarijus')),
+			        7, CALCULATE([Atsakymas: partija], REMOVEFILTERS(Data), REMOVEFILTERS('Oro scenarijus')),
+			        8, CALCULATE([Atsakymas: DI], REMOVEFILTERS(Data), REMOVEFILTERS(Partija), REMOVEFILTERS('Oro scenarijus')),
+			        9, CALCULATE([Atsakymas: duomenys], REMOVEFILTERS(Data), REMOVEFILTERS(Partija), REMOVEFILTERS('Oro scenarijus'))
+			    )
+		displayFolder: 11 Klausk
+		lineageTag: 3f8cfe71-601f-48ab-aabb-1481d66f4fd7
+
+	measure 'Pasirinktas klausimas' =
+			SELECTEDVALUE(Atsakymai[Klausimas], "Pasirink klausimą kairėje")
+		displayFolder: 11 Klausk
+		lineageTag: 76f1a0f0-dac6-4958-a822-cc92e71d1c54
+
+	measure 'Atsakymas: metai' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR P26 = DATESBETWEEN(Data[Data], DATE(2026, 1, 1), DATE(2026, 10, 31))
+			VAR P25 = DATESBETWEEN(Data[Data], DATE(2025, 1, 1), DATE(2025, 10, 31))
+			VAR Paj26 = CALCULATE([Pajamos], P26)
+			VAR Paj25 = CALCULATE([Pajamos], P25)
+			VAR Pel26 = CALCULATE([Bendrasis pelnas], P26)
+			VAR Pel25 = CALCULATE([Bendrasis pelnas], P25)
+			VAR M26 = CALCULATE([Marža %], P26)
+			VAR M25 = CALCULATE([Marža %], P25)
+			VAR Iv = CALCULATE([Užsakymų įvykdymas %], P26)
+			VAR Pr = CALCULATE([Prarastos pajamos], P26)
+			VAR Rinkos =
+			    ADDCOLUMNS(
+			        FILTER(VALUES(Klientas[Rinka]), NOT ISBLANK(Klientas[Rinka]) && Klientas[Rinka] <> "(nenurodyta)"),
+			        "@g", DIVIDE(CALCULATE([Pajamos], P26), CALCULATE([Pajamos], P25)) - 1
+			    )
+			VAR Geriausia = TOPN(1, Rinkos, [@g], DESC)
+			RETURN
+			    SWITCH(
+			        e,
+			        1, "Pajamos ir pelnas auga, bet marža mažesnė nei pernai, o vasarą dalies užsakymų nespėta įvykdyti.",
+			        2, "2026 m. sausis–spalis: pajamos " & FORMAT(Paj26, "#,0 €", "lt-LT") & " (" & FORMAT(DIVIDE(Paj26, Paj25) - 1, "+0.0 %;-0.0 %", "lt-LT") & " vs pernai).",
+			        3, "Bendrasis pelnas " & FORMAT(Pel26, "#,0 €", "lt-LT") & " (" & FORMAT(Pel26 - Pel25, "+#,0 €;-#,0 €", "lt-LT") & "), marža " & FORMAT(M26, "0.0 %", "lt-LT") & " (" & FORMAT((M26 - M25) * 100, "+0.0;-0.0", "lt-LT") & " p. p.).",
+			        4, "Užsakymų įvykdyta " & FORMAT(Iv, "0.0 %", "lt-LT") & ", dėl trūkumų prarasta " & FORMAT(Pr, "#,0 €", "lt-LT") & " pajamų.",
+			        5, "Sparčiausiai augo rinka „" & MAXX(Geriausia, Klientas[Rinka]) & "“: " & FORMAT(MAXX(Geriausia, [@g]), "+0.0 %;-0.0 %", "lt-LT") & ".",
+			        6, "Daugiausia dėmesio reikia dviem dalykams: grietinėlės kainai (ji mažina maržą) ir pasiruošimui karščio savaitėms (dėl jų trūksta prekių).",
+			        7, "Puslapis „Apžvalga“."
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: 04e47269-f517-4382-b38a-7a8b45bf7b49
+
+	measure 'Atsakymas: trūkumai' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR Bir = DATESBETWEEN(Data[Data], DATE(2026, 6, 1), DATE(2026, 6, 30))
+			VAR VIVII = DATESBETWEEN(Data[Data], DATE(2026, 6, 1), DATE(2026, 7, 31))
+			VAR Karstis = DATESBETWEEN(Data[Data], DATE(2026, 6, 22), DATE(2026, 6, 28))
+			VAR Puod = CALCULATE([Užsakymų įvykdymas %], Bir, Produktas[Kategorija] = "Plombyras puodelyje")
+			VAR Kitos = CALCULATE([Užsakymų įvykdymas %], Bir, Produktas[Kategorija] <> "Plombyras puodelyje")
+			VAR Nuokr = CALCULATE([Nukrypimas nuo normos °C], Karstis)
+			VAR Lond = CALCULATE([Nukrypimas nuo normos °C], Karstis, 'Šalis'[Šalies kodas] = "GB")
+			VAR Planas = CALCULATE([Plano įvykdymas %], VIVII, Linija[Linijos kodas] = "KRE-L2")
+			VAR Prast = CALCULATE([Prastovos min], VIVII, Linija[Linijos kodas] = "KRE-L2")
+			VAR PrarV = CALCULATE([Prarasta vnt], VIVII, Produktas[Kategorija] = "Plombyras puodelyje")
+			VAR PrarE = CALCULATE([Prarastos pajamos], VIVII, Produktas[Kategorija] = "Plombyras puodelyje")
+			RETURN
+			    SWITCH(
+			        e,
+			        1, "Sutapo dvi priežastys: karščio banga ir sugedusi Kretingos puodelių linija (KRE-L2).",
+			        2, "Birželį pristatyta tik " & FORMAT(Puod, "0.0 %", "lt-LT") & " puodelių užsakymų, kitų kategorijų " & FORMAT(Kitos, "0.0 %", "lt-LT") & ". Problema yra vienos linijos.",
+			        3, "2026-06-22 savaitę Europoje buvo karščio banga: rinkose vidutiniškai " & FORMAT(Nuokr, "+0.0;-0.0", "lt-LT") & " °C virš normos, Londone " & FORMAT(Lond, "+0.0;-0.0", "lt-LT") & " °C. Užsakymai viršijo prognozę.",
+			        4, "Tą pačią savaitę KRE-L2 sugedo šaldymo kompresorius. Per VI–VII linija pagamino " & FORMAT(Planas, "0 %", "lt-LT") & " plano, prastovos " & FORMAT(Prast, "#,0", "lt-LT") & " min.",
+			        5, "Per VI–VII prarasta " & FORMAT(PrarV, "#,0", "lt-LT") & " vnt. puodelių ir " & FORMAT(PrarE, "#,0 €", "lt-LT") & " pajamų.",
+			        6, "Šaldymo įrangai daryti prevencinę priežiūrą prieš sezoną (gegužę), atsargines kompresoriaus dalis laikyti vietoje, o planuojant atsižvelgti į orų prognozę.",
+			        7, "Puslapiai „Gamyba“ ir „Planavimas“."
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: 14e5891a-672d-4ee3-98a7-07f311b30992
+
+	measure 'Atsakymas: marža' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR P26 = DATESBETWEEN(Data[Data], DATE(2026, 4, 1), DATE(2026, 9, 30))
+			VAR P25 = DATESBETWEEN(Data[Data], DATE(2025, 4, 1), DATE(2025, 9, 30))
+			VAR Paj26 = CALCULATE([Pajamos], P26)
+			VAR Paj25 = CALCULATE([Pajamos], P25)
+			VAR M26 = CALCULATE([Marža %], P26)
+			VAR M25 = CALCULATE([Marža %], P25)
+			VAR Pok = CALCULATE([Pelno pokyčis vs PY], P26)
+			VAR Kiek = CALCULATE([Kiekio efektas], P26)
+			VAR Mix = CALCULATE([Mix efektas], P26)
+			VAR Kain = CALCULATE([Kainos ir nuolaidų efektas], P26)
+			VAR Zal = CALCULATE([Žaliavų kainų efektas], P26)
+			VAR G1 = CALCULATE([Vid. pirkimo kaina], DATESBETWEEN(Data[Data], DATE(2026, 1, 1), DATE(2026, 3, 31)), 'Žaliava'[Žaliava] = "Grietinėlė 35 %")
+			VAR G2 = CALCULATE([Vid. pirkimo kaina], P26, 'Žaliava'[Žaliava] = "Grietinėlė 35 %")
+			RETURN
+			    SWITCH(
+			        e,
+			        1, "Pelnas augo, bet lėčiau nei pajamos, nes nuo balandžio pabrango grietinėlė.",
+			        2, "2026 m. IV–IX pajamos " & FORMAT(DIVIDE(Paj26, Paj25) - 1, "+0.0 %;-0.0 %", "lt-LT") & " (" & FORMAT(Paj25 / 1000000, "0.00", "lt-LT") & " → " & FORMAT(Paj26 / 1000000, "0.00", "lt-LT") & " mln. €), o žaliavų marža " & FORMAT(M25, "0.0 %", "lt-LT") & " → " & FORMAT(M26, "0.0 %", "lt-LT") & ".",
+			        3, "Bendrasis pelnas vis tiek " & FORMAT(Pok, "+#,0 €;-#,0 €", "lt-LT") & ": kiekis " & FORMAT(Kiek, "+#,0 €;-#,0 €", "lt-LT") & ", kainos ir nuolaidos " & FORMAT(Kain, "+#,0 €;-#,0 €", "lt-LT") & ", mix " & FORMAT(Mix, "+#,0 €;-#,0 €", "lt-LT") & ", žaliavų kainos " & FORMAT(Zal, "+#,0 €;-#,0 €", "lt-LT") & ".",
+			        4, "Grietinėlė 35 %: I–III vidutiniškai " & FORMAT(G1, "0.00", "lt-LT") & " €/kg, IV–IX " & FORMAT(G2, "0.00", "lt-LT") & " €/kg (" & FORMAT(DIVIDE(G2, G1) - 1, "+0.0 %;-0.0 %", "lt-LT") & ").",
+			        6, "Derėtis su grietinėlės tiekėju arba ieškoti antro. Peržiūrėti kainas produktų, kuriuose daugiausia grietinėlės (plombyras, tortai).",
+			        7, "Puslapis „Kodėl?“ (krioklio diagrama ir pokytis pagal rinką bei kategoriją)."
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: b295c16b-9bee-4cdd-947c-84ab0ed8c580
+
+	measure 'Atsakymas: karštis' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR J = CALCULATE([Paklausos jautrumas 1 °C], REMOVEFILTERS(Data))
+			VAR N = [Pasirinktas nukrypimas °C]
+			VAR R = [Rekomenduojamas prognozės pokytis %]
+			VAR Sav = TREATAS({DATE(2026, 6, 22)}, Data[Savaitės pradžia])
+			VAR Pr = CALCULATE([Prognozė vnt], Sav)
+			VAR PrO = CALCULATE([Prognozė su orais vnt], Sav, 'Oro scenarijus'[Nukrypimas °C] = 6)
+			VAR Uz = CALCULATE([Užsakyta vnt], Sav)
+			RETURN
+			    SWITCH(
+			        e,
+			        1, "Iš istorijos matyti: +1 °C virš normos ≈ " & FORMAT(J, "+0.0 %;-0.0 %", "lt-LT") & " užsakymų (gegužė–rugsėjis, visos rinkos).",
+			        2, IF(N = 0, "Slankikliu dešinėje pasirink, kiek šilčiau nei įprasta bus kitą savaitę.", "Jei bus " & FORMAT(N, "+0;-0", "lt-LT") & " °C virš normos, prognozę reikia keisti " & FORMAT(R, "+0.0 %;-0.0 %", "lt-LT") & "."),
+			        3, "Patikra su tikra karščio savaite 2026-06-22 (+6 °C): planuotojo prognozė " & FORMAT(Pr, "#,0", "lt-LT") & " vnt., su orų pataisa " & FORMAT(PrO, "#,0", "lt-LT") & " vnt., iš tikrųjų užsakyta " & FORMAT(Uz, "#,0", "lt-LT") & " vnt.",
+			        6, "Kas savaitę į planą įtraukti 16 dienų orų prognozę. Skriptas planner_weather.py ją paima automatiškai ir įrašo į planuotojo Excel.",
+			        7, "Puslapis „Planavimas“."
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: 2e5462d8-a0f9-48cd-b8da-1aaa4e229a25
+
+	measure 'Atsakymas: kokybė' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR Kris = CALCULATE(COUNTROWS(Skundai), Skundai[Tipas] = "Tekstūra (ledo kristalai)", Skundai[Gavimo mėnuo] IN {"2026-07", "2026-08"})
+			VAR KrisKiti = CALCULATE(COUNTROWS(Skundai), Skundai[Tipas] = "Tekstūra (ledo kristalai)", NOT Skundai[Gavimo mėnuo] IN {"2026-07", "2026-08"})
+			VAR Menesiu = CALCULATE(DISTINCTCOUNT(Skundai[Gavimo mėnuo]), NOT Skundai[Gavimo mėnuo] IN {"2026-07", "2026-08"})
+			VAR Gedimas = DATESBETWEEN(Data[Data], DATE(2026, 6, 22), DATE(2026, 7, 12))
+			VAR SkG = CALCULATE([Skundai 1 mln. vnt.], Gedimas, Linija[Linijos kodas] = "KRE-L2")
+			VAR SkV = [Skundai 1 mln. vnt.]
+			VAR FtaV = [Pirmo karto atitiktis %]
+			VAR FtaG = CALCULATE([Pirmo karto atitiktis %], Gedimas, Linija[Linijos kodas] = "KRE-L2")
+			RETURN
+			    SWITCH(
+			        e,
+			        1, "Taip. Kol KRE-L2 kompresorius neveikė, šaldymo tunelis nepasiekė −35 °C, ir ledai buvo grūdinami per šiltai.",
+			        2, "Liepą–rugpjūtį gauta " & FORMAT(Kris, "#,0", "lt-LT") & " skundų dėl ledo kristalų, kai kitais mėnesiais vidutiniškai " & FORMAT(DIVIDE(KrisKiti, Menesiu), "0.0", "lt-LT") & " per mėnesį.",
+			        3, "Gedimo metu (06-22–07-12) pagamintų KRE-L2 partijų skundai: " & FORMAT(SkG, "0", "lt-LT") & " milijonui vienetų, kai vidutiniškai " & FORMAT(SkV, "0.0", "lt-LT") & ".",
+			        4, "Pirmo karto atitiktis: visų partijų " & FORMAT(FtaV, "0.0 %", "lt-LT") & ", gedimo laikotarpio KRE-L2 partijų " & FORMAT(FtaG, "0 %", "lt-LT") & ".",
+			        6, "Grūdinimo temperatūrą stebėti realiu laiku ir partiją sulaikyti automatiškai, kai riba viršijama, o ne laukti skundų.",
+			        7, "Puslapiai „Kokybė“ ir „Procesas“."
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: c7518855-14a9-4e32-9dd7-0bf61e462b6c
+
+	measure 'Atsakymas: procesas' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR Et = TOPN(1, VALUES('Partijų etapai'[Etapas]), [Vid. laukimas prieš etapą h], DESC)
+			VAR EtP = MAXX(Et, 'Partijų etapai'[Etapas])
+			VAR EtH = MAXX(Et, [Vid. laukimas prieš etapą h])
+			VAR Cik = [Vid. gamybos ciklas h]
+			VAR LD = [Laukimo dalis %]
+			VAR Sau = CALCULATE([Laukimas prieš šaldymą h], DATESBETWEEN(Data[Data], DATE(2026, 1, 1), DATE(2026, 1, 31)))
+			VAR Lie = CALCULATE([Laukimas prieš šaldymą h], DATESBETWEEN(Data[Data], DATE(2026, 7, 1), DATE(2026, 7, 31)))
+			RETURN
+			    SWITCH(
+			        e,
+			        1, "Ilgiausiai partija laukia prieš etapą „" & EtP & "“: vidutiniškai " & FORMAT(EtH, "0.0", "lt-LT") & " h.",
+			        2, "Vidutinis gamybos ciklas " & FORMAT(Cik, "0.0", "lt-LT") & " h, iš jo " & FORMAT(LD, "0 %", "lt-LT") & " laiko partija tiesiog laukia eilėje.",
+			        3, "Laukimas prieš šaldymą: 2026 m. sausį " & FORMAT(Sau, "0.0", "lt-LT") & " h, liepą " & FORMAT(Lie, "0.0", "lt-LT") & " h, nes vasarą frizeriai perkrauti.",
+			        6, "Vasarai planuoti papildomą pamainą prie frizerių arba dalį produkcijos pagaminti iš anksto, kol sezonas neprasidėjo.",
+			        7, "Puslapis „Procesas“."
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: 48c52605-272e-45c3-85dd-652340798e4b
+
+	measure 'Atsakymas: partija' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR Pav = SELECTEDVALUE(Partija[Partija paieškai])
+			VAR Pag = SUM(Partija[Pagaminta vnt])
+			VAR Br = SUM(Partija[Brokas vnt])
+			VAR Isv = [Išsiųsta vnt]
+			VAR Lik = [Atšaukimas: likutis sandėlyje vnt]
+			VAR Ats = [Atšaukimas: atsekta %]
+			VAR KlSk = [Atšaukimas: klientų sk.]
+			VAR Kl =
+			    CONCATENATEX(
+			        FILTER(VALUES(Klientas[Klientas]), [Išsiųsta vnt] > 0),
+			        Klientas[Klientas] & " " & FORMAT([Išsiųsta vnt], "#,0", "lt-LT"),
+			        ", ",
+			        [Išsiųsta vnt], DESC
+			    )
+			VAR Tsk = [Atšaukimas: tiekėjų sąskaitų sk.]
+			VAR Sas =
+			    CONCATENATEX(
+			        SUMMARIZE('Žaliavų sunaudojimas', 'Žaliavų sunaudojimas'[Tiekėjo sąskaita], 'Žaliava'[Žaliava]),
+			        'Žaliavų sunaudojimas'[Tiekėjo sąskaita] & " (" & 'Žaliava'[Žaliava] & ")",
+			        ", "
+			    )
+			VAR Sk = [Skundų sk.]
+			VAR SkT = CONCATENATEX(VALUES(Skundai[Tipas]), Skundai[Tipas], ", ")
+			RETURN
+			    IF(
+			        NOT HASONEVALUE(Partija[Partijos nr]),
+			        IF(e = 1, "Pasirink vieną partiją paieškos laukelyje dešinėje (pvz. P26-001885)."),
+			        SWITCH(
+			            e,
+			            1, "Partija " & Pav & " atsekta " & FORMAT(Ats, "0 %", "lt-LT") & ".",
+			            2, "Pagaminta " & FORMAT(Pag, "#,0", "lt-LT") & " vnt., brokas " & FORMAT(Br, "#,0", "lt-LT") & ", išsiųsta " & FORMAT(Isv, "#,0", "lt-LT") & ", sandėlyje liko " & FORMAT(Lik, "#,0", "lt-LT") & " vnt.",
+			            3, "Gavo " & KlSk & " klientai: " & Kl & ".",
+			            4, "Žaliavos iš " & Tsk & " tiekėjų sąskaitų: " & Sas & ".",
+			            5, IF(Sk > 0, "Šiai partijai užregistruota skundų: " & Sk & " (" & SkT & ").", "Skundų šiai partijai neužregistruota."),
+			            6, "Jei reikia atšaukti, informuoti šiuos klientus ir paprašyti tiekėjų partijų sertifikatų. Visa informacija gaunama iš karto, nereikia ieškoti penkiose sistemose.",
+			            7, "Puslapis „Atšaukimas“."
+			        )
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: 1a777935-c918-449c-afe5-2d0a92630b29
+
+	measure 'Atsakymas: DI' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR N = [DI apdorota sąskaitų]
+			VAR A = [DI automatizavimo lygis %]
+			VAR P = [DI atiduota peržiūrai]
+			VAR T = [DI laikas min]
+			VAR R = [Rankinio darbo laikas min]
+			VAR K = [DI kaina USD]
+			RETURN
+			    SWITCH(
+			        e,
+			        1, "DI apdorotos tiekėjų sąskaitos: " & FORMAT(N, "#,0", "lt-LT") & ". Automatiškai patvirtinta " & FORMAT(A, "0 %", "lt-LT") & ", žmogui patikrinti nukreipta: " & FORMAT(P, "#,0", "lt-LT") & ".",
+			        2, "Laikas: " & FORMAT(T, "0.0", "lt-LT") & " min. su DI vietoje maždaug " & FORMAT(R, "#,0", "lt-LT") & " min. rankomis.",
+			        3, "Kaina: " & FORMAT(K, "0.00", "lt-LT") & " $, t. y. apie " & FORMAT(DIVIDE(K, N), "0.00", "lt-LT") & " $ už sąskaitą.",
+			        4, "Patikra su žinomais atsakymais: 378 iš 378 laukų teisingi, pagauti visi 6 „spąstai“ (nuolaida eilutėje, skenuota kopija, kita valiuta, dublikatas, nesutampanti suma, paslėpta instrukcija DI).",
+			        6, "Pradėti nuo vieno tiekėjo: pirmą mėnesį DI dirba lygiagrečiai su žmogumi, ir rezultatai lyginami.",
+			        7, "Puslapis „Duomenų kokybė ir DI“."
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: 342cfcb0-48d9-45d3-b2a3-7c2486ce84dc
+
+	measure 'Atsakymas: duomenys' =
+			VAR e = SELECTEDVALUE(Atsakymai[Eilė])
+			VAR Np = COUNTROWS('Kokybės patikros')
+			VAR Dub = [Pašalinta dublikatų]
+			VAR Kk = [Sutvarkyta kliento kodų]
+			VAR Bk = [Be kliento kodo]
+			VAR Pk = [Sutvarkyta plano kodų]
+			VAR Nk = [Nerasta plano kodų]
+			VAR Lab = [Lab nr. kitu formatu]
+			VAR SkN = [Skundo nr. kitu formatu]
+			RETURN
+			    SWITCH(
+			        e,
+			        1, "Taip, nes prieš patenkant į ataskaitą duomenys patikrinami " & Np & " taisyklėmis.",
+			        2, "Pašalinta dublikatų: " & FORMAT(Dub, "#,0", "lt-LT") & ". Sutvarkyta kliento kodų: " & FORMAT(Kk, "#,0", "lt-LT") & ", plano kodų: " & FORMAT(Pk, "#,0", "lt-LT") & " (ERP ir planuotojo Excel kodai skiriasi).",
+			        3, "Partijos numeris įvestas kitu formatu: laboratorijoje " & FORMAT(Lab, "#,0", "lt-LT") & " k., skundų registre " & FORMAT(SkN, "#,0", "lt-LT") & " k. Sutvarkyta automatiškai.",
+			        4, "Automatiškai nesutvarkyta: eilutės be kliento kodo (" & FORMAT(Bk, "#,0", "lt-LT") & ") ir nerasti plano kodai (" & FORMAT(Nk, "#,0", "lt-LT") & "). Jos rodomos atskirai, kad žmogus patikrintų.",
+			        6, "Tikroje įmonėje pirmiausia sulyginti ataskaitos sumas su finansų skyriaus skaičiais ir tik tada rodyti vadovams.",
+			        7, "Puslapis „Duomenų kokybė ir DI“."
+			    )
+		isHidden
+		displayFolder: 11 Klausk
+		lineageTag: c18d2a32-7b1f-4152-af27-3e8fe206e559
+
+	column Pagalbinis
+		isHidden
+		lineageTag: 3726ff86-ce83-4458-9d25-5a7ab9735dca
+		isNameInferred
+		sourceColumn: [Pagalbinis]
+
+	partition _Matai = calculated
+		mode: import
+		source = ROW("Pagalbinis", BLANK())
+

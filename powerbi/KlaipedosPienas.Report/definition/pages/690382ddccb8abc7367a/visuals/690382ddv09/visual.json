@@ -1,0 +1,184 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "690382ddv09",
+  "position": {
+    "x": 24,
+    "y": 440,
+    "z": 9000,
+    "width": 610,
+    "height": 245,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Peržiūra"
+                    }
+                  },
+                  "Property": "Failas"
+                }
+              },
+              "queryRef": "Peržiūra.Failas",
+              "nativeQueryRef": "Failas"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Peržiūra"
+                    }
+                  },
+                  "Property": "Tiekėjas"
+                }
+              },
+              "queryRef": "Peržiūra.Tiekėjas",
+              "nativeQueryRef": "Tiekėjas"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Peržiūra"
+                    }
+                  },
+                  "Property": "Suma"
+                }
+              },
+              "queryRef": "Peržiūra.Suma",
+              "nativeQueryRef": "Suma"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Peržiūra"
+                    }
+                  },
+                  "Property": "Priežastys"
+                }
+              },
+              "queryRef": "Peržiūra.Priežastys",
+              "nativeQueryRef": "Priežastys"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Peržiūra"
+                    }
+                  },
+                  "Property": "Įtartinas turinys"
+                }
+              },
+              "queryRef": "Peržiūra.Įtartinas turinys",
+              "nativeQueryRef": "Įtartinas turinys"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Atiduota žmogui peržiūrėti'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

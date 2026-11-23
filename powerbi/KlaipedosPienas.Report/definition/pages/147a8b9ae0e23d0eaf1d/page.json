@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "147a8b9ae0e23d0eaf1d",
+  "displayName": "Procesas",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "147a8b9av03",
+      "target": "147a8b9av05",
+      "type": "NoFilter"
+    }
+  ]
+}

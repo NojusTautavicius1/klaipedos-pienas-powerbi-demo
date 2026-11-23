@@ -1,0 +1,438 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 2378.6766106950536,
+            "y": 1004.584586395732
+          },
+          "nodeIndex": "_Matai",
+          "nodeLineageTag": "d8615e0e-4f68-43de-9e44-19596702846f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 430.2498766521577,
+            "y": 1184.5718182175988
+          },
+          "nodeIndex": "Atsargos",
+          "nodeLineageTag": "70d429e4-83ea-4571-bffa-0e78e6a97b63",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 418.05171944315055,
+            "y": 579.84969511244208
+          },
+          "nodeIndex": "Biudžetas",
+          "nodeLineageTag": "b5c463b9-1c32-4108-afaa-61cc70663d64",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 710.967945483592,
+            "y": 825.69215995147306
+          },
+          "nodeIndex": "Data",
+          "nodeLineageTag": "3f0779fb-f00f-498a-a218-b9a450eaf465",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2662.6766106950536,
+            "y": 1006.584586395732
+          },
+          "nodeIndex": "DI žurnalas",
+          "nodeLineageTag": "929779db-15af-4240-b27e-c150e5376077",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 245.34127761938566,
+            "y": 837.22130406686392
+          },
+          "nodeIndex": "Finansai",
+          "nodeLineageTag": "4a82a1b3-32b2-44ce-8e62-10f6a900be49",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1056.3513321223761,
+            "y": 1036.7369580473087
+          },
+          "nodeIndex": "Gamyba",
+          "nodeLineageTag": "4fedc4ac-85fe-4a70-85da-55ae37d0a893",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1003.7332660492175,
+            "y": 731.28921289615073
+          },
+          "nodeIndex": "Gamybos planas",
+          "nodeLineageTag": "f8461f43-eac2-4067-a3c7-7bf28c63b92b",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 965.88030299326442,
+            "y": 2059.169172791464
+          },
+          "nodeIndex": "Klientas",
+          "nodeLineageTag": "6efb2440-8f92-4df2-b784-476b4bb66d0d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2946.6766106950536,
+            "y": 1066.584586395732
+          },
+          "nodeIndex": "Kokybės patikros",
+          "nodeLineageTag": "b3de5bde-ae6d-4336-897b-3872e232726d",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1853.0368967730619,
+            "y": 936.21149555488159
+          },
+          "nodeIndex": "Lab tyrimai",
+          "nodeLineageTag": "e3d4daa7-f2e7-4bec-b9a6-08fe0dc4cd54",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1349.1284421731873,
+            "y": 895.36416192113438
+          },
+          "nodeIndex": "Linija",
+          "nodeLineageTag": "4f6ec5c8-6e53-4e54-9b86-01eeada53ba8",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3230.6766106950536,
+            "y": 1090.584586395732
+          },
+          "nodeIndex": "Maržos veiksniai",
+          "nodeLineageTag": "6216c53e-99e3-46aa-819d-11cace7f1673",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 137.46481915292134,
+            "y": 1381.9730065604576
+          },
+          "nodeIndex": "Orai",
+          "nodeLineageTag": "2e57ce8c-766b-4d64-b237-243ecbf90999",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3514.6766106950536,
+            "y": 1054.584586395732
+          },
+          "nodeIndex": "Oro scenarijus",
+          "nodeLineageTag": "8bc43b7a-f677-411f-90b6-b2d66ab54df1",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 938.27411147221812,
+            "y": 1701.1419226716184
+          },
+          "nodeIndex": "Pardavimai",
+          "nodeLineageTag": "6a6c672d-e5bd-470d-879b-6b10e59614a7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1560.6749565778146,
+            "y": 1128.3685898437031
+          },
+          "nodeIndex": "Partija",
+          "nodeLineageTag": "d68f36d5-27e2-499d-a36f-1c3cade4c830",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1974.5090950481244,
+            "y": 1413.322763932792
+          },
+          "nodeIndex": "Partijų etapai",
+          "nodeLineageTag": "5503898f-aacf-4c37-8f21-04509935eb43",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2144.6766106950531,
+            "y": 1154.0376932934539
+          },
+          "nodeIndex": "Partijų sprendimai",
+          "nodeLineageTag": "8388a724-6a35-4b47-bf30-8edeace6719d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3798.6766106950536,
+            "y": 1006.584586395732
+          },
+          "nodeIndex": "Peržiūra",
+          "nodeLineageTag": "2f8df6d1-fd29-4d2a-ae31-9364ca1c4f9b",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1123.7290517719466,
+            "y": 139.4007702902918
+          },
+          "nodeIndex": "Pirkimai",
+          "nodeLineageTag": "431bc249-b8cf-4c22-9285-fd4701dcb024",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 835.65513740511187,
+            "y": 498.27469931738779
+          },
+          "nodeIndex": "Prastovos",
+          "nodeLineageTag": "4545da18-9bcb-4ad0-9345-c71289bdb1d8",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1025.80379487015,
+            "y": 1344.6832815573302
+          },
+          "nodeIndex": "Produktas",
+          "nodeLineageTag": "cbf41564-c4fc-4672-a3fb-955c77a3a16a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 708.53260865491734,
+            "y": 1418.5338173065343
+          },
+          "nodeIndex": "Prognozė",
+          "nodeLineageTag": "b28a96f6-3223-41ef-bcb6-3561dc585c58",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 645.38284663733361,
+            "y": 1983.1831772832275
+          },
+          "nodeIndex": "Šalis",
+          "nodeLineageTag": "1164d62a-3d3e-482c-b808-ba590fd34b89",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1258.66844539001,
+            "y": 1806.4261504368919
+          },
+          "nodeIndex": "Siuntos",
+          "nodeLineageTag": "4f5640ef-b765-479c-9c5d-50ff1486a826",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1629.3416000473962,
+            "y": 1893.7295983219442
+          },
+          "nodeIndex": "Skundai",
+          "nodeLineageTag": "b247dc6a-ffda-487c-8ac0-abf3294c6982",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 604.14924631217946
+          },
+          "nodeIndex": "Straipsnis",
+          "nodeLineageTag": "68ded681-a3e7-475e-8fbc-d6d2a542c860",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1788.1958062599913,
+            "y": 326.41147877583012
+          },
+          "nodeIndex": "Tiekėjas",
+          "nodeLineageTag": "9a0fb488-a9a8-493c-bfc0-342a0010bb40",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1416.5689430424882,
+            "y": -50
+          },
+          "nodeIndex": "Žaliava",
+          "nodeLineageTag": "f54fc28c-efa5-4fb3-9170-d235e4e06291",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1635.9409949853505,
+            "y": 680.30639004856585
+          },
+          "nodeIndex": "Žaliavų sunaudojimas",
+          "nodeLineageTag": "8954032e-d9e0-45ab-8aeb-7a519c4e32ef",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4032.6766106950536,
+            "y": 1066.584586395732
+          },
+          "nodeIndex": "Atsakymai",
+          "nodeLineageTag": "0a08bb21-e379-425c-ba8e-a7f774a55596",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

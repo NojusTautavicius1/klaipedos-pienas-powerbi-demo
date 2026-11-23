@@ -1,0 +1,4 @@
+/// Aplankas su ERP eksportais, planuotojo Excel ir DI rezultatais. Pakeisk, jei projektas kitoje vietoje (turi baigtis \).
+expression 'Duomenų aplankas' = "C:\Users\37060\OneDrive\Desktop\IT\pienines_cv\data\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 999c7c75-2acd-44a0-8d45-ce8f53d89f9b
+

@@ -1,0 +1,103 @@
+/// Partijos kelias per gamybos etapus iš linijų apskaitos (partiju_etapai.csv): laikai ir kontrolės parametrai. KVT = kritinis valdymo taškas (RVASVT). Etapai yra tipinė ledų technologija.
+table 'Partijų etapai'
+	lineageTag: 5503898f-aacf-4c37-8f21-04509935eb43
+
+	column 'Partijos nr'
+		dataType: string
+		isHidden
+		lineageTag: 37e6cdf5-3898-464c-85dd-61c62ff735aa
+		sourceColumn: Partijos nr
+
+	column 'Etapo nr'
+		dataType: int64
+		lineageTag: 492c921d-cda9-451c-bb77-7f22927738b2
+		summarizeBy: none
+		sourceColumn: Etapo nr
+
+	column Etapas
+		dataType: string
+		lineageTag: 368e4628-2093-46ba-a3b9-5ab874a68beb
+		sourceColumn: Etapas
+		sortByColumn: 'Etapo nr'
+
+	column Pradžia
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:nn
+		lineageTag: 9f9ab477-fa87-4e51-885e-8dce4de87b79
+		sourceColumn: Pradžia
+
+	column Pabaiga
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:nn
+		lineageTag: de18baf5-9e54-4ab4-83ef-6a7b84dafccc
+		sourceColumn: Pabaiga
+
+	column Kontrolė
+		dataType: string
+		lineageTag: bbce1512-babf-4a21-828e-c87afe241a2e
+		sourceColumn: Kontrolė
+
+	column Reikšmė
+		dataType: double
+		formatString: 0.0
+		lineageTag: 9961c5bf-609f-4df2-8877-b2937569fba9
+		summarizeBy: none
+		sourceColumn: Reikšmė
+
+	column 'Riba min'
+		dataType: double
+		formatString: 0.0
+		lineageTag: c1c2e740-09a2-429d-8112-60081ea53a4f
+		summarizeBy: none
+		sourceColumn: Riba min
+
+	column 'Riba max'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 07205b5f-07dd-475a-bab7-6d8c69f5a060
+		summarizeBy: none
+		sourceColumn: Riba max
+
+	column KVT
+		dataType: string
+		lineageTag: 212e1ba0-ea53-4e82-b8d2-1c46f284c076
+		sourceColumn: KVT
+
+	column Atitinka
+		dataType: string
+		lineageTag: c7f8c8dd-ab41-42bb-ae51-89ab16c92d88
+		sourceColumn: Atitinka
+
+	column 'Trukmė min'
+		dataType: double
+		formatString: #,0
+		lineageTag: 41cde0b7-1fae-4313-b827-bc9480adfcd3
+		summarizeBy: none
+		sourceColumn: Trukmė min
+
+	/// Kiek partija laukia tarp ankstesnio etapo pabaigos ir šio etapo pradžios.
+	column 'Laukimas min' =
+			VAR Ankstesnis = LOOKUPVALUE('Partijų etapai'[Pabaiga], 'Partijų etapai'[Partijos nr], 'Partijų etapai'[Partijos nr], 'Partijų etapai'[Etapo nr], 'Partijų etapai'[Etapo nr] - 1)
+			RETURN IF(NOT ISBLANK(Ankstesnis), ('Partijų etapai'[Pradžia] - Ankstesnis) * 24 * 60)
+		dataType: double
+		formatString: #,0
+		lineageTag: 9a204141-7333-4614-95c4-a4916f076b2c
+		summarizeBy: none
+
+	partition 'Partijų etapai' = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\linijos\partiju_etapai.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tusti = Table.ReplaceValue(Antrastes, "", null, Replacer.ReplaceValue, {"PABAIGA", "RIBA_MIN", "RIBA_MAX"}),
+				    Tipai = Table.TransformColumnTypes(Tusti, {{"PARTIJOS_NR", type text}, {"ETAPO_NR", Int64.Type}, {"ETAPAS", type text}, {"PRADZIA", type datetime}, {"PABAIGA", type datetime}, {"KONTROLE", type text}, {"REIKSME", type number}, {"RIBA_MIN", type number}, {"RIBA_MAX", type number}, {"KVT", type text}}, "lt-LT"),
+				    Atitinka = Table.AddColumn(Tipai, "Atitinka", each if ([RIBA_MIN] = null or [REIKSME] >= [RIBA_MIN]) and ([RIBA_MAX] = null or [REIKSME] <= [RIBA_MAX]) then "Taip" else "Ne", type text),
+				    Kvt = Table.TransformColumns(Atitinka, {{"KVT", each if _ = "T" then "Taip" else "Ne", type text}}),
+				    Trukme = Table.AddColumn(Kvt, "Trukmė min", each if [PABAIGA] = null then null else Duration.TotalMinutes([PABAIGA] - [PRADZIA]), type number),
+				    Pervadinta = Table.RenameColumns(Trukme, {{"PARTIJOS_NR", "Partijos nr"}, {"ETAPO_NR", "Etapo nr"}, {"ETAPAS", "Etapas"}, {"PRADZIA", "Pradžia"}, {"PABAIGA", "Pabaiga"}, {"KONTROLE", "Kontrolė"}, {"REIKSME", "Reikšmė"}, {"RIBA_MIN", "Riba min"}, {"RIBA_MAX", "Riba max"}, {"KVT", "KVT"}})
+				in
+				    Pervadinta
+

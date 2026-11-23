@@ -69,12 +69,16 @@ Pokalbyje galėsi parodyti: „Marža krito 2,6 p. p. Paspaudžiu „Kodėl?“:
 - **README** su architektūra (mermaid), lentele „skelbimas → projektas“, 4 diagramomis (`docs/img/`, `readme_charts.py`) ir EN santrauka. **90 dienų planas**: `docs/pirmos_90_dienu.md` (pradžia ne sezono metu, sulyginimas su finansais, DI pilotas lygiagrečiai su žmogumi, BRCGS atsekamumo testas, mokymai pagal skyrius).
 - **Motyvacinis tekstas**: `IT\CV\juodrastis\klaipedos_pienas_motyvacinis.md` (ne repozitorijoje).
 
+**Padaryta 11-23:**
+- Ataskaitos taisymai (`kurti_ataskaita.py`, `kurti_klausk.py`): „Klausk“ puslapis neveikė (DAX kintamasis `Top` rezervuotas), nukirptos antraštės ir slicer'iai, išjungtos angliškos paantraštės („X by Y“), skaidymo medis pakeistas dviem grafikais, Planavimo savaitės filtras, „Gamyba“ numatytai VI–VII, linksniai atsakymuose.
+- Pristatymo puslapis be kodo: https://nojus-powerbi-demo.vercel.app (`site/`, perdaroma su `site/build_site.py`). 11 puslapių nuotraukos, trys istorijos, „Klausk duomenų“ (9 klausimai, atsakymai iš modelio + DAX), klausimų forma.
+- README „Kas ką darė“ pataisyta pagal tiesą (puslapius aprašo skriptas), pridėta nuoroda į puslapį. Motyvaciniame tekste nuoroda į puslapį.
+
 **Liko tau (Nojau) iki 11-24:**
-1. Atidaryti Power BI Desktop, modelį išsaugoti kaip `powerbi\KlaipedosPienas.pbip` (README jau rodo šį kelią) ir sudėti puslapius pagal `docs/puslapiu_gidas.md`.
-2. Padaryti 2–3 ekrano nuotraukas („Kodėl?“, „Planavimas“, „Atšaukimas“), įdėti į `docs/img/` ir README skyrių „Trys istorijos“.
-3. README skyriuje „Kas ką darė“ parašyta, kad vizualus sudėjai pats. Tai turi būti tiesa prieš darant repozitoriją viešą.
-4. Padaryti repozitoriją viešą, perskaityti ir patvirtinti motyvacinį tekstą, kandidatuoti CVbankas formoje.
-5. Neprivaloma: įrašyti „Klausk duomenų“ video (`docs/video_scenarijus.md`).
+1. Atsidaryti https://nojus-powerbi-demo.vercel.app ir peržiūrėti (ypač „Klausk duomenų“). Pokalbyje mokėti paaiškinti bent „Kodėl?“ ir „Planavimas“ puslapius.
+2. Padaryti repozitoriją viešą (`gh repo edit NojusTautavicius1/klaipedos-pienas-powerbi-demo --visibility public --accept-visibility-change-consequences`).
+3. Perskaityti motyvacinį tekstą ir kandidatuoti CVbankas formoje.
+4. Neprivaloma: įrašyti „Klausk duomenų“ video (`docs/video_scenarijus.md`).
 
 ## 3. Duomenų modelis (žvaigždės schema)
 

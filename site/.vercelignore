@@ -1,0 +1,3 @@
+build_site.py
+.vercel
+.env*

@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledų gamintojo duomenys: Power BI + DI pavyzdys</title>
+<meta name="description" content="Mokomasis Power BI ir DI pavyzdys ledų gamintojui: ERP, planuotojo Excel, kokybė ir tikri orai viename modelyje. Nojus Tautavičius.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF7; --surface:#FFFFFF; --ink:#111214; --muted:#5F6368; --line:#E4E4DF;
+  --blue:#2A78D6; --blue-soft:#EAF2FC; --orange:#EB6834; --orange-soft:#FDF0EA; --green:#1E8E5A;
+  --radius:14px; --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:20;background:rgba(250,250,247,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:20px;height:56px}
+header.top b{font-weight:600;white-space:nowrap}
+nav{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+nav::-webkit-scrollbar{display:none}
+nav a{color:var(--muted);text-decoration:none;font-size:14px;white-space:nowrap}
+nav a:hover{color:var(--ink)}
+.hero{padding-top:64px;padding-bottom:40px}
+.badge{display:inline-flex;gap:8px;align-items:center;background:var(--orange-soft);color:#9A3A12;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:500}
+h1{font-size:clamp(30px,4.6vw,50px);line-height:1.1;letter-spacing:-.02em;margin:18px 0 16px;max-width:860px}
+.lead{font-size:19px;color:#33363a;max-width:760px;margin:0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:10px;font-weight:600;text-decoration:none;font-size:15px;border:1px solid transparent;cursor:pointer}
+.btn.primary{background:var(--ink);color:#fff}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn:hover{transform:translateY(-1px)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.stat b{display:block;font-size:26px;letter-spacing:-.01em}
+.stat span{color:var(--muted);font-size:14px;line-height:1.4;display:block;margin-top:4px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(24px,3vw,32px);letter-spacing:-.015em;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 28px;max-width:760px}
+.guide{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.step .n{width:28px;height:28px;border-radius:50%;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center;font-weight:700;font-size:14px}
+.step h3{margin:12px 0 6px;font-size:17px}
+.step p{margin:0;color:#3c4043;font-size:15px}
+table.req{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;font-size:15px}
+table.req th,table.req td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+table.req th{background:#F3F3EF;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+table.req tr:last-child td{border-bottom:0}
+table.req td:first-child{font-weight:500;width:34%}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font:500 14px Inter,sans-serif;cursor:pointer;color:#3c4043}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.shot{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.shot img{width:100%;cursor:zoom-in}
+.shot .cap{padding:16px 20px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
+.shot .cap h3{margin:0 0 4px;font-size:17px}
+.shot .cap p{margin:0;color:#3c4043;font-size:15px}
+.shot .cap .look{font-size:13px;color:var(--muted);white-space:nowrap}
+.stories{display:grid;gap:18px}
+.story{display:grid;grid-template-columns:1fr 1.2fr;gap:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;align-items:center}
+.story .k{font-size:13px;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:.05em}
+.story h3{margin:6px 0 10px;font-size:21px;letter-spacing:-.01em}
+.story p{margin:0 0 10px;color:#33363a}
+.story .num{font-weight:600}
+.ask{display:grid;grid-template-columns:340px 1fr;gap:18px}
+.qlist{display:flex;flex-direction:column;gap:6px}
+.q{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 14px;font:500 15px/1.4 Inter,sans-serif;cursor:pointer;color:var(--ink)}
+.q:hover{border-color:#cfcfc8}
+.q[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-soft)}
+.answer{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);min-height:420px}
+.answer .qq{color:var(--muted);font-size:14px;margin:0 0 6px}
+.answer h3{font-size:21px;margin:0 0 14px;letter-spacing:-.01em}
+.answer ul{margin:0 0 14px;padding-left:20px}
+.answer li{margin:6px 0}
+.answer .todo{background:#F1F8F4;border-left:3px solid var(--green);padding:12px 14px;border-radius:6px;margin:14px 0}
+.answer details{margin-top:12px}
+.answer summary{cursor:pointer;color:var(--blue);font-weight:500;font-size:14px}
+pre{background:#0F1115;color:#E6E6E6;padding:16px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5}
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.way{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.way h4{margin:0 0 6px;font-size:16px}
+.way p{margin:0;font-size:14.5px;color:#3c4043}
+.ai{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.card h3{margin:0 0 8px;font-size:18px}
+.card p{margin:0 0 10px;color:#33363a;font-size:15px}
+.card .big{font-size:28px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.card .big small{font-size:14px;color:var(--muted);font-weight:500}
+.flow{font:13px/1.6 ui-monospace,Consolas,monospace;background:#F3F3EF;border-radius:8px;padding:12px;color:#33363a;white-space:pre-wrap}
+.honest{background:#FFF8E6;border:1px solid #F1E2B5;border-radius:var(--radius);padding:20px 22px}
+.honest h3{margin:0 0 8px}
+.honest p{margin:0 0 8px}
+.me{display:grid;grid-template-columns:1.3fr 1fr;gap:24px}
+.contact{background:var(--ink);color:#fff;border-radius:var(--radius);padding:26px}
+.contact a{color:#fff}
+.contact p{margin:0 0 10px;color:#d9d9d9}
+.contact textarea{width:100%;min-height:110px;border-radius:10px;border:0;padding:12px;font:15px Inter,sans-serif;margin:8px 0 12px}
+.contact .btn{background:#fff;color:var(--ink)}
+footer{padding:28px 0 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+.lb{position:fixed;inset:0;background:rgba(10,10,12,.88);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-height:94vh;border-radius:8px}
+.story>*,.ask>*,.me>*,.guide>*,.ways>*,.ai>*,.stats>*,.shot .cap>*{min-width:0}
+table.req{table-layout:fixed}
+table.req td{overflow-wrap:anywhere}
+@media (max-width:600px){
+  table.req td:first-child{width:40%}
+  table.req th,table.req td{padding:10px 12px;font-size:14px}
+  .stats{grid-template-columns:1fr 1fr;gap:8px}
+  .stat b{font-size:21px}
+  .lead{font-size:17px}
+}
+@media (max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .guide,.ways,.ai{grid-template-columns:1fr}
+  .story,.ask,.me{grid-template-columns:1fr}
+  .shot .cap{grid-template-columns:1fr}
+  header.top b{display:none}
+  nav{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <b>Nojus Tautavičius · Power BI + DI</b>
+  <nav aria-label="Turinys">
+    <a href="#kaip">Kaip žiūrėti</a>
+    <a href="#ataskaita">Ataskaita</a>
+    <a href="#istorijos">Trys istorijos</a>
+    <a href="#klausk">Klausk duomenų</a>
+    <a href="#di">DI dalis</a>
+    <a href="#apie">Apie mane</a>
+  </nav>
+</div></header>
+
+<main>
+<div class="wrap hero">
+  <span class="badge">⚠ Mokomasis pavyzdys: sintetiniai duomenys, ne tikri AB „Klaipėdos pienas“ skaičiai</span>
+  <h1>Ledų gamintojo duomenys viename modelyje, ir ataskaita, kuri atsako „kodėl“</h1>
+  <p class="lead">Šį pavyzdį sukūriau kandidatuodamas į „Duomenų analitikos ir procesų automatizavimo specialisto“ pareigas. ERP eksportai, planuotojo Excel, laboratorija, sandėlis, skundų registras, DI nuskaitytos tiekėjų sąskaitos ir tikri orai sujungti į vieną Power BI modelį. Kodo skaityti nereikia: viskas parodyta šiame puslapyje.</p>
+  <div class="cta">
+    <a class="btn primary" href="#ataskaita">Peržiūrėti ataskaitą</a>
+    <a class="btn ghost" href="#klausk">Užduoti klausimą duomenims</a>
+    <a class="btn ghost" href="https://github.com/NojusTautavicius1/klaipedos-pienas-powerbi-demo">Kodas GitHub'e</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>30 · 116</b><span>lentelių ir DAX matų viename modelyje, 3 prieigos rolės</span></div>
+    <div class="stat"><b>378 / 378</b><span>sąskaitų laukų DI ištraukė teisingai, 6 iš 6 „spąstų“ pagauti</span></div>
+    <div class="stat"><b>88 → 95 %</b><span>vasaros prognozės tikslumas su orų pataisa (patikra su nematytais duomenimis)</span></div>
+    <div class="stat"><b>31 / 31</b><span>skaičių DI mėnesio komentare sutampa su modeliu (tikrina skriptas)</span></div>
+  </div>
+</div>
+
+<section id="kaip"><div class="wrap">
+  <h2>Kaip žiūrėti (3 minutės)</h2>
+  <p class="sub">Trumpiausias kelias per projektą. Kiekvienas žingsnis atsako į vieną skelbimo reikalavimą.</p>
+  <div class="guide">
+    <div class="step"><div class="n">1</div><h3>Ataskaita</h3><p>Peržiūrėkite 11 Power BI puslapių. Pradėkite nuo „Kodėl?“: ten pelno pokytis išskaidytas į kiekį, kainas, produktų mix ir žaliavas.</p></div>
+    <div class="step"><div class="n">2</div><h3>Klausk duomenų</h3><p>Pasirinkite klausimą, pvz. „Kodėl birželį trūko puodelių?“. Atsakymas suskaičiuotas iš to paties modelio, prie jo yra ir skaičiavimo būdas.</p></div>
+    <div class="step"><div class="n">3</div><h3>DI dalis</h3><p>Kaip Claude nuskaito tiekėjų sąskaitas į ERP ir rašo mėnesio komentarą vadovybei, o skriptas patikrina kiekvieną skaičių.</p></div>
+  </div>
+
+  <h2 style="margin-top:48px">Skelbimo reikalavimai ir kur juos rasti</h2>
+  <p class="sub">Skelbimo eilutės kairėje, o dešinėje tai, kas padaryta šiame pavyzdyje.</p>
+  <table class="req">
+    <thead><tr><th>Skelbime</th><th>Šiame projekte</th></tr></thead>
+    <tbody>
+      <tr><td>Sujungti ERP ir kitų sistemų duomenis į vieną modelį</td><td>22 mėnesiniai ERP eksportai (CSV), planuotojo Excel, laboratorija kitu formatu, sandėlis, skundų registras, DI nuskaitytos sąskaitos ir tikri orai → vienas modelis: 30 lentelių, 39 ryšiai, 116 matų.</td></tr>
+      <tr><td>Ataskaitos, rodančios procesą ir priežastis</td><td>Puslapiai „Kodėl?“, „Procesas: nuo žaliavos iki lentynos“ ir „Atšaukimas“ (partija → klientai ir tiekėjai).</td></tr>
+      <tr><td>DI: dokumentų apdorojimas, duomenų suvedimas</td><td>27 PDF sąskaitos → Claude → taisyklių patikra → ERP importo failas. Abejotinos sąskaitos keliauja žmogui.</td></tr>
+      <tr><td>DI: ataskaitų rengimas</td><td>Mėnesio komentaras vadovybei, kurį rašo Claude, o skriptas patikrina kiekvieną jame paminėtą skaičių.</td></tr>
+      <tr><td>Informacijos perdavimas tarp sistemų</td><td>ERP importo CSV iš sąskaitų. Orų pataisa grįžta planuotojui į Excel jo paties formatu.</td></tr>
+      <tr><td>Išmatuojama nauda</td><td>Sąskaitos: 1,4 min. vietoj ~108 min. Vasaros prognozės tikslumas: 88,1 % → 94,8 %.</td></tr>
+      <tr><td>Duomenų kokybė, prieigos, dokumentacija, mokymai</td><td>Kokybės patikrų puslapis, 3 RLS rolės, automatinis duomenų žodynas ir pirmų 90 dienų planas.</td></tr>
+    </tbody>
+  </table>
+</div></section>
+
+<section id="ataskaita"><div class="wrap">
+  <h2>Power BI ataskaita</h2>
+  <p class="sub">Ekrano nuotraukos iš Power BI Desktop. Spustelėkite nuotrauką, kad padidintumėte. Visi puslapiai turi bendrą laikotarpio filtrą ir lietuviškus pavadinimus.</p>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="shot">
+    <img id="shotImg" alt="">
+    <div class="cap"><div><h3 id="shotTitle"></h3><p id="shotText"></p></div><span class="look" id="shotLook"></span></div>
+  </div>
+</div></section>
+
+<section id="istorijos"><div class="wrap">
+  <h2>Trys istorijos duomenyse</h2>
+  <p class="sub">Generuodamas duomenis paslėpiau tris įvykius. Ataskaita juos randa pati, nereikia žinoti, kur ieškoti.</p>
+  <div class="stories">
+    <div class="story">
+      <div><div class="k">1 · Paklausa</div><h3>Karščio banga, kurios planas nenumatė</h3>
+        <p>2026-06-22 savaitę Londone buvo <span class="num">+10 °C</span>, Berlyne +8,8 °C virš normos (tikri Open-Meteo orai). Planuotojas prognozuoja pagal įprastą sezoną, todėl JK užsakymai viršijo prognozę <span class="num">63 %</span>.</p>
+        <p>Iš istorijos matyti: <span class="num">+1 °C virš normos ≈ +4,8 % užsakymų</span> (vien vasaros savaitėms +4,5 %). Su orų pataisa ta savaitė būtų prognozuota 0,3 % tikslumu.</p></div>
+      <img src="img/orai_vs_prognoze.png" alt="Oro nukrypimas ir prognozės klaida pagal savaitę" loading="lazy">
+    </div>
+    <div class="story">
+      <div><div class="k">2 · Gamyba ir kokybė</div><h3>Tą pačią savaitę sugenda puodelių linija</h3>
+        <p>Kretingos linijos KRE-L2 šaldymo kompresorius sustoja pačiame sezone: gedimas, dalių laukimas, remontas. Birželį pristatyta tik <span class="num">77 %</span> puodelių užsakymų, prarasta <span class="num">~200 tūkst. €</span> pajamų.</p>
+        <p>Kol tunelis nepasiekė −35 °C, ledai grūdinti per šiltai, todėl iš tų partijų skundų atėjo 17 kartų daugiau (ledo kristalai).</p></div>
+      <img src="img/kre_l2.png" alt="KRE-L2 planas ir faktas" loading="lazy">
+    </div>
+    <div class="story">
+      <div><div class="k">3 · Pelnas</div><h3>Marža krito, nors pardavimai augo</h3>
+        <p>Grietinėlė nuo balandžio pabrango <span class="num">+18 %</span>. IV–IX pajamos augo 8,9 %, o marža krito 62,8 % → 60,2 %.</p>
+        <p>Bendrasis pelnas vis tiek <span class="num">+268 tūkst. €</span>: kiekis +417 tūkst., kainos +136 tūkst., mix +47 tūkst., žaliavos −333 tūkst. €.</p></div>
+      <img src="img/pelno_skaidymas.png" alt="Pelno pokyčio skaidymas" loading="lazy">
+    </div>
+  </div>
+</div></section>
+
+<section id="klausk"><div class="wrap">
+  <h2>Klausk duomenų</h2>
+  <p class="sub">Vadovo klausimai ir atsakymai iš modelio. Visi skaičiai suskaičiuoti DAX'u iš tos pačios ataskaitos, tad jie sutampa su puslapiais aukščiau.</p>
+  <div class="ask">
+    <div class="qlist" id="qlist" role="group" aria-label="Klausimai"></div>
+    <div class="answer" id="answer" aria-live="polite"></div>
+  </div>
+
+  <h3 style="margin:40px 0 4px">Kur dar galima klausti</h3>
+  <div class="ways">
+    <div class="way"><h4>Power BI ataskaitoje</h4><p>Puslapyje „Klausk“ pasirenkate klausimą, o atsakymą sudaro DAX matas. Veikia be interneto ir be DI, užtenka nemokamo Power BI Desktop.</p></div>
+    <div class="way"><h4>Laisvu tekstu, su Claude</h4><p>Claude Code per Microsoft Power BI Modeling MCP prisijungia prie atidaryto modelio, pats parašo DAX užklausą ir atsako lietuviškai. Modelio jis nekeičia, tik skaito.</p></div>
+    <div class="way"><h4>Paklauskite manęs</h4><p>Turite klausimą, kurio čia nėra? <a href="#apie">Parašykite</a>: atsakysiu iš modelio su DAX užklausa ir ekrano nuotrauka.</p></div>
+  </div>
+</div></section>
+
+<section id="di"><div class="wrap">
+  <h2>DI dalis</h2>
+  <p class="sub">Visur ta pati taisyklė: DI atsakymą tikrina kodas, o kas abejotina, keliauja žmogui.</p>
+  <div class="ai">
+    <div class="card"><h3>Tiekėjų sąskaitos → ERP</h3>
+      <p class="big">378/378 <small>laukų teisingai</small></p>
+      <p>27 PDF (3 maketai, vienas skenuotas). Claude grąžina struktūruotą JSON, taisyklės tikrina sumas, PVM, tiekėją ir dublikatus.</p>
+      <p>Viena sąskaita turėjo paslėptą tekstą, liepiantį DI įrašyti 1 € sumą. Modelis jo nevykdė, pažymėjo kaip įtartiną, ir sąskaita nukeliavo žmogui.</p>
+      <div class="flow">PDF → Claude → taisyklės → ERP
+abejotina → žmogui</div></div>
+    <div class="card"><h3>Mėnesio komentaras vadovybei</h3>
+      <p class="big">0,12 $ <small>už mėnesį, 41 s</small></p>
+      <p>Skriptas suskaičiuoja faktus tomis pačiomis formulėmis kaip Power BI, Claude parašo tekstą, o skriptas palygina kiekvieną paminėtą skaičių su faktais.</p>
+      <p>Patikra pagavo ir mano klaidą: 2026 m. birželis turi 5 užsakymų savaites, 2025 m. tik 4. Dabar komentaras rašo „+48,7 %, bet vienai savaitei +18,9 %“.</p></div>
+    <div class="card"><h3>Orų pataisa planuotojui</h3>
+      <p class="big">+0,8 % <small>karščio savaitės paklaida (buvo −22 %)</small></p>
+      <p>Jautrumas orams apskaičiuotas iš 2025 m., tikrintas su 2026 m. vasara. Skriptas paima tikrą 16 dienų Open-Meteo prognozę ir įrašo Excel failą planuotojo formatu su linijų apkrova.</p></div>
+  </div>
+  <div class="honest" style="margin-top:18px">
+    <h3>Sąžiningai</h3>
+    <p>Duomenys sintetiniai, ir ryšys tarp orų ir paklausos juose įdėtas sąmoningai. Su tikrais įmonės duomenimis pagerėjimas bus mažesnis. Būtent tai patikrinčiau pirmiausia.</p>
+    <p id="who">Power BI anksčiau nebuvau naudojęs, jį išmokau kurdamas šį pavyzdį. Modelį, DAX matus ir ataskaitos puslapius kūriau kartu su Claude Code (per Power BI Modeling MCP ir skriptą, kuris aprašo puslapius): aš sprendžiau, ką ir kodėl skaičiuoti, ir tikrinau rezultatus DAX užklausomis.</p>
+  </div>
+</div></section>
+
+<section id="apie"><div class="wrap me">
+  <div>
+    <h2>Apie mane</h2>
+    <p>Esu Nojus Tautavičius, gyvenu Kretingoje ir baigiu programuotojo mokslus KTMC. Vasarą Potissimus agentūroje Klaipėdoje automatizavau SEO turinio ir audito ataskaitų rengimą, dabar atlieku praktiką IT Perspective. Rašau Python, TypeScript ir SQL, Claude API naudoju kasdien.</p>
+    <p>Taip pat parengiau <a href="https://github.com/NojusTautavicius1/klaipedos-pienas-powerbi-demo/blob/main/docs/pirmos_90_dienu.md">planą, ką daryčiau per pirmas 90 dienų</a>: pradžia ne sezono metu, sulyginimas su finansais ir DI pilotas lygiagrečiai su žmogumi.</p>
+    <p>Kiti darbai: <a href="https://ntdev.lt">ntdev.lt</a></p>
+  </div>
+  <div class="contact">
+    <h3 style="margin-top:0">Klausimas apie projektą?</h3>
+    <p>Parašykite, ką norėtumėte pamatyti duomenyse. Atsakysiu per dieną.</p>
+    <label for="qtext" class="sr" style="position:absolute;left:-9999px">Jūsų klausimas</label>
+    <textarea id="qtext" placeholder="Pvz.: kiek prarastume, jei grietinėlė pabrangtų dar 10 %?"></textarea>
+    <a class="btn" id="qsend" href="mailto:nojustautavicius007@gmail.com">Siųsti el. paštu</a>
+    <p style="margin-top:14px">nojustautavicius007@gmail.com</p>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">Sintetiniai duomenys. Mokomasis pavyzdys, nesusijęs su AB „Klaipėdos pienas“. Prekių ženklai ir tinklai paminėti tik tam, kad pavyzdys būtų artimas tikram verslui, tiekėjai išgalvoti. Orai: Open-Meteo.</div></footer>
+
+<div class="lb" id="lb" role="dialog" aria-label="Padidinta nuotrauka"><img id="lbImg" alt=""></div>
+
+<script src="qa.js"></script>
+<script>
+const PAGES = [
+  {id:"kodel", t:"Kodėl?", h:"Kodėl pasikeitė pelnas", p:"Krioklio diagrama skaido bendrojo pelno pokytį į kiekį, produktų mix, kainas ir žaliavas. Šalia: pokytis pagal rinką ir kategoriją, grietinėlės kaina ir žaliavų kainų indeksas.", l:"Svarbiausias puslapis"},
+  {id:"apzvalga", t:"Apžvalga", h:"Apžvalga ir automatiniai įspėjimai", p:"Pagrindiniai rodikliai pasirinktam mėnesiui. Įspėjimų korteles rašo DAX: kai rodiklis nukrypsta, kortelė pasako, kas atsitiko ir kur žiūrėti.", l:""},
+  {id:"planavimas", t:"Planavimas", h:"Orai ir prognozė", p:"Kiekviena vasaros savaitė: kiek oras skyrėsi nuo normos ir kiek suklydo prognozė. Pasirinkite, kiek bus šilčiau, ir modelis perskaičiuos, kiek daugiau gaminti.", l:"Istorija 1"},
+  {id:"gamyba", t:"Gamyba", h:"Planas, faktas ir prastovos", p:"Plano įvykdymas pagal liniją ir prastovos pagal priežastį. Matosi, kad karščio bangos metu sustojo KRE-L2.", l:"Istorija 2"},
+  {id:"procesas", t:"Procesas", h:"Nuo žaliavos iki lentynos", p:"Kiek laiko partija praleidžia kiekviename etape ir kiek laukia prieš jį. Vasarą susidaro eilė prie frizerio. Apačioje kontrolės taškai, kurie neatitiko ribų.", l:""},
+  {id:"kokybe", t:"Kokybė", h:"Kokybė ir skundai", p:"Pirmo karto atitiktis, skundai milijonui vienetų, laboratorijos neatitiktys ir skundų registras.", l:"Istorija 2"},
+  {id:"atsaukimas", t:"Atšaukimas", h:"Atšaukimo simuliacija pagal partiją", p:"Įvedus partijos numerį matyti, kam ji išsiųsta, iš kurių tiekėjų žaliavų pagaminta, kokį kelią ji praėjo ir ką rodė laboratorija.", l:"BRCGS atsekamumas"},
+  {id:"pardavimai", t:"Pardavimai", h:"Rinkos, klientai, sezoniškumas", p:"Pajamos, augimas, marža ir akcijų dalis pagal rinką ir klientą. Sezoniškumas: 2025 ir 2026 m. palyginimas pagal mėnesį.", l:""},
+  {id:"di", t:"Duomenų kokybė ir DI", h:"Duomenų kokybė ir DI", p:"Ką patikros rado duomenyse (dublikatai, skirtingi kodai, trūkstami klientai) ir kaip DI apdorojo tiekėjų sąskaitas: kiek automatiškai, kiek žmogui, kiek kainavo.", l:""},
+  {id:"klausk", t:"Klausk", h:"Klausk duomenų (Power BI)", p:"Tie patys klausimai kaip šio puslapio skiltyje „Klausk duomenų“, tik pačiame Power BI. Atsakymą sudaro DAX matas.", l:""},
+  {id:"virselis", t:"Viršelis", h:"Viršelis", p:"Įžanginis puslapis su pagrindiniais rodikliais ir mygtukais į tris istorijas.", l:""}
+];
+const tabs = document.getElementById("tabs");
+function show(i){
+  const p = PAGES[i];
+  document.querySelectorAll(".tab").forEach((b,j)=>b.setAttribute("aria-selected", j===i));
+  const img = document.getElementById("shotImg");
+  img.src = "img/pbi/" + p.id + ".png"; img.alt = "Power BI puslapis: " + p.h;
+  document.getElementById("shotTitle").textContent = p.h;
+  document.getElementById("shotText").textContent = p.p;
+  document.getElementById("shotLook").textContent = p.l;
+}
+PAGES.forEach((p,i)=>{
+  const b = document.createElement("button");
+  b.className="tab"; b.role="tab"; b.textContent=p.t; b.onclick=()=>show(i); tabs.appendChild(b);
+});
+show(0);
+
+const lb = document.getElementById("lb");
+document.getElementById("shotImg").onclick = e => { document.getElementById("lbImg").src = e.target.src; lb.classList.add("on"); };
+lb.onclick = () => lb.classList.remove("on");
+document.addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("on"); });
+
+const QA = window.QA || [];
+const qlist = document.getElementById("qlist"), ans = document.getElementById("answer");
+function esc(s){ return s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+function showQ(i){
+  const a = QA[i];
+  document.querySelectorAll(".q").forEach((b,j)=>b.setAttribute("aria-pressed", j===i));
+  ans.innerHTML =
+    `<p class="qq">${esc(a.q)}</p><h3>${esc(a.title)}</h3>` +
+    `<ul>${a.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` +
+    (a.todo ? `<div class="todo"><b>Ką daryti:</b> ${esc(a.todo)}</div>` : "") +
+    (a.where ? `<p style="color:var(--muted);font-size:14px;margin:0">Kur žiūrėti ataskaitoje: ${esc(a.where)}</p>` : "") +
+    (a.dax ? `<details><summary>Kaip suskaičiuota (DAX)</summary><pre>${esc(a.dax)}</pre></details>` : "");
+}
+QA.forEach((a,i)=>{
+  const b = document.createElement("button");
+  b.className="q"; b.textContent=a.q; b.onclick=()=>showQ(i); qlist.appendChild(b);
+});
+if (QA.length) showQ(0);
+
+const qtext = document.getElementById("qtext"), qsend = document.getElementById("qsend");
+function mail(){ qsend.href = "mailto:nojustautavicius007@gmail.com?subject=" + encodeURIComponent("Klausimas apie Power BI pavyzdį") + "&body=" + encodeURIComponent(qtext.value); }
+qtext.addEventListener("input", mail); mail();
+</script>
+</body>
+</html>

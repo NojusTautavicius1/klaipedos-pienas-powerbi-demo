@@ -6,7 +6,13 @@ Pavyzdį sukūriau kandidatuodamas į „Duomenų analitikos ir procesų automat
 
 Ataskaita atsako į klausimą „kodėl“, ne tik „kiek“. Duomenyse paslėpiau tris istorijas, ir modelis jas randa pats.
 
-![Kodėl marža krito, nors pelnas augo](docs/img/pelno_skaidymas.png)
+**Peržiūra be kodo:** https://nojus-powerbi-demo.vercel.app — visi ataskaitos puslapiai, trys istorijos ir „Klausk duomenų“ su atsakymais iš modelio.
+
+![Power BI: puslapis „Kodėl?“](docs/img/pbi_kodel.png)
+
+| Planavimas: orai ir prognozė | Atšaukimas pagal partiją | Klausk duomenų |
+|---|---|---|
+| ![Planavimas](docs/img/pbi_planavimas.png) | ![Atšaukimas](docs/img/pbi_atsaukimas.png) | ![Klausk](docs/img/pbi_klausk.png) |
 
 ## Ką rasite pagal skelbimo reikalavimus
 
@@ -135,7 +141,7 @@ tests/         32 testai: sąskaitų taisyklės, kokybės duomenys, skaičių pa
 
 ## Kas ką darė
 
-Modelį (Power Query, ryšius, DAX matus, RLS) kūriau kartu su Claude Code per Power BI Modeling MCP: aš sprendžiau, ką ir kodėl skaičiuoti, ir tikrinau rezultatus DAX užklausomis. Vizualus ir puslapius sudėjau pats Power BI Desktop, kad suprasčiau, kaip jie veikia. Python dalį ir testus rašiau su Claude Code.
+Modelį (Power Query, ryšius, DAX matus, RLS) kūriau kartu su Claude Code per Power BI Modeling MCP: aš sprendžiau, ką ir kodėl skaičiuoti, ir tikrinau rezultatus DAX užklausomis. Ataskaitos puslapiai aprašyti skriptu [`powerbi/kurti_ataskaita.py`](powerbi/kurti_ataskaita.py) (PBIR formatas), kurį rašėme su Claude Code. Juos peržiūrėjau ir taisiau Power BI Desktop. Python dalį ir testus rašiau su Claude Code.
 
 ---
 

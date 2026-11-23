@@ -1,0 +1,68 @@
+/// Puslapio „Klausk“ klausimai ir atsakymo eilutės. Atsakymus skaičiuoja matas [Atsakymas] (aplankas „11 Klausk“).
+table Atsakymai
+	lineageTag: 24f7bfe7-8ba8-43e4-bc7a-577cad7b9c74
+
+	column Nr
+		isHidden
+		formatString: 0
+		lineageTag: 63ec3ef1-976e-44bc-9fc4-74a181e6e077
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nr]
+
+	column Klausimas
+		lineageTag: 4073d0b5-2cbe-49c5-bfd8-bdf29c630ae6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Klausimas]
+		sortByColumn: Nr
+
+	column Eilė
+		isHidden
+		formatString: 0
+		lineageTag: 794114c9-32d5-4f96-8ec6-babd945ff9f7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Eilė]
+
+	column Eilutė
+		lineageTag: 704b6975-1655-472e-b45e-d8cbda48364a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Eilutė]
+		sortByColumn: Eilė
+
+	partition Atsakymai = calculated
+		mode: import
+		source =
+				VAR K =
+				    DATATABLE(
+				        "Nr", INTEGER, "Klausimas", STRING,
+				        {
+				        {1, "Kaip sekasi šiais metais, palyginti su pernai?"},
+				        {2, "Kodėl 2026 m. birželį trūko puodelių?"},
+				        {3, "Kodėl krito marža, nors pardavimai augo?"},
+				        {4, "Kiek daugiau gaminti, jei kitą savaitę bus karšta?"},
+				        {5, "Ar linijos gedimas paveikė kokybę?"},
+				        {6, "Kur gamyboje partija stovi ilgiausiai?"},
+				        {7, "Kas gavo partiją ir iš ko ji pagaminta?"},
+				        {8, "Kiek laiko ir pinigų sutaupo DI sąskaitoms?"},
+				        {9, "Ar galima pasitikėti šiais duomenimis?"}
+				        }
+				    )
+				VAR E =
+				    DATATABLE(
+				        "Eilė", INTEGER, "Eilutė", STRING,
+				        {
+				        {1, "Atsakymas"},
+				        {2, "①"},
+				        {3, "②"},
+				        {4, "③"},
+				        {5, "④"},
+				        {6, "Ką daryti"},
+				        {7, "Kur žiūrėti"}
+				        }
+				    )
+				RETURN
+				    CROSSJOIN(K, E)
+

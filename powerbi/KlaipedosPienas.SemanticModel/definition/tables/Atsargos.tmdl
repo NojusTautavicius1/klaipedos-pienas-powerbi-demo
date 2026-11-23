@@ -1,0 +1,42 @@
+/// Savaitiniai gatavos produkcijos likučiai sekmadienį (atsargos.csv). Likučiai nesumuojami per laiką: naudok matą Likutis vnt.
+table Atsargos
+	lineageTag: 70d429e4-83ea-4571-bffa-0e78e6a97b63
+
+	column Data
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 915e3cb3-53de-437f-a9a2-dc415446fa8b
+		sourceColumn: Data
+
+	column 'Prekės kodas'
+		dataType: string
+		isHidden
+		lineageTag: 9c53a383-ff7a-414c-b5b6-d082435ad052
+		sourceColumn: Prekės kodas
+
+	column Sandėlis
+		dataType: string
+		lineageTag: e2d4a97b-3826-482e-8667-2af24fa1ff8f
+		sourceColumn: Sandėlis
+
+	column 'Likutis vnt'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: ea67ae66-6758-43f3-8609-bf725fe38827
+		sourceColumn: Likutis vnt
+
+	partition Atsargos = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\erp\atsargos.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"DATA", type date}, {"PREKES_KODAS", type text}, {"SANDELIS", type text}, {"LIKUTIS_VNT", Int64.Type}}),
+				    Pervadinta = Table.RenameColumns(Tipai, {{"DATA", "Data"}, {"PREKES_KODAS", "Prekės kodas"}, {"SANDELIS", "Sandėlis"}, {"LIKUTIS_VNT", "Likutis vnt"}})
+				in
+				    Pervadinta
+

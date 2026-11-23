@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "ba046b1av08",
+  "position": {
+    "x": 440,
+    "y": 610,
+    "z": 8000,
+    "width": 816,
+    "height": 60,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Atsakymus skaičiuoja DAX matas [Atsakymas] tiesiai iš modelio, be interneto ir be DI. Laisvus klausimus galima užduoti Claude (Claude Code + Power BI Modeling MCP, skilas /klausk-duomenu).",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#5F6368"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

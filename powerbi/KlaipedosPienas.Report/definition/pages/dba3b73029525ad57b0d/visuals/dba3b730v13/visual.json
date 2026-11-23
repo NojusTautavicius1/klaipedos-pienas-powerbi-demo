@@ -1,0 +1,198 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "dba3b730v13",
+  "position": {
+    "x": 646,
+    "y": 463,
+    "z": 13000,
+    "width": 610,
+    "height": 222,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Lab tyrimai"
+                    }
+                  },
+                  "Property": "Rodiklis"
+                }
+              },
+              "queryRef": "Lab tyrimai.Rodiklis",
+              "nativeQueryRef": "Rodiklis"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Lab tyrimai"
+                    }
+                  },
+                  "Property": "Rezultatas"
+                }
+              },
+              "queryRef": "Lab tyrimai.Rezultatas",
+              "nativeQueryRef": "Rezultatas"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Lab tyrimai"
+                    }
+                  },
+                  "Property": "Matas"
+                }
+              },
+              "queryRef": "Lab tyrimai.Matas",
+              "nativeQueryRef": "Matas"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Lab tyrimai"
+                    }
+                  },
+                  "Property": "Riba min"
+                }
+              },
+              "queryRef": "Lab tyrimai.Riba min",
+              "nativeQueryRef": "Riba min"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Lab tyrimai"
+                    }
+                  },
+                  "Property": "Riba max"
+                }
+              },
+              "queryRef": "Lab tyrimai.Riba max",
+              "nativeQueryRef": "Riba max"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Lab tyrimai"
+                    }
+                  },
+                  "Property": "Atitinka"
+                }
+              },
+              "queryRef": "Lab tyrimai.Atitinka",
+              "nativeQueryRef": "Atitinka"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Laboratorija'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

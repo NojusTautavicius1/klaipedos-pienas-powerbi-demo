@@ -1,0 +1,44 @@
+/// Duomenų kokybės patikrų sąrašas. Naudok su matu Rasta atvejų.
+table 'Kokybės patikros'
+	lineageTag: b3de5bde-ae6d-4336-897b-3872e232726d
+
+	column Nr
+		lineageTag: 95f3f9cd-5b08-4779-8544-cedd8f6dd535
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nr]
+
+	column Sritis
+		lineageTag: 5cd77fee-e146-43af-a8f7-1cdf53d5c9c2
+		isNameInferred
+		sourceColumn: [Sritis]
+
+	column Patikra
+		lineageTag: 90897cf3-d711-4d30-b23e-204f5ed40957
+		isNameInferred
+		sourceColumn: [Patikra]
+
+	column 'Kas daroma'
+		lineageTag: e2b51385-50f5-4e29-a967-204788057cac
+		isNameInferred
+		sourceColumn: [Kas daroma]
+
+	partition 'Kokybės patikros' = calculated
+		mode: import
+		source =
+				DATATABLE(
+				    "Nr", INTEGER, "Sritis", STRING, "Patikra", STRING, "Kas daroma", STRING,
+				    {
+				        {1, "Pardavimai", "Pasikartojančios eilutės (dublikatai)", "Pašalinama Power Query: grupuojama pagal visus laukus"},
+				        {2, "Pardavimai", "Kliento kodas su tarpais ar mažosiomis raidėmis", "Sutvarkoma: Trim + Upper"},
+				        {3, "Pardavimai", "Nenurodytas kliento kodas", "Priskiriama NEŽINOMAS, kad pajamos nedingtų"},
+				        {4, "Gamybos planas", "Plano kodas su tarpu gale (Excel)", "Sutvarkoma: Trim"},
+				        {5, "Gamybos planas", "Plano kodas nerastas ERP produktuose", "Rodoma čia, reikia patikrinti rankomis"},
+				        {6, "Pirkimai (DI)", "Sąskaitos, atiduotos žmogui peržiūrėti", "Neįkeliama į ERP, kol žmogus nepatvirtina"},
+				        {7, "Laboratorija", "Partijos nr. įvestas kitu formatu (P26/000123, p26-..., be nulių)", "Sutvarkoma: į ERP formatą P26-000123"},
+				        {8, "Laboratorija", "Tyrimai, kurių partijos nėra ERP", "Rodoma čia, reikia patikrinti rankomis"},
+				        {9, "Skundų registras", "Partijos nr. su tarpais ar mažosiomis raidėmis", "Sutvarkoma: Trim + Upper"},
+				        {10, "Sandėlis", "Siuntos be partijos (2024 m. likutis)", "Atsekamumas galimas tik iki 2024 m. sandėlio likučio"}
+				    }
+				)
+

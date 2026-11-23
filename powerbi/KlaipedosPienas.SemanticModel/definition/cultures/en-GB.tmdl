@@ -1,0 +1,240 @@
+cultureInfo en-GB
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "atsakymai.eilutė": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Atsakymai",
+			          "ConceptualProperty": "Eilutė"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_matai.atsakymas": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Atsakymas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Atsakymas": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.paklausos_jautrumas_1_c": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Paklausos jautrumas 1 °C"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "+1 °C virš normos": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.prognozės_tikslumas_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Prognozės tikslumas %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tikslumas 2025 VI–VIII": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Tikslumas 2026 VI–VIII": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.rekomenduojamas_prognozės_pokytis_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Rekomenduojamas prognozės pokytis %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Prognozę keisti": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.papildomai_reikia_vnt": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Papildomai reikia vnt"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Papildomai, vnt.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.atšaukimas_klientų_sk_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Atšaukimas: klientų sk."
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Klientų": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.išsiųsta_vnt": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Išsiųsta vnt"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Išsiųsta, vnt.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.atšaukimas_likutis_sandėlyje_vnt": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Atšaukimas: likutis sandėlyje vnt"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Likutis sandėlyje, vnt.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.atšaukimas_atsekta_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Atšaukimas: atsekta %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Atsekta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_matai.atšaukimas_tiekėjų_sąskaitų_sk_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Matai",
+			          "ConceptualProperty": "Atšaukimas: tiekėjų sąskaitų sk."
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tiekėjų sąskaitų": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

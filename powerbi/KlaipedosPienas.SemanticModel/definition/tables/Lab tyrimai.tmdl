@@ -1,0 +1,79 @@
+/// Laboratorijos sistemos eksportas (tyrimai.csv): kitas formatas (skirtukas kablelis, dešimtainės taškas, data dd.MM.yyyy), partijos nr. kartais įvestas rankomis kitaip. Power Query sutvarko.
+table 'Lab tyrimai'
+	lineageTag: e3d4daa7-f2e7-4bec-b9a6-08fe0dc4cd54
+
+	column 'Partijos nr (laboratorijoje)'
+		dataType: string
+		lineageTag: bafa7af0-53e5-4296-86dc-c4f564496b58
+		sourceColumn: Partijos nr (laboratorijoje)
+
+	column 'Mėginio data'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: cc7d4215-ca9b-45b3-83d3-bfca98122df0
+		sourceColumn: Mėginio data
+
+	column Rodiklis
+		dataType: string
+		lineageTag: e622e1e5-645a-41e4-9b59-08201e7157b7
+		sourceColumn: Rodiklis
+
+	column Rezultatas
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 56bd03b2-be96-42f7-8d38-d339de66cf7a
+		summarizeBy: none
+		sourceColumn: Rezultatas
+
+	column Matas
+		dataType: string
+		lineageTag: eb6fcff5-9fdf-4400-845f-d70eb37efa31
+		sourceColumn: Matas
+
+	column 'Riba min'
+		dataType: double
+		lineageTag: a1dc7fc7-ef7d-42e3-9780-3e07782dd81f
+		summarizeBy: none
+		sourceColumn: Riba min
+
+	column 'Riba max'
+		dataType: double
+		lineageTag: b95c025f-b265-4587-b309-2e83ef0e735c
+		summarizeBy: none
+		sourceColumn: Riba max
+
+	column 'Partijos nr'
+		dataType: string
+		isHidden
+		lineageTag: e8f2ed5a-d5eb-47f9-b22e-f4553d8860ee
+		sourceColumn: Partijos nr
+
+	column 'Nr. taisytas'
+		dataType: int64
+		isHidden
+		lineageTag: e9d5fd98-4e72-44f9-bf4a-c8959f19eee2
+		sourceColumn: Nr. taisytas
+
+	column Atitinka
+		dataType: string
+		lineageTag: e82e1faa-8e7e-43bf-b1a1-990c25b75884
+		sourceColumn: Atitinka
+
+	partition 'Lab tyrimai' = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\laboratorija\tyrimai.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tusti = Table.ReplaceValue(Antrastes, "", null, Replacer.ReplaceValue, {"LimitMin", "LimitMax"}),
+				    Tipai = Table.TransformColumnTypes(Tusti, {{"Batch", type text}, {"Test", type text}, {"Result", type number}, {"Unit", type text}, {"LimitMin", type number}, {"LimitMax", type number}}, "en-US"),
+				    Data = Table.TransformColumns(Tipai, {{"SampleDate", each Date.FromText(_, [Format = "dd.MM.yyyy"]), type date}}),
+				    Normalizuota = Table.AddColumn(Data, "Partijos nr", each let t = Text.Upper(Text.Trim(Text.Replace([Batch], "/", "-"))), d = Text.Split(t, "-") in d{0} & "-" & Text.PadStart(d{1}, 6, "0"), type text),
+				    Taisyta = Table.AddColumn(Normalizuota, "Nr. taisytas", each if [Batch] <> [Partijos nr] then 1 else 0, Int64.Type),
+				    Atitinka = Table.AddColumn(Taisyta, "Atitinka", each if ([LimitMin] = null or [Result] >= [LimitMin]) and ([LimitMax] = null or [Result] <= [LimitMax]) then "Taip" else "Ne", type text),
+				    Pervadinta = Table.RenameColumns(Atitinka, {{"Batch", "Partijos nr (laboratorijoje)"}, {"SampleDate", "Mėginio data"}, {"Test", "Rodiklis"}, {"Result", "Rezultatas"}, {"Unit", "Matas"}, {"LimitMin", "Riba min"}, {"LimitMax", "Riba max"}})
+				in
+				    Pervadinta
+

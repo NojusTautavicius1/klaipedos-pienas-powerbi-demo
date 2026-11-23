@@ -1,0 +1,170 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "dba3b730v11",
+  "position": {
+    "x": 646,
+    "y": 238,
+    "z": 11000,
+    "width": 610,
+    "height": 215,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Žaliava"
+                    }
+                  },
+                  "Property": "Žaliava"
+                }
+              },
+              "queryRef": "Žaliava.Žaliava",
+              "nativeQueryRef": "Žaliava"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tiekėjas"
+                    }
+                  },
+                  "Property": "Tiekėjas"
+                }
+              },
+              "queryRef": "Tiekėjas.Tiekėjas",
+              "nativeQueryRef": "Tiekėjas"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Žaliavų sunaudojimas"
+                    }
+                  },
+                  "Property": "Tiekėjo sąskaita"
+                }
+              },
+              "queryRef": "Žaliavų sunaudojimas.Tiekėjo sąskaita",
+              "nativeQueryRef": "Tiekėjo sąskaita"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Žaliavų sunaudojimas"
+                    }
+                  },
+                  "Property": "Sunaudota"
+                }
+              },
+              "queryRef": "Žaliavų sunaudojimas.Sunaudota",
+              "nativeQueryRef": "Sunaudota"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Iš ko pagaminta'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

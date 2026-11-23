@@ -1,0 +1,70 @@
+/// Produktų katalogas iš ERP (produktai.csv). Plano kodas sieja su planuotojo Excel.
+table Produktas
+	lineageTag: cbf41564-c4fc-4672-a3fb-955c77a3a16a
+
+	column 'Prekės kodas'
+		dataType: string
+		lineageTag: 37778e36-42c8-4aa6-af46-f5aa8876e8cd
+		sourceColumn: Prekės kodas
+
+	column Produktas
+		dataType: string
+		lineageTag: 00de37ee-da19-4500-8123-fc7744f50468
+		sourceColumn: Produktas
+
+	column 'Prekės ženklas'
+		dataType: string
+		lineageTag: efae0db7-b997-41d3-a626-effb7ee8e18b
+		sourceColumn: Prekės ženklas
+
+	column Kategorija
+		dataType: string
+		lineageTag: 48540561-1f3f-4f65-a49c-331ab60838d4
+		sourceColumn: Kategorija
+
+	column 'Tūris, ml'
+		dataType: int64
+		lineageTag: b4e2084d-2f8a-4828-9d2a-86ec03fea7ca
+		summarizeBy: none
+		sourceColumn: Tūris, ml
+
+	column 'Linijos kodas'
+		dataType: string
+		lineageTag: fef44bc7-202a-4809-8458-cb9e33515c5a
+		sourceColumn: Linijos kodas
+
+	column 'Plano kodas'
+		dataType: string
+		lineageTag: 6f530cd1-cc0a-4632-874b-dd90fafb5bb1
+		sourceColumn: Plano kodas
+
+	column 'Bazinė kaina'
+		dataType: double
+		formatString: 0.0000
+		lineageTag: c3c12423-d6b4-4f7e-83bb-56dfe2290188
+		summarizeBy: none
+		sourceColumn: Bazinė kaina
+
+	/// Gamykla, kurioje gaminamas produktas (pagal liniją).
+	column Gamykla = LOOKUPVALUE(Linija[Gamykla], Linija[Linijos kodas], Produktas[Linijos kodas])
+		dataType: string
+		lineageTag: 81f3a833-1019-4821-81bb-a9c6bb9f1bb8
+
+	/// Gamybos linijos pavadinimas.
+	column Linija = LOOKUPVALUE(Linija[Linija], Linija[Linijos kodas], Produktas[Linijos kodas])
+		dataType: string
+		lineageTag: 2c3c8586-0799-412d-b327-f2d2db39cd2c
+
+	partition Produktas = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\erp\produktai.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"PREKES_KODAS", type text}, {"PAVADINIMAS", type text}, {"PREKES_ZENKLAS", type text}, {"KATEGORIJA", type text}, {"TURIS_ML", Int64.Type}, {"LINIJA", type text}, {"PLANO_KODAS", type text}, {"BAZINE_KAINA_EUR", type number}}, "lt-LT"),
+				    Pervadinta = Table.RenameColumns(Tipai, {{"PREKES_KODAS", "Prekės kodas"}, {"PAVADINIMAS", "Produktas"}, {"PREKES_ZENKLAS", "Prekės ženklas"}, {"KATEGORIJA", "Kategorija"}, {"TURIS_ML", "Tūris, ml"}, {"LINIJA", "Linijos kodas"}, {"PLANO_KODAS", "Plano kodas"}, {"BAZINE_KAINA_EUR", "Bazinė kaina"}})
+				in
+				    Pervadinta
+

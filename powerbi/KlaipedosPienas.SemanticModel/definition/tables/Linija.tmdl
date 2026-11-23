@@ -1,0 +1,38 @@
+/// Gamybos linijos ir gamyklos (linijos.csv).
+table Linija
+	lineageTag: 4f6ec5c8-6e53-4e54-9b86-01eeada53ba8
+
+	column 'Linijos kodas'
+		dataType: string
+		lineageTag: 66df0835-3530-487d-89a5-2d9149761821
+		sourceColumn: Linijos kodas
+
+	column Gamykla
+		dataType: string
+		lineageTag: bbda4e21-a539-4161-aef8-8be3e232746b
+		sourceColumn: Gamykla
+
+	column Linija
+		dataType: string
+		lineageTag: aa9cc5aa-6114-45b8-b3ee-4d7fdb8d35c0
+		sourceColumn: Linija
+
+	column 'Minutės per savaitę'
+		dataType: int64
+		lineageTag: 71070ad3-4875-4ac9-aaca-0d17443b5f26
+		summarizeBy: none
+		sourceColumn: Minutės per savaitę
+
+	partition Linija = m
+		mode: import
+		source =
+				let
+				    Failai = Folder.Files(#"Duomenų aplankas"),
+				    Turinys = Table.SelectRows(Failai, each Text.EndsWith(Text.Lower([Folder Path] & [Name]), "\raw\erp\linijos.csv")){0}[Content],
+				    Csv = Csv.Document(Turinys, [Delimiter = ";", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Antrastes = Table.TransformColumnNames(Table.PromoteHeaders(Csv, [PromoteAllScalars = true]), each Text.Replace(_, "#(feff)", "")),
+				    Tipai = Table.TransformColumnTypes(Antrastes, {{"LINIJOS_KODAS", type text}, {"GAMYKLA", type text}, {"PAVADINIMAS", type text}, {"MINUTES_PER_SAVAITE", Int64.Type}}),
+				    Pervadinta = Table.RenameColumns(Tipai, {{"LINIJOS_KODAS", "Linijos kodas"}, {"GAMYKLA", "Gamykla"}, {"PAVADINIMAS", "Linija"}, {"MINUTES_PER_SAVAITE", "Minutės per savaitę"}})
+				in
+				    Pervadinta
+

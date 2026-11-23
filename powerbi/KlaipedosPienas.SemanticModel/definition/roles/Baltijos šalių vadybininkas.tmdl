@@ -1,0 +1,8 @@
+/// Mato tik Lidl LT/LV/EE, vietinius tinklus ir HoReCa.
+role 'Baltijos šalių vadybininkas'
+	modelPermission: read
+
+	tablePermission Klientas = Klientas[Vadybininkas] = "Baltijos šalių vadybininkas"
+
+	annotation PBI_Id = c7d971e85d2842a7925b41b1635f704b
+
