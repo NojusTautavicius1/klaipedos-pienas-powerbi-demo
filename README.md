@@ -24,7 +24,7 @@ Ataskaita atsako į klausimą „kodėl“, ne tik „kiek“. Duomenyse paslėp
 | DI: ataskaitų rengimas | Mėnesio komentaras vadovybei: Claude rašo, skriptas patikrina **kiekvieną** skaičių ([spalio](docs/menesio_komentaras_2026-10.md), [birželio](docs/menesio_komentaras_2026-06.md)) |
 | Informacijos perdavimas tarp sistemų | ERP importo CSV iš sąskaitų; orų pataisa grįžta planuotojui į Excel jo paties formatu |
 | Išmatuojama nauda | Sąskaitos: 1,4 min. vietoj ~108 min. Vasaros prognozės tikslumas su orų pataisa: 88,1 % → 94,8 % |
-| Duomenų kokybė, prieigos, dokumentacija, mokymai | Kokybės patikrų puslapis (dublikatai, kodai, trūkstami klientai), 3 RLS rolės vadybininkams, automatinis duomenų žodynas, [pirmų 90 dienų planas](docs/pirmos_90_dienu.md) |
+| Duomenų kokybė, prieigos, dokumentacija, mokymai | Kokybės patikrų puslapis (dublikatai, kodai, trūkstami klientai), 3 RLS rolės vadybininkams, automatinis duomenų žodynas |
 
 ## Trys istorijos duomenyse
 
@@ -66,7 +66,7 @@ Patikra: jautrumas apskaičiuotas tik iš 2025 m. duomenų, o tikrinama su 2026 
 
 ![Orų pataisos patikra](docs/img/oru_pataisa.png)
 
-**Sąžiningai:** sintetiniuose duomenyse ryšys tarp orų ir paklausos įdėtas sąmoningai, o patikroje naudoti tikri tos savaitės orai, ne prieš savaitę skelbta prognozė. Su tikrais įmonės duomenimis ir tikra prognoze pagerėjimas bus mažesnis. Būtent tai patikrinčiau pirmiausia ([90 dienų planas](docs/pirmos_90_dienu.md)).
+**Sąžiningai:** sintetiniuose duomenyse ryšys tarp orų ir paklausos įdėtas sąmoningai, o patikroje naudoti tikri tos savaitės orai, ne prieš savaitę skelbta prognozė. Su tikrais įmonės duomenimis ir tikra prognoze pagerėjimas bus mažesnis. Būtent tai patikrinčiau pirmiausia.
 
 ### 4. „Klausk duomenų“
 
@@ -135,7 +135,7 @@ invoices/      PDF sąskaitos, Claude ištraukėjas, taisyklės, tikslumo vertin
 automation/    mėnesio komentaras, orų pataisa planuotojui, duomenų žodynas, diagramos
 powerbi/       modelis (TMDL), tema, PBIP projektas
 data/          raw/ (šaltiniai), clean/ (DI rezultatai), out/ (Excel planuotojui, komentarų faktai)
-docs/          puslapių gidas, duomenų žodynas, komentarai, 90 dienų planas, video scenarijus
+docs/          puslapių gidas, duomenų žodynas, komentarai, video scenarijus
 tests/         32 testai: sąskaitų taisyklės, kokybės duomenys, skaičių patikra, orų pataisa, žodynas
 ```
 
