@@ -2,7 +2,7 @@
 
 > **Tai mokomasis pavyzdys.** Visi skaičiai sugeneruoti. Tai ne tikri AB „Klaipėdos pienas“ duomenys, ir projektas su įmone nesusijęs. Prekių ženklai ir prekybos tinklai paminėti tik tam, kad pavyzdys būtų artimas tikram verslui. Tiekėjai išgalvoti. Orai tikri (Open-Meteo).
 
-Pavyzdį sukūriau kandidatuodamas į „Duomenų analitikos ir procesų automatizavimo specialisto“ pareigas. Power BI anksčiau nebuvau naudojęs, todėl išmokau jį kurdamas šį projektą tokio tipo įmonei: ledų gamyba, trys gamyklos, savos gamybos ERP, gamybos planas Excel'yje ir ryškus vasaros sezonas.
+Pavyzdį sukūriau kandidatuodamas į „Duomenų analitikos ir procesų automatizavimo specialisto“ pareigas. Projektą kūriau tokio tipo įmonei: ledų gamyba, trys gamyklos, savos gamybos ERP, gamybos planas Excel'yje ir ryškus vasaros sezonas.
 
 Ataskaita atsako į klausimą „kodėl“, ne tik „kiek“. Duomenyse paslėpiau tris istorijas, ir modelis jas randa pats.
 
